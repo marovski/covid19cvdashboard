@@ -48,10 +48,11 @@ dplyr::mutate(novos_casos = (confirmados +
                                     dplyr::lag(confirmados, n = 4)) / 5)
 
 # total_nacional<-total_nacional%>%mutate(diff_date=Data-lag(Data),diff_growthConfirmados=confirmados-lag(confirmados),percentagem=(diff_growthConfirmados / diff_date) /confirmados*100)
+
 #Get demographic data
 covid_demo<-covid19cvdata::covid19cv_pop
 
-covid19cv<-covid19cvdata::covid19cv %>% group_by(data,grupo_etario,sexo)%>%dplyr::summarise(confirmados=sum(tipo_caso=="confirmado"),evacuados=sum(tipo_caso=="evacuado"),recuperados=sum(tipo_caso=="recuperado"),obitos=sum(tipo_caso=="obito"))
+covid19cv<-covid19cvdata::covid19cv %>% group_by(data,grupo_etario,sexo,nacionalidade)%>%dplyr::summarise(confirmados=sum(tipo_caso=="confirmado"),evacuados=sum(tipo_caso=="evacuado"),recuperados=sum(tipo_caso=="recuperado"),obitos=sum(tipo_caso=="obito"))
 
 #Female
 female_data<-covid19cvdata::covid19cv  %>% filter(sexo == 'F') %>% 
@@ -427,21 +428,21 @@ plotly::plot_ly(data = joint_s,
          hovermode = "compared")
 ```
 
-Row
+Row {.tabset}
 -------------------------------------------------------
 ### Relação entre Casos Confirmados, Sexo, Grupo Etário
 
 ```{r}
-plotly::plot_ly(data=covid_demo, x=~confirmados_ativos, y=~grupo_etario,color=~sexo) %>% 
-  plotly::add_bars(orientation = 'h', hoverinfo = 'text', text = ~confirmados_ativos) %>%
+plotly::plot_ly(data=covid_demo, x=~confirmados, y=~grupo_etario,color=~sexo) %>% 
+  plotly::add_bars(orientation = 'h', hoverinfo = 'text', text = ~confirmados) %>%
   plotly::layout(bargap = 0.1, barmode = 'normal',
          xaxis = list(tickmode = 'array', tickvals = c(-1000, -500, 0, 500, 1000),
-                      ticktext = c('1000', '500', '0', '500', '1000'),title="Nr. Casos Ativos"))
+                      ticktext = c('1000', '500', '0', '500', '1000'),title="Casos Confirmados"))
   
 ```
 
 
-### Relação entre Casos Confirmados Ativos, Sexo, Grupo Etário
+### Relação entre Casos Ativos, Sexo, Grupo Etário
 
 ```{r}
 plotly::plot_ly(data= covid_demo,
@@ -462,13 +463,24 @@ plotly::plot_ly(data= covid_demo,
   
 ```
 
+### Nacionalidade dos Casos
+
+```{r}
+plotly::plot_ly(data=covid19cv%>%mutate(nacionalidade=sub("^$","NãoDivulgado",nacionalidade)),
+    labels = ~nacionalidade, values = ~confirmados,
+    type = 'pie', showlegend = FALSE,hole=.4,
+    textposition = 'inside', textinfo = 'label+percent') %>% 
+  plotly::layout(title = "<b>Nacionalidades dos Casos Confirmados</b>")
+```
 
 Mapa CV
 =====================================================================
 
 ```{r map}
-cabo_verde_map%>% mutate(c_acumulados=replace_na(c_acumulados,0))%>% 
-  mapview::mapview(legend=TRUE,zcol = "c_acumulados") 
+
+cabo_verde_map%>% mutate(c_acumulados=replace_na(c_acumulados,"Sem casos"))%>% 
+  mapview::mapview(legend=TRUE,zcol = "c_acumulados",raster.palette = grey.colors,
+               col.regions = colorRampPalette(c("yellow", "red", "snow"))) 
 ```
 
 
@@ -581,7 +593,7 @@ Sobre
 
 **Dashboard Covid19CV**
 
-Este Dashboard da Covid19 fornece uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. Este dashboard foi construído com R usando a estrutura R Markdown.
+Este Dashboard da Covid19 fornece uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. O dashboard foi construído com [R](https://www.r-project.org/) usando a estrutura R Markdown.
 
 **Autoria**
 
@@ -614,3 +626,7 @@ O dashboard foi implementado no _Github docs_, caso deseje modificar na sua cont
 
 * _Fork_ o [repositório do dashboard](https://github.com/marovski/covid19-caboverde-dashboard) ou;
 * Clonar o repositório para sua conta do Github.
+
+**Errata**
+
+Em caso de identificação de erros/sugestões, por favor, abrir uma _issue_ através de https://github.com/marovski/covid19-caboverde-dashboard/issues/new.
