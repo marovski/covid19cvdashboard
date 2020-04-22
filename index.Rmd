@@ -1,0 +1,613 @@
+---
+title: "Covid19 - Cabo Verde"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    css: style.css
+    social: menu
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+#-------------------Packages---------------------------
+### covid19cvdata Required the dev version from Github 
+library(covid19cvdata)
+library(flexdashboard)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(sp)
+library(rworldmap)
+library(reshape2)
+library(ggplot2)
+library(plyr)
+library(rnaturalearth)
+
+#------------------ Parameters ------------------
+# Set colors
+# https://www.w3.org/TR/css-color-3/#svg-color
+tested_color <- "purple"
+positive_color <- RColorBrewer::brewer.pal(9, "PuRd")[7]
+active_color <- "#1f77b4"
+recovered_color <- "forestgreen"
+death_color <- "#E41317"
+intensive_care_color <- "#9E0003"
+h_symptoms_color <- "#E41317"
+home_conf_color <- "#FDBBBC"
+
+
+#------------------ Data ------------------
+
+## get confirmed cases
+cv_total_today<- covid19cvdata::covid19cv_nacional %>% filter(Data==max(Data))
+
+total_nacional<-covid19cvdata::covid19cv_nacional  %>%
+dplyr::mutate(novos_casos = (confirmados +
+                                    dplyr::lag(confirmados, n = 1) +
+                                    dplyr::lag(confirmados, n = 2) +
+                                    dplyr::lag(confirmados, n = 3) +
+                                    dplyr::lag(confirmados, n = 4)) / 5)
+
+# total_nacional<-total_nacional%>%mutate(diff_date=Data-lag(Data),diff_growthConfirmados=confirmados-lag(confirmados),percentagem=(diff_growthConfirmados / diff_date) /confirmados*100)
+#Get demographic data
+covid_demo<-covid19cvdata::covid19cv_pop
+
+covid19cv<-covid19cvdata::covid19cv %>% group_by(data,grupo_etario,sexo)%>%dplyr::summarise(confirmados=sum(tipo_caso=="confirmado"),evacuados=sum(tipo_caso=="evacuado"),recuperados=sum(tipo_caso=="recuperado"),obitos=sum(tipo_caso=="obito"))
+
+#Female
+female_data<-covid19cvdata::covid19cv  %>% filter(sexo == 'F') %>% 
+  group_by(data) %>% dplyr::summarise(feminino_confirmado = sum(tipo_caso=="confirmado"))
+
+#Male
+male_data<-covid19cvdata::covid19cv  %>% filter(sexo == 'M') %>% group_by(data) %>% dplyr::summarise(masculino_confirmado = sum(tipo_caso=="confirmado"))
+
+#FullJoin
+joint_s<-full_join(male_data,female_data,by="data")%>%mutate(feminino_confirmado=replace_na(feminino_confirmado,0),masculino_confirmado=replace_na(masculino_confirmado,0)) 
+
+joint_s<-joint_s %>% mutate(masculino_acum=cumsum(masculino_confirmado),feminino_acum=cumsum(feminino_confirmado),Data=as.Date(data)) %>% tidyr::complete(Data = seq.Date(min(data), max(data), by="day")) %>% select(Data, feminino_confirmado,feminino_acum,masculino_confirmado,masculino_acum)
+
+joint_s[is.na(joint_s)]<-0
+
+age_group<-covid_demo %>% group_by(grupo_etario) %>%dplyr::summarise(confirmados=sum(confirmados),c_ativos=sum(confirmados_ativos),evacuados=sum(evacuados),recuperados=sum(recuperados),obitos=sum(obitos))
+
+#cv map
+
+cv_city<-covid19cvdata::covid19cv_cidades
+
+cv_city$cidade<-gsub("Sal Rei", "Boa Vista",cv_city$cidade)
+
+cv_city$cidade<-gsub("Mindelo", "São Vicente",cv_city$cidade)
+
+cv_city$cidade<- as.character(cv_city$cidade)
+
+
+cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass = "sf") %>%
+  dplyr::select(cidade = name, region, geometry) %>%
+  dplyr::group_by(cidade) %>%
+  dplyr::summarise(n = dplyr::n()) %>%
+  dplyr::left_join(cv_city %>%
+              dplyr::filter(Data == max(Data)) %>%
+                dplyr::group_by(cidade) %>%
+                dplyr::summarise(c_acumulados = sum(confirmados_acumulados)), # subseting for the most recent day
+            by = c("cidade" = "cidade"))
+
+
+
+
+#World Cases
+world<-utils::read.csv('https://raw.githubusercontent.com/RamiKrispin/coronavirus-csv/master/coronavirus_dataset.csv')
+
+#Get Africa Countries
+countries <- read_csv("africa.csv")
+countries$Country<-gsub("Cape Verde", "Cabo Verde",countries$Country)
+#Africa Cases
+africa<-semi_join(world,countries, by=c("Country.Region"="Country"))
+
+#topCountries
+africa_countries<-africa %>%
+  dplyr::group_by( type,Country.Region) %>%
+  dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
+  tidyr::pivot_wider(names_from = type,
+                     values_from = total) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(active =  confirmed - death - recovered)
+
+#Daily Cases Africa
+africa_daily <- africa %>% 
+  dplyr::mutate(date=as.Date(date))%>%
+  dplyr::group_by(date, type) %>%
+  dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
+  tidyr::pivot_wider(names_from = type,
+                     values_from = total) %>%
+  dplyr::arrange(date) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(active =  confirmed - death - recovered) %>%
+  dplyr::mutate(confirmed_cum = cumsum(confirmed),
+                death_cum = cumsum(death),
+                recovered_cum = cumsum(recovered),
+                active_cum = cumsum(active))
+```
+
+
+Resumo
+======================================================================
+Row
+-----------------------------------------------------------------------
+
+### Tested {.value-box}
+
+```{r}
+valueBox(value = format(187, big.mark = ","),caption = "Total de Testes Realizados",icon = "fas fa-user-md", color = tested_color)
+```
+
+
+### Positive Cases {.value-box}
+
+```{r}
+valueBox(value = paste(format(cv_total_today$confirmados_acumulados, big.mark = ","), "", sep = " "), 
+         caption = "Total Casos Confirmados", 
+         icon = "fas fa-diagnoses", 
+         color = positive_color)
+```
+
+
+### Ative Cases {.value-box}
+
+```{r}
+valueBox(value = paste(format(cv_total_today$confirmados_ativos, big.mark = ","), " (",round(100 * cv_total_today$confirmados_ativos / cv_total_today$confirmados_acumulados, 1), 
+                       "%)", sep = " "),  
+         caption = "Total Casos Ativos", 
+         icon = "far fa-plus-square", 
+         color = active_color)
+```
+
+
+### Recovered Cases {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(total_nacional$recuperados), big.mark = ","), " (",round(100 * sum(total_nacional$recuperados, na.rm = TRUE) / cv_total_today$confirmados_acumulados, 1), 
+                       "%)", sep = " "),  
+         caption = "Total Recuperados", 
+         icon = "fas fa-file-medical-alt", 
+         color = recovered_color)
+```
+
+
+### Death Cases {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(total_nacional$obitos), big.mark = ","), " (",round(100 * sum(total_nacional$obitos, na.rm = TRUE) / cv_total_today$confirmados_acumulados, 1), 
+                       "%)", sep = " "), 
+         caption = "Total Óbitos", 
+         color = death_color)
+```
+
+### Evacuated Cases {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(total_nacional$evacuados), big.mark = ","), " (",round(100 * sum(total_nacional$evacuados, na.rm = TRUE) / cv_total_today$confirmados_acumulados, 1), 
+                       "%)", sep = " "), 
+         caption = "Total Evacuados", 
+         color = 'grey',icon = "fas fa-plane")
+```
+
+
+Row
+-----------------------------------------------------------------------
+
+### Distribuição do Total de Casos
+
+```{r}
+plotly::plot_ly(data = total_nacional,
+                x = ~ Data,
+                y = ~confirmados_ativos,
+                name = 'Ativos',
+                type = 'bar',
+                mode = 'none') %>%
+  plotly::add_trace( y = ~ obitos,
+                     name = "Óbitos",
+                      marker = list(color=death_color))%>%
+    plotly::add_trace(y = ~evacuados,
+                    name = 'Evacuados',
+                       marker = list(color='grey')) %>%
+  plotly::add_trace(y = ~recuperados,
+                    name = 'Recuperados',
+                    marker = list(color=recovered_color)) %>%
+  plotly::add_annotations(x = as.Date("2020-03-27"),
+                          y = 3,
+                          text ="Estado de Emergência",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 5,
+                          arrowhead = 3,
+                          arrowsize = 1,
+                          showarrow = TRUE,
+                          ax = 10,
+                          ay = -90)%>% 
+  plotly::add_annotations(x = as.Date("2020-04-18"),
+                          y = 1,
+                          text ="PEE",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 3,
+                          arrowhead = 3,
+                          arrowsize = .05,
+                          showarrow = TRUE,
+                          ax = 5,
+                          ay = -90)%>%
+  plotly::layout(barmode='stack',
+                 legend = list(orientation = "h",   # show entries horizontally
+                     xanchor = "center",  # use center of legend as anchor
+                     x = 0.5,y=8),
+                 yaxis = list(title = "Casos Acumulados"),
+                 xaxis = list(title = "Data"),
+                 hovermode = "compared",margin=list(b=10,t=10,pad=2))
+```
+
+Row {.tabset}
+----------------------------------------------
+
+### Casos por Concelho
+
+```{r}
+cv_city %>%
+dplyr::select(cidade, confirmados,c_ativos_acumulados, recuperados, obitos, confirmados_acumulados) %>%
+  dplyr::group_by(cidade) %>%
+  dplyr::summarise(cumulative_positive_cases = sum(confirmados),
+                   recovered = sum(recuperados),
+                   death = sum(obitos),
+                   cumulative_cases = sum(confirmados_acumulados)) %>%
+  dplyr::ungroup() %>%
+  dplyr::arrange(-cumulative_cases) %>%
+  dplyr::mutate(region = factor(cidade , levels = cidade)) %>%
+plotly::plot_ly(
+          y = ~ region, 
+          x = ~ cumulative_positive_cases, 
+          orientation = 'h',
+          # text =  ~ cumulative_positive_cases,
+          # textposition = 'auto',
+          type = "bar", 
+          name = "Ativos",
+          marker = list(color = "#1f77b4")) %>%
+  plotly::add_trace(x = ~ recovered,
+            name = "Recuperados",
+            marker = list(color = "forestgreen")) %>%
+  plotly::add_trace(x = ~ death, 
+            name = "Óbitos",
+            marker = list(color = "red")) %>%
+  plotly::layout(title = "",
+         barmode = 'stack',
+         yaxis = list(title = "Concelho"),
+         xaxis = list(title = "Casos"),
+         hovermode = "compare",
+         legend = list(x = 0.65, y = 0.9),
+        hovermode = "compared",margin=list(b=10,t=10,pad=2))
+```
+
+<!-- ### Islands with cases -->
+
+<!-- ```{r} -->
+
+<!-- max_date <- max(cv_city$Data) -->
+<!-- cv_city %>%  -->
+<!--   dplyr::filter(Data == max_date) %>% -->
+<!--   dplyr::group_by(cidade,ilha) %>% -->
+<!--   dplyr::summarise(casos=sum(confirmados_acumulados)) %>% -->
+<!--   dplyr::arrange(-casos) %>% -->
+<!--   # dplyr::mutate(country = factor(Country.Region, levels = Country.Region)) %>% -->
+<!--   dplyr::ungroup() %>% -->
+<!--   plotly::plot_ly(x = ~ cidade, -->
+<!--                   y = ~ casos, -->
+<!--                   text = ~ casos, -->
+<!--                   color = ~ ilha, -->
+<!--                   textposition = 'auto', -->
+<!--                   type = "bar") %>% -->
+<!--   plotly::layout(yaxis = list(title = "Casos Acumulados"), -->
+<!--                  xaxis = list(title = ""), -->
+<!--                  margin =  list( -->
+<!--                    l = 10, -->
+<!--                    r = 10, -->
+<!--                    b = 10, -->
+<!--                    t = 10, -->
+<!--                    pad = 2 -->
+<!--                  )) -->
+
+<!-- ``` -->
+
+### Casos Confirmados Diários
+
+```{r}
+plotly::plot_ly(data = total_nacional,
+                x = ~ Data,
+                y = ~ confirmados,
+                type = "scatter",
+                mode = "markers",
+                name = "Casos Confirmados") %>%
+  plotly::add_lines(x = ~ Data, 
+                    y = ~ novos_casos,
+                    line = list(color = "red", width = 3),
+                    name = "Trend Line") %>%
+  plotly::add_annotations(x = as.Date("2020-03-27"),
+                          y = 1,
+                          text ="Estado de Emergência",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 3,
+                          arrowhead = 3,
+                          arrowsize = 1,
+                          showarrow = TRUE,
+                          ax = 10,
+                          ay = -90)%>%
+  plotly::add_annotations(x = as.Date("2020-04-18"),
+                          y = 1,
+                          text ="Prorrogação EE",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 3,
+                          arrowhead = 3,
+                          arrowsize = .05,
+                          showarrow = TRUE,
+                          ax = 10,
+                          ay = -90)%>%
+  plotly::layout(title = "",
+                 legend = list(x = 0.1, y = 0.9),
+                 yaxis = list(title = "Casos Confirmados"),
+                 xaxis = list(title = "Média Móvel para Calcular a Linha de Tendência"),
+                 hovermode = "compare")
+  
+```
+
+
+Demografia
+======================================================================
+Row
+-----------------------------------------------------------------------
+### CasosF {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(joint_s$feminino_confirmado), big.mark = ",")," (",round(100 * sum(joint_s$feminino_confirmado)/ cv_total_today$confirmados_acumulados, 1), 
+                       "%)",sep=" "),
+         caption = "Casos Confirmados do Sexo Feminino",
+         icon = "fas fa-female", color = 'red')
+```
+
+
+### CasesM {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(joint_s$masculino_confirmado), big.mark = ",")," (",round(100 * sum(joint_s$masculino_confirmado) / cv_total_today$confirmados_acumulados, 1), 
+                       "%)",sep=" "),caption = "Casos Confirmados do Sexo Masculino",icon = "fas fa-male", color = 'blue')
+```
+
+### CasosFA {.value-box}
+
+```{r}
+valueBox(value = paste(format(covid_demo%>%filter(sexo=="F")%>%summarise(sum(confirmados_ativos)), big.mark = ",")," (",round(100 * covid_demo%>%filter(sexo=="F")%>%summarise(sum(confirmados_ativos)) / cv_total_today$confirmados_ativos, 1), 
+                       "%)",sep=" "),
+         caption = "Casos Ativos do Sexo Feminino",
+         icon = "fas fa-female", color = 'pink')
+```
+
+
+### CasesMA {.value-box}
+
+```{r}
+valueBox(value = paste(format(covid_demo%>%filter(sexo=="M")%>%summarise(sum(confirmados_ativos)), big.mark = ",")," (",round(100 * covid_demo%>%filter(sexo=="M")%>%summarise(sum(confirmados_ativos)) / cv_total_today$confirmados_ativos, 1), 
+                       "%)",sep=" "),caption = "Casos Ativos do Sexo Masculino",icon = "fas fa-male", color = 'lightblue')
+```
+
+### AgeGroup Cases {.value-box}
+
+```{r}
+x<-age_group %>% filter(confirmados==max(confirmados))
+valueBox(value = paste(x$grupo_etario<-gsub(",","-",x$grupo_etario)," (",round(100 * x$confirmados / cv_total_today$confirmados_acumulados, 1), 
+                       "%)",sep=""),caption = "Grupo Etário Mais Afetado",icon = "fas fa-cross", color = 'purple')
+```
+
+
+Row
+------------------------------------
+
+### Distribuição por Sexo dos Casos Confirmados Acumulados
+
+```{r}
+plotly::plot_ly(data = joint_s,
+        x = ~ Data,
+        y = ~ cumsum(masculino_confirmado), 
+        name = 'Masculino', 
+        fillcolor = 'blue',
+        type = 'scatter',
+        mode = 'none', 
+        stackgroup = 'one') %>%
+  plotly::add_trace( y = ~cumsum(feminino_confirmado), 
+             name = "Feminino",
+             fillcolor = 'red') %>%
+  plotly::layout(title = "",
+         legend = list(x = 0.1, y = 0.9),
+         yaxis = list(title = "Casos Confirmados Acumulados"),
+         xaxis = list(title = "Data"),
+         hovermode = "compared")
+```
+
+Row
+-------------------------------------------------------
+### Relação entre Casos Confirmados, Sexo, Grupo Etário
+
+```{r}
+plotly::plot_ly(data=covid_demo, x=~confirmados_ativos, y=~grupo_etario,color=~sexo) %>% 
+  plotly::add_bars(orientation = 'h', hoverinfo = 'text', text = ~confirmados_ativos) %>%
+  plotly::layout(bargap = 0.1, barmode = 'normal',
+         xaxis = list(tickmode = 'array', tickvals = c(-1000, -500, 0, 500, 1000),
+                      ticktext = c('1000', '500', '0', '500', '1000'),title="Nr. Casos Ativos"))
+  
+```
+
+
+### Relação entre Casos Confirmados Ativos, Sexo, Grupo Etário
+
+```{r}
+plotly::plot_ly(data= covid_demo,
+    x = ~grupo_etario, y = ~confirmados_ativos,
+    color = ~sexo, size=~confirmados_ativos*10,
+    text = ~`sexo`, name = ~`sexo`,
+    type = "scatter", mode = 'markers',
+    hovertemplate = paste0(
+      '<b>Sexo</b>: %{text}',
+      '<br><b>Grupo Etario</b>: %{x}<br>',
+      '<b>Casos Ativos</b>: %{y}')) %>% 
+  plotly::layout(
+    title = "<b>Grupo Etario vs Casos Ativos</b>",
+    xaxis = list(title = "<b>Grupo Etário</b>"),
+    yaxis = list(title = "<b>Casos Ativos</b>"),
+    margin = list(t = 70)
+    ) 
+  
+```
+
+
+Mapa CV
+=====================================================================
+
+```{r map}
+cabo_verde_map<-na.omit(cabo_verde_map)
+cabo_verde_map %>% 
+  mapview::mapview(legend=TRUE,zcol = "c_acumulados") 
+```
+
+
+
+
+África
+======================================================================
+Row
+-----------------------------------------------------------------------
+### Confirmados {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(africa_daily$confirmed), big.mark = ","),sep=" "),
+         caption = "Casos Confirmados",
+         icon = "fas fa-globe-africa", color = '#003399')
+```
+
+
+### Ativos {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(africa_daily$active), big.mark = ",")," (",round(100 * sum(africa_daily$active) / sum(africa_daily$confirmed), 1), 
+                       "%)",sep=" "),caption = "Casos Ativos",icon = "fas fa-cross", color = 'blue')
+```
+
+### Recovered {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(africa_daily$recovered), big.mark = ",")," (",round(100 * sum(africa_daily$recovered) / sum(africa_daily$confirmed), 1), 
+                       "%)",sep=" "),
+         caption = "Recuperados",
+         icon = "fas fa-heartbeat", color = 'green')
+```
+
+
+### Death {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(africa_daily$death), big.mark = ",")," (",round(100 * sum(africa_daily$death) / sum(africa_daily$confirmed), 1), 
+                       "%)",sep=" "),
+         caption = "Óbitos",
+         color = 'red')
+```
+
+Row
+---------------------------------------------------------
+### Casos Diários
+
+```{r}
+plotly::plot_ly(data = africa_daily,
+                x = ~ date,
+                y = ~ active_cum, 
+                name = 'Ativos', 
+                fillcolor = active_color,
+                type = 'scatter',
+                mode = 'none', 
+                stackgroup = 'one') %>%
+  plotly::add_trace(y = ~ recovered_cum,
+                    name = "Recuperados",
+                    fillcolor = recovered_color) %>%
+  plotly::add_trace(y = ~ death_cum,
+                    name = "Óbitos",
+                    fillcolor = death_color) %>%
+  plotly::layout(title = "Covid19 em África",
+                 yaxis = list(title = "Casos acumulados"),
+                 xaxis = list(title = "Data"),
+                 legend = list(x = 0.1, y = 0.9),
+                 hovermode = "compare")
+```
+
+
+### Taxa de Recuperação vs Taxa de Mortandade
+
+```{r}
+plotly::plot_ly(data=africa_countries,
+                x=~(death/confirmed)*100,
+                y=~(recovered/confirmed)*100,
+                size = ~log(confirmed),
+                color = ~Country.Region,
+                sizes = c(5, 30),
+                marker = list(sizemode = 'diameter' , opacity = 0.5),
+                type = 'scatter',
+               hoverinfo='text',
+                hovertemplate = ~paste0("",Country.Region,'<br>',
+                               "Confirmados: ",confirmed,'<br>',
+                                "Ativos: ",active," (",round(100*(active/confirmed),1),' %)','<br>',
+                               "Recuperados: ", recovered," (",round(100*(recovered/confirmed),1),' %)','<br>',
+                               "Óbitos: ", death," (",round(100*(death/confirmed),1),' %)',sep=""))%>%
+  plotly::layout(title = "",
+         xaxis = list(title = "<b>Taxa de Mortandade</b>",ticksuffix = "%"),
+         yaxis = list(title = "<b>Taxa de Recuperação</b>",ticksuffix = "%"),
+         # set the top margin so the plot helper buttons don't cover the title
+         margin = list(t = 70))
+```
+
+Dados
+=====================================================
+
+```{r}
+covid19cvdata::covid19cv %>% mutate(cidade = stringr::str_replace_all(cidade, c("Sal Rei"= "Boa Vista", "Mindelo"="São Vicente"))) %>%
+  dplyr::select(Data = data, Concelho = cidade, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>%
+  DT::datatable(rownames = FALSE,
+            options = list(searchHighlight = TRUE, 
+                           pageLength = 20), filter = 'top')
+```
+
+
+Sobre
+=======================================================================
+
+**Painel Covid19**
+
+Este painel da Covid19 fornece uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. Este painel foi construído com R usando a estrutura R Markdown.
+
+**Autoria**
+
+O painel foi desenvolvido e é mantido por [Mário Cardoso](www.marovski).
+
+**Dados**
+
+Os dados de entrada para este painel são os pacotes R [covid19cvdata](https://marovski.github.io/covid19cvdata/) e [coronavirus](https://github.com/RamiKrispin/coronavirus) R (versão de desenvolvimento). Os dados e o painel são atualizados diariamente.
+
+**Fonte de dados**
+
+Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvdata) são obtidos do website [covi19.cv](https://covid19.cv) e o pacote coronavírus do Centro de Ciência e Engenharia da Universidade Johns Hopkins (JHU CCSE).
+
+**Pacotes**
+
+* Interface do painel - o pacote [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/).
+* Visualização - o pacote [plotly](https://plot.ly/r/) para os gráficos e [mapview](https://r-spatial.github.io/mapview/) para o mapa
+* Manipulação de dados - [dplyr](https://dplyr.tidyverse.org/) e [tidyr](https://tidyr.tidyverse.org/)
+* Tabelas - o pacote [DT](https://rstudio.github.io/DT/)
+
+**Implantação e reprodutibilidade**
+
+O painel está disponível no Github, livre para qualquer reutilização.
+
+Para qualquer dúvida ou comentário, você pode abrir um [problema](https://github.com/RamiKrispin/italy_dash/issues) ou entrar em contato comigo no [Twitter] (https://twitter.com/Rami_Krispin).
