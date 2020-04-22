@@ -234,7 +234,7 @@ plotly::plot_ly(data = total_nacional,
                           arrowhead = 3,
                           arrowsize = .05,
                           showarrow = TRUE,
-                           ax = -120,
+                           ax = -10,
                           ay = -90)%>%
   plotly::layout(barmode='stack',
                  legend = list(orientation = "h",   # show entries horizontally
@@ -414,7 +414,7 @@ plotly::plot_ly(data = joint_s,
                           arrowhead = 3,
                           arrowsize = .05,
                           showarrow = TRUE,
-                          ax = -180,
+                          ax = -10,
                           ay = -90)%>%
   plotly::layout(title = "",
          legend = list(x = 0.1, y = 0.9),
