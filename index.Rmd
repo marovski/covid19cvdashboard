@@ -592,7 +592,7 @@ Este Dashboard da Covid19 fornece uma visão geral do novo surto do novo Coronav
 
 **Autoria**
 
-O dashboard foi desenvolvido e é mantido por [Mário Cardoso](www.marovski,github.io).
+O dashboard foi desenvolvido e é mantido por [Mário Cardoso](https://www.marovski,github.io).
 
 **Dados**
 
