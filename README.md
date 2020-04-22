@@ -40,4 +40,4 @@ The provided data are from [covid19cvdata](https://github.com/marovski/covid19cv
 * [Coronavirus Dashboard](https://ramikrispin.github.io/coronavirus_dashboard/#summary) by Rami Krispin: The awesome work and code done by Rami served as a inpiration and base for this project. It is a bible to learn how are build dashboards and follow the tidy standart format applied by his project Covid19R. Thank You!
 
 -------------------
-Please note that the 'covid19cvdata' project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
+Please note that the 'covid19-caboverde-dashboard' project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
