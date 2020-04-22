@@ -579,7 +579,7 @@ covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho
 Sobre
 =======================================================================
 
-**Dashboard Covid19**
+**Dashboard Covid19CV**
 
 Este Dashboard da Covid19 fornece uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. Este dashboard foi construído com R usando a estrutura R Markdown.
 
@@ -602,7 +602,7 @@ Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvd
 * Manipulação de dados - [dplyr](https://dplyr.tidyverse.org/) e [tidyr](https://tidyr.tidyverse.org/)
 * Tabelas - o pacote [DT](https://rstudio.github.io/DT/)
 
-**Referências*
+**Referências**
 
 * Dashboard do [João Silva](https://rpubs.com/joaosilva/covid19-dash): o excelente trabalho desenvolvido pelo Engenheiro João serviu de base para este dashboard. Grande obrigado.
 
@@ -612,5 +612,5 @@ Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvd
 
 O dashboard foi implementado no _Github docs_, caso deseje modificar na sua conta do Github, pode aplicar as seguintes etapas:
 
-* _Fork_ o repositório do dashboard ou;
+* _Fork_ o [repositório do dashboard](https://github.com/marovski/covid19-caboverde-dashboard) ou;
 * Clonar o repositório para sua conta do Github.
