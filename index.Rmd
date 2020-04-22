@@ -467,7 +467,7 @@ Mapa CV
 =====================================================================
 
 ```{r map}
-cabo_verde_map%>% 
+cabo_verde_map%>% mutate(c_acumulados=replace_na(c_acumulados,0))%>% 
   mapview::mapview(legend=TRUE,zcol = "c_acumulados") 
 ```
 
