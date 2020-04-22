@@ -2,6 +2,8 @@
 title: "Covid19 - Cabo Verde"
 output: 
   flexdashboard::flex_dashboard:
+    favicon: ./img/favicon_io/favicon.ico
+    logo: ./img/covid19.png
     orientation: rows
     css: style.css
     social: menu
@@ -225,14 +227,14 @@ plotly::plot_ly(data = total_nacional,
                           ay = -90)%>% 
   plotly::add_annotations(x = as.Date("2020-04-18"),
                           y = 1,
-                          text ="PEE",
+                          text ="Prorrogação EE",
                           xref = "x",
                           yref = "y",
                           arrowhead = 3,
                           arrowhead = 3,
                           arrowsize = .05,
                           showarrow = TRUE,
-                          ax = 5,
+                           ax = -120,
                           ay = -90)%>%
   plotly::layout(barmode='stack',
                  legend = list(orientation = "h",   # show entries horizontally
@@ -283,35 +285,6 @@ plotly::plot_ly(
         hovermode = "compared",margin=list(b=10,t=10,pad=2))
 ```
 
-<!-- ### Islands with cases -->
-
-<!-- ```{r} -->
-
-<!-- max_date <- max(cv_city$Data) -->
-<!-- cv_city %>%  -->
-<!--   dplyr::filter(Data == max_date) %>% -->
-<!--   dplyr::group_by(concelho,ilha) %>% -->
-<!--   dplyr::summarise(casos=sum(confirmados_acumulados)) %>% -->
-<!--   dplyr::arrange(-casos) %>% -->
-<!--   # dplyr::mutate(country = factor(Country.Region, levels = Country.Region)) %>% -->
-<!--   dplyr::ungroup() %>% -->
-<!--   plotly::plot_ly(x = ~ concelho, -->
-<!--                   y = ~ casos, -->
-<!--                   text = ~ casos, -->
-<!--                   color = ~ ilha, -->
-<!--                   textposition = 'auto', -->
-<!--                   type = "bar") %>% -->
-<!--   plotly::layout(yaxis = list(title = "Casos Acumulados"), -->
-<!--                  xaxis = list(title = ""), -->
-<!--                  margin =  list( -->
-<!--                    l = 10, -->
-<!--                    r = 10, -->
-<!--                    b = 10, -->
-<!--                    t = 10, -->
-<!--                    pad = 2 -->
-<!--                  )) -->
-
-<!-- ``` -->
 
 ### Casos Confirmados Diários
 
@@ -421,6 +394,28 @@ plotly::plot_ly(data = joint_s,
   plotly::add_trace( y = ~cumsum(feminino_confirmado), 
              name = "Feminino",
              fillcolor = 'red') %>%
+  plotly::add_annotations(x = as.Date("2020-03-27"),
+                          y = 4,
+                          text ="Estado de Emergência",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 3,
+                          arrowhead = 3,
+                          arrowsize = 1,
+                          showarrow = TRUE,
+                          ax = 10,
+                          ay = -90)%>%
+  plotly::add_annotations(x = as.Date("2020-04-18"),
+                          y = 1,
+                          text ="Prorrogação EE",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 5,
+                          arrowhead = 3,
+                          arrowsize = .05,
+                          showarrow = TRUE,
+                          ax = -180,
+                          ay = -90)%>%
   plotly::layout(title = "",
          legend = list(x = 0.1, y = 0.9),
          yaxis = list(title = "Casos Confirmados Acumulados"),
@@ -624,9 +619,9 @@ Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvd
 
 O dashboard foi implementado no _Github docs_, caso deseje modificar na sua conta do Github, pode aplicar as seguintes etapas:
 
-* _Fork_ o [repositório do dashboard](https://github.com/marovski/covid19-caboverde-dashboard) ou;
+* _Fork_ o [repositório do dashboard](https://marovski.github.io/covid19cvdashboard/) ou;
 * Clonar o repositório para sua conta do Github.
 
 **Errata**
 
-Em caso de identificação de erros/sugestões, por favor, abrir uma _issue_ através de https://github.com/marovski/covid19-caboverde-dashboard/issues/new.
+Em caso de identificação de erros/sugestões, por favor, abrir uma [issue](https://marovski.github.io/covid19cvdashboard/issues/new).
