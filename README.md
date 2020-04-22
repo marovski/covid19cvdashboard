@@ -33,5 +33,11 @@ The provided data are from [covid19cvdata](https://github.com/marovski/covid19cv
 
 * The raw data from [coronavirus](https://github.com/RamiKrispin/coronavirus) from Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE).
 
+### Credits
+
++ covid19-dash by [João Silva](https://rpubs.com/joaosilva/covid19-dash): Thanks to João work and [post](https://www.linkedin.com/posts/antonio-joao_rpubs-covid-19-dashboard-activity-6647282965627850752-LvFd) I've came in contact with flexdashboard and how to build interesting dashboard. This inspired me to build something focus in Cabo Verde and Africa.
+
+* [Coronavirus Dashboard](https://ramikrispin.github.io/coronavirus_dashboard/#summary) by Rami Krispin: The awesome work and code done by Rami served as a inpiration and base for this project. It is a bible to learn how are build dashboards and follow the tidy standart format applied by his project Covid19R. Thank You!
+
 -------------------
 Please note that the 'covid19cvdata' project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
