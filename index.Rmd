@@ -32,9 +32,7 @@ positive_color <- RColorBrewer::brewer.pal(9, "PuRd")[7]
 active_color <- "#1f77b4"
 recovered_color <- "forestgreen"
 death_color <- "#E41317"
-intensive_care_color <- "#9E0003"
-h_symptoms_color <- "#E41317"
-home_conf_color <- "#FDBBBC"
+
 
 
 #------------------ Data ------------------
@@ -73,24 +71,24 @@ age_group<-covid_demo %>% group_by(grupo_etario) %>%dplyr::summarise(confirmados
 
 #cv map
 
-cv_city<-covid19cvdata::covid19cv_cidades
+cv_city<-covid19cvdata::covid19cv_concelhos
 
-cv_city$cidade<-gsub("Sal Rei", "Boa Vista",cv_city$cidade)
+cv_city$concelho<-gsub("Sal Rei", "Boa Vista",cv_city$concelho)
 
-cv_city$cidade<-gsub("Mindelo", "São Vicente",cv_city$cidade)
+cv_city$concelho<-gsub("Sao Vicente", "São Vicente",cv_city$concelho)
 
-cv_city$cidade<- as.character(cv_city$cidade)
+cv_city$concelho<- as.character(cv_city$concelho)
 
 
 cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass = "sf") %>%
-  dplyr::select(cidade = name, region, geometry) %>%
-  dplyr::group_by(cidade) %>%
+  dplyr::select(concelho = name, region, geometry) %>%
+  dplyr::group_by(concelho) %>%
   dplyr::summarise(n = dplyr::n()) %>%
   dplyr::left_join(cv_city %>%
               dplyr::filter(Data == max(Data)) %>%
-                dplyr::group_by(cidade) %>%
+                dplyr::group_by(concelho) %>%
                 dplyr::summarise(c_acumulados = sum(confirmados_acumulados)), # subseting for the most recent day
-            by = c("cidade" = "cidade"))
+            by = c("concelho" = "concelho"))
 
 
 
@@ -203,8 +201,7 @@ plotly::plot_ly(data = total_nacional,
                 x = ~ Data,
                 y = ~confirmados_ativos,
                 name = 'Ativos',
-                type = 'bar',
-                mode = 'none') %>%
+                type = 'bar') %>%
   plotly::add_trace( y = ~ obitos,
                      name = "Óbitos",
                       marker = list(color=death_color))%>%
@@ -252,15 +249,15 @@ Row {.tabset}
 
 ```{r}
 cv_city %>%
-dplyr::select(cidade, confirmados,c_ativos_acumulados, recuperados, obitos, confirmados_acumulados) %>%
-  dplyr::group_by(cidade) %>%
+dplyr::select(concelho, confirmados,c_ativos_acumulados, recuperados, obitos, confirmados_acumulados) %>%
+  dplyr::group_by(concelho) %>%
   dplyr::summarise(cumulative_positive_cases = sum(confirmados),
                    recovered = sum(recuperados),
                    death = sum(obitos),
                    cumulative_cases = sum(confirmados_acumulados)) %>%
   dplyr::ungroup() %>%
   dplyr::arrange(-cumulative_cases) %>%
-  dplyr::mutate(region = factor(cidade , levels = cidade)) %>%
+  dplyr::mutate(region = factor(concelho , levels = concelho)) %>%
 plotly::plot_ly(
           y = ~ region, 
           x = ~ cumulative_positive_cases, 
@@ -292,12 +289,12 @@ plotly::plot_ly(
 <!-- max_date <- max(cv_city$Data) -->
 <!-- cv_city %>%  -->
 <!--   dplyr::filter(Data == max_date) %>% -->
-<!--   dplyr::group_by(cidade,ilha) %>% -->
+<!--   dplyr::group_by(concelho,ilha) %>% -->
 <!--   dplyr::summarise(casos=sum(confirmados_acumulados)) %>% -->
 <!--   dplyr::arrange(-casos) %>% -->
 <!--   # dplyr::mutate(country = factor(Country.Region, levels = Country.Region)) %>% -->
 <!--   dplyr::ungroup() %>% -->
-<!--   plotly::plot_ly(x = ~ cidade, -->
+<!--   plotly::plot_ly(x = ~ concelho, -->
 <!--                   y = ~ casos, -->
 <!--                   text = ~ casos, -->
 <!--                   color = ~ ilha, -->
@@ -470,8 +467,7 @@ Mapa CV
 =====================================================================
 
 ```{r map}
-cabo_verde_map<-na.omit(cabo_verde_map)
-cabo_verde_map %>% 
+cabo_verde_map%>% 
   mapview::mapview(legend=TRUE,zcol = "c_acumulados") 
 ```
 
@@ -572,8 +568,8 @@ Dados
 =====================================================
 
 ```{r}
-covid19cvdata::covid19cv %>% mutate(cidade = stringr::str_replace_all(cidade, c("Sal Rei"= "Boa Vista", "Mindelo"="São Vicente"))) %>%
-  dplyr::select(Data = data, Concelho = cidade, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>%
+covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho, c("Sal Rei"= "Boa Vista", "Mindelo"="São Vicente"))) %>%
+  dplyr::select(Data = data, Concelho = concelho, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>%
   DT::datatable(rownames = FALSE,
             options = list(searchHighlight = TRUE, 
                            pageLength = 20), filter = 'top')
@@ -589,11 +585,11 @@ Este Dashboard da Covid19 fornece uma visão geral do novo surto do novo Coronav
 
 **Autoria**
 
-O dashboard foi desenvolvido e é mantido por [Mário Cardoso](www.marovski).
+O dashboard foi desenvolvido e é mantido por [Mário Cardoso](www.marovski,github.io).
 
 **Dados**
 
-Os dados de entrada para este dashboard são os pacotes R [covid19cvdata](https://marovski.github.io/covid19cvdata/) e [coronavirus](https://github.com/RamiKrispin/coronavirus) R (versão de desenvolvimento). Os dados e o dashboard são atualizados diariamente.
+Os dados de entrada para este dashboard são os pacotes R [covid19cvdata](https://marovski.github.io/covid19cvdata/) e [coronavirus](https://github.com/RamiKrispin/coronavirus) (versão de desenvolvimento). Os dados e o dashboard são atualizados diariamente.
 
 **Fonte de dados**
 
