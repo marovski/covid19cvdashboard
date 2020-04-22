@@ -35,9 +35,11 @@ The provided data are from [covid19cvdata](https://github.com/marovski/covid19cv
 
 ### Credits
 
-+ covid19-dash by [João Silva](https://rpubs.com/joaosilva/covid19-dash): Thanks to João work and [post](https://www.linkedin.com/posts/antonio-joao_rpubs-covid-19-dashboard-activity-6647282965627850752-LvFd) I've came in contact with flexdashboard and how to build interesting dashboard. This inspired me to build something focus in Cabo Verde and Africa.
+* [Coronavirus Dashboard](https://ramikrispin.github.io/coronavirus_dashboard/#summary) by Rami Krispin: The awesome work and code done by Rami served as a inpiration and base for this project. It is a bible to learn how to build dashboards and follow the tidy standart format applied by his project Covid19R. Thank You!
 
-* [Coronavirus Dashboard](https://ramikrispin.github.io/coronavirus_dashboard/#summary) by Rami Krispin: The awesome work and code done by Rami served as a inpiration and base for this project. It is a bible to learn how are build dashboards and follow the tidy standart format applied by his project Covid19R. Thank You!
++ covid19-dash by [João Silva](https://rpubs.com/joaosilva/covid19-dash): Thanks to João work and [post](https://www.linkedin.com/posts/antonio-joao_rpubs-covid-19-dashboard-activity-6647282965627850752-LvFd) I've came in contact with flexdashboard and how to build fast and interesting dashboards. This inspired me to build something focus in Cabo Verde and Africa. Arigatou!
+
+
 
 -------------------
 Please note that the 'covid19-caboverde-dashboard' project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
