@@ -99,7 +99,7 @@ cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass =
 world<-utils::read.csv('https://raw.githubusercontent.com/RamiKrispin/coronavirus-csv/master/coronavirus_dataset.csv')
 
 #Get Africa Countries
-countries <- read_csv("africa.csv")
+countries <- read_csv("./data-raw/africa.csv")
 countries$Country<-gsub("Cape Verde", "Cabo Verde",countries$Country)
 #Africa Cases
 africa<-semi_join(world,countries, by=c("Country.Region"="Country"))
@@ -583,17 +583,17 @@ covid19cvdata::covid19cv %>% mutate(cidade = stringr::str_replace_all(cidade, c(
 Sobre
 =======================================================================
 
-**Painel Covid19**
+**Dashboard Covid19**
 
-Este painel da Covid19 fornece uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. Este painel foi construído com R usando a estrutura R Markdown.
+Este Dashboard da Covid19 fornece uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. Este dashboard foi construído com R usando a estrutura R Markdown.
 
 **Autoria**
 
-O painel foi desenvolvido e é mantido por [Mário Cardoso](www.marovski).
+O dashboard foi desenvolvido e é mantido por [Mário Cardoso](www.marovski).
 
 **Dados**
 
-Os dados de entrada para este painel são os pacotes R [covid19cvdata](https://marovski.github.io/covid19cvdata/) e [coronavirus](https://github.com/RamiKrispin/coronavirus) R (versão de desenvolvimento). Os dados e o painel são atualizados diariamente.
+Os dados de entrada para este dashboard são os pacotes R [covid19cvdata](https://marovski.github.io/covid19cvdata/) e [coronavirus](https://github.com/RamiKrispin/coronavirus) R (versão de desenvolvimento). Os dados e o dashboard são atualizados diariamente.
 
 **Fonte de dados**
 
@@ -601,13 +601,20 @@ Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvd
 
 **Pacotes**
 
-* Interface do painel - o pacote [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/).
+* Interface do dashboard - o pacote [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/).
 * Visualização - o pacote [plotly](https://plot.ly/r/) para os gráficos e [mapview](https://r-spatial.github.io/mapview/) para o mapa
 * Manipulação de dados - [dplyr](https://dplyr.tidyverse.org/) e [tidyr](https://tidyr.tidyverse.org/)
 * Tabelas - o pacote [DT](https://rstudio.github.io/DT/)
 
-**Implantação e reprodutibilidade**
+**Referências*
 
-O painel está disponível no Github, livre para qualquer reutilização.
+* Dashboard do [João Silva](https://rpubs.com/joaosilva/covid19-dash): o excelente trabalho desenvolvido pelo Engenheiro João serviu de base para este dashboard. Grande obrigado.
 
-Para qualquer dúvida ou comentário, você pode abrir um [problema](https://github.com/RamiKrispin/italy_dash/issues) ou entrar em contato comigo no [Twitter] (https://twitter.com/Rami_Krispin).
+* Dashboards do [Rami Krispin](https://ramikrispin.github.io/coronavirus_dashboard): This amazing work helped me a lot to understand and use the structure behind flexdashboads, mapview and plotly. Big Thanks Rami!
+
+**Contribuição**
+
+O dashboard foi implementado no _Github docs_, caso deseje modificar na sua conta do Github, pode aplicar as seguintes etapas:
+
+* _Fork_ o repositório do dashboard ou;
+* Clonar o repositório para sua conta do Github.

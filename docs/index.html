@@ -1,0 +1,2936 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>Covid19 - Cabo Verde</title>
+
+<meta property="og:title" content="Covid19 - Cabo Verde" />
+
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+
+<link rel="icon" href="data:image/x-icon;" type="image/x-icon">
+
+
+<script type="text/javascript">
+window.FlexDashboardComponents = [];
+</script>
+
+<script id="flexdashboard-navbar" type="application/json">
+[{"icon":"fa-share-alt","items":[{"title":"Twitter","icon":"fa-twitter"},{"title":"Facebook","icon":"fa-facebook"},{"title":"Google+","icon":"fa-google-plus"},{"title":"LinkedIn","icon":"fa-linkedin"},{"title":"Pinterest","icon":"fa-pinterest"}]}]
+</script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/stickytableheaders-0.1.19/jquery.stickytableheaders.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="site_libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="site_libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<link href="site_libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="site_libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="site_libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="site_libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="site_libs/PopupTable-0.0.1/popup.css" rel="stylesheet" />
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.13/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="site_libs/dt-plugin-searchhighlight-1.10.20/source.css" rel="stylesheet" />
+<script src="site_libs/dt-plugin-searchhighlight-1.10.20/jquery.highlight.js"></script>
+<script src="site_libs/dt-plugin-searchhighlight-1.10.20/source.min.js"></script>
+<style type="text/css">
+
+/*
+ Dashboard CSS from Keen IO Dashboards
+ (https://github.com/keen/dashboards)
+*/
+
+body {
+  background: #f2f2f2;
+  padding: 60px 0 0 8px; /* padding-top overridden by theme */
+}
+
+body hr {
+  border-color: #d7d7d7;
+  margin: 10px 0;
+}
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar .navbar-brand {
+  text-decoration: none;
+}
+
+.navbar-logo {
+  margin-top: 1px;
+}
+
+.navbar-logo img {
+  margin-right: 12px;
+}
+
+.navbar-author {
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.navbar .dropdown-menu .fa {
+  min-width: 20px;
+}
+
+.navbar .dropdown-menu {
+  min-width: 150px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.chart-wrapper,
+.nav-tabs-custom,
+.sbframe-commentary
+{
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+
+.chart-title {
+  border-bottom: 1px solid #d7d7d7;
+  color: #666;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 7px 10px 4px;
+}
+
+.chart-wrapper .chart-title:empty {
+  display: none;
+}
+
+.chart-wrapper .chart-stage {
+  overflow: hidden;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.chart-wrapper .chart-notes {
+  background: #fbfbfb;
+  border-top: 1px solid #e2e2e2;
+  color: #808080;
+  font-size: 12px;
+  padding: 8px 10px 5px;
+}
+
+/*
+ CSS for handling flexbox layout
+*/
+
+#dashboard-container {
+  visibility: hidden;
+}
+
+.tab-content>.dashboard-page-wrapper.active {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dashboard-page-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.dashboard-row-orientation {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.dashboard-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.dashboard-row-flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.dashboard-column-orientation {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.dashboard-column {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.chart-wrapper-flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.chart-stage-flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+}
+
+.chart-shim {
+  position: absolute;
+  left: 8px; top: 8px; right: 8px; bottom: 8px;
+}
+
+.no-padding .chart-shim {
+  left: 0; top: 0; right: 0; bottom: 0;
+}
+
+.flowing-content-shim {
+  overflow: auto;
+  left: 0; top: 0; right: 0; bottom: 0;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.flowing-content-container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.chart-stage .table-bordered {
+  border: none;
+}
+
+.chart-stage .table-bordered > tbody > tr > th,
+.chart-stage .table-bordered > tfoot > tr > th,
+.chart-stage .table-bordered > tbody > tr > td,
+.chart-stage .table-bordered > tfoot > tr > td {
+  border: none;
+}
+
+.chart-stage .table-bordered > tbody > tr > td {
+  border-top: 1px solid #dddddd;
+}
+
+.chart-stage .table-bordered > thead > tr > th {
+  border: none;
+  border-bottom: 2px solid #dddddd;
+}
+
+.bootstrap-table table>thead {
+  background-color: #fff;
+}
+
+.bootstrap-table table.data,
+.bootstrap-table table.shiny-table {
+  width: inherit !important;
+}
+
+.bootstrap-table table.data>tbody>tr>th,
+.bootstrap-table table.shiny-table>tbody>tr>th {
+  border-top: none;
+  border-bottom: 2px solid #dddddd;
+  padding: 5px;
+}
+
+.bootstrap-table .data td[align=right] {
+  font-family: inherit;
+}
+
+.chart-wrapper form {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.shiny-input-container label {
+  font-weight: normal;
+}
+
+.chart-stage .html-widget {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-stage .html-widget-static-bound {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-stage .shiny-bound-output {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Omit display of empty paragraphs */
+
+.chart-shim>p:empty {
+  display: none;
+}
+
+.chart-stage>p:empty {
+  display: none;
+}
+
+/* Omit display of special knitr options div*/
+
+.chart-stage .knitr-options {
+  display: none;
+}
+
+/* Automatically resizing images */
+
+.image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+}
+
+.image-container img {
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Value box */
+
+.value-box {
+  border-radius: 2px;
+  position: relative;
+  display: block;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.value-box > .inner {
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.value-box .value {
+  font-size: 38px;
+  font-weight: bold;
+  margin: 0 0 3px 0;
+  white-space: nowrap;
+  padding: 0;
+}
+
+.value-box .caption {
+  font-size: 15px;
+}
+.value-box .caption > small {
+  display: block;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.value-box .icon i {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 80px;
+  color: rgba(0, 0, 0, 0.15);
+}
+
+.linked-value:hover {
+  cursor: pointer;
+}
+
+.value-box.linked-value:hover {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* STORYBOARD */
+
+.storyboard-nav button {
+  background: transparent;
+  border: 0;
+  opacity: .3;
+  outline: none;
+  padding: 0;
+}
+
+.storyboard-nav button:hover,
+.storyboard-nav button:hover {
+  opacity: .5;
+}
+
+.storyboard-nav button:disabled,
+.storyboard-nav button:disabled {
+  opacity: .1;
+}
+
+.storyboard-nav .sbnext,
+.storyboard-nav .sbprev {
+  float: left;
+  width: 2%;
+  height: 120px;
+  font-size: 50px;
+}
+
+.storyboard-nav .sbprev {
+  text-align: left;
+  width: 2%;
+}
+
+.storyboard-nav .sbnext {
+  float: right;
+  text-align: right;
+  margin-right: 8px;
+}
+
+.storyboard-nav .sbframelist {
+  margin: 0 auto;
+  width: 94%;
+  height: 120px;
+  overflow: hidden;
+  text-shadow: none;
+  margin-bottom: 8px;
+}
+
+.storyboard-nav .sbframelist ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.storyboard-nav .sbframelist ul li {
+  float: left;
+  width: 270px;
+  height: 100%;
+  padding: 10px 10px 10px 10px;
+  margin-right: 8px;
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  color: #3a3c47;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.storyboard-nav .sbframelist ul li:last-child {
+  margin-right: 0px;
+}
+
+.storyboard-nav .sbframelist ul li.active {
+  color: #fff;
+  background: #B8B8B8;
+}
+
+.sbframe-commentary {
+  width: 300px;
+  background: #fbfbfb;
+  font-size: 14px;
+}
+
+.sbframe-commentary ul {
+  padding-left: 22px;
+}
+
+.sbframe.active {
+  display: flex;
+}
+
+.sbframe:not(.active) {
+  display: none;
+}
+
+/* NAV TABS */
+
+.nav-tabs-custom > .nav-tabs {
+  margin: 0;
+  border-bottom: 1px solid #d7d7d7;
+  color: #666;
+  font-size: 14px;
+  font-weight: 300;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.nav-tabs-custom > .nav-tabs > li {
+  border-top: 3px solid transparent;
+  margin-bottom: -1px;
+  margin-right: 5px;
+}
+.nav-tabs-custom > .nav-tabs > li > a,
+.nav-tabs-custom > .nav-tabs > li > a:active {
+  color: #666;
+  font-weight: 300;
+  font-size: 14px;
+  border-radius: 0;
+  padding: 3px 10px 5px;
+  text-transform: none;
+}
+
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a {
+  border-bottom-color: transparent;
+}
+
+.nav-tabs-custom > .nav-tabs > li > a.text-muted {
+  color: #999;
+}
+.nav-tabs-custom > .nav-tabs > li > a,
+.nav-tabs-custom > .nav-tabs > li > a:hover {
+  background: transparent;
+  margin: 0;
+}
+.nav-tabs-custom > .nav-tabs > li > a:hover {
+  color: #999;
+}
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a:hover,
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a:focus,
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a:active {
+  border-color: transparent;
+}
+.nav-tabs-custom > .nav-tabs > li.active {
+  border-top-color: #3c8dbc;
+}
+.nav-tabs-custom > .nav-tabs > li.active > a,
+.nav-tabs-custom > .nav-tabs > li.active:hover > a {
+  background-color: #fff;
+  color: #666;
+}
+.nav-tabs-custom > .nav-tabs > li.active > a {
+  border-top-color: transparent;
+  border-left-color: #d7d7d7;
+  border-right-color: #d7d7d7;
+}
+.nav-tabs-custom > .nav-tabs > li:first-of-type {
+  margin-left: 0;
+}
+.nav-tabs-custom > .nav-tabs > li:first-of-type.active > a {
+  border-left-color: transparent;
+}
+.nav-tabs-custom > .nav-tabs.pull-right {
+  float: none !important;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li {
+  float: right;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type {
+  margin-right: 0;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type > a {
+  border-left-width: 1px;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type.active > a {
+  border-left-color: #d7d7d7;
+  border-right-color: transparent;
+}
+.nav-tabs-custom > .nav-tabs > li.header {
+  line-height: 35px;
+  padding: 0 10px;
+  font-size: 20px;
+  color: #666;
+}
+.nav-tabs-custom > .nav-tabs > li.header > .fa,
+.nav-tabs-custom > .nav-tabs > li.header > .glyphicon,
+.nav-tabs-custom > .nav-tabs > li.header > .ion {
+  margin-right: 5px;
+}
+.nav-tabs-custom > .tab-content {
+  background: #fff;
+  padding: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.nav-tabs-custom > .tab-content > .chart-wrapper {
+  background: #fff;
+  border: none;
+  margin: 0;
+}
+
+
+.nav-tabs-custom > .tab-content > .active {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.nav-tabs-custom .dropdown.open > a:active,
+.nav-tabs-custom .dropdown.open > a:focus {
+  background: transparent;
+  color: #999;
+}
+
+
+@media (max-width: 767px) {
+  .value-box {
+    text-align: center;
+    margin-right: 8px;
+  }
+  .value-box .icon {
+    display: none;
+  }
+}
+
+/* Fixed position sidebar */
+
+.section.sidebar {
+  position: fixed;
+  top: 51px; /* overridden by theme */
+  left: 0;
+  bottom: 0;
+  border-right: 1px solid #e2e2e2;
+  background-color: white; /* overridden by theme */
+  padding-left: 10px;
+  padding-right: 10px;
+  visibility: hidden;
+  overflow: auto;
+}
+
+.section.sidebar form p:first-child {
+  margin-top: 10px;
+}
+
+/* Embedded source code */
+
+#flexdashboard-source-code {
+  display: none;
+}
+
+.featherlight-content #flexdashboard-source-code {
+  display: inline-block;
+}
+
+.featherlight-content {
+  width: 80%;
+  max-width: 800px;
+  padding: 0 !important;
+  border-bottom: none !important;
+}
+
+.featherlight:last-of-type {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.featherlight-inner {
+  width: 100%;
+}
+
+.featherlight-content pre {
+  margin: 0;
+  border: 0;
+  background: #fff;
+  font-size: 12px;
+}
+
+.unselectable {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+#flexdashboard-source-code code {
+  -ms-user-select: text;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -o-user-select: text;
+  user-select: text;
+}
+
+/* DataTables Tweaks */
+
+.dataTables_filter input[type="search"] {
+  -webkit-appearance: searchfield;
+  outline: none;
+}
+
+.dataTables_wrapper.no-footer
+.dataTables_info {
+  padding-top: 0;
+}
+
+
+table.dataTable thead th {
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: 1px solid #d7d7d7;
+}
+
+/* Mobile phone only CSS */
+
+.desktop-layout div.section.mobile {
+  display: none;
+}
+
+.mobile-layout div.section.no-mobile {
+  display: none;
+}
+
+.mobile-figure {
+  display: none;
+}
+
+
+
+body {
+  padding-top: 60px;
+}
+
+.section.sidebar {
+  top: 51px;
+  background-color: rgba(39, 128, 227, 0.1);
+}
+
+.value-box {
+  color: #f9f9f9;
+}
+
+.bg-primary {
+  background-color: rgba(39, 128, 227, 0.7);
+}
+
+.storyboard-nav .sbframelist ul li.active {
+  background-color: rgba(39, 128, 227, 0.7);
+}
+
+.nav-tabs-custom > .nav-tabs > li.active {
+  border-top-color: rgba(39, 128, 227, 0.7);
+}
+
+.bg-info {
+  background-color: rgba(153, 84, 187, 0.7);
+}
+
+.bg-warning {
+  background-color: rgba(255, 117, 24, 0.7);
+}
+
+.bg-danger {
+  background-color: rgba(255, 0, 57, 0.7);
+}
+
+.bg-success {
+  background-color: rgba(63, 182, 24, 0.7);
+}
+
+.chart-title {
+  font-weight: 500;
+}
+
+.nav-tabs-custom > .nav-tabs > li > a,
+.nav-tabs-custom > .nav-tabs > li > a:active {
+  font-weight: 500;
+}
+
+@media only screen and (min-width: 768px) {
+html, body {
+  height: 100%;
+}
+
+#dashboard-container {
+  height: 100%;
+}
+}
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="container-fluid">
+<div class="navbar-header">
+
+<button id="navbar-button" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+
+<span class="navbar-logo pull-left">
+  
+</span>
+<span class="navbar-brand">
+  Covid19 - Cabo Verde
+  <span class="navbar-author">
+        </span>
+</span>
+
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav navbar-left">
+</ul>
+<ul class="nav navbar-nav navbar-right">
+</ul>
+</div><!--/.nav-collapse-->
+</div><!--/.container-->
+</div><!--/.navbar-->
+
+<script type="text/javascript">
+
+
+var FlexDashboard = (function () {
+
+  // initialize options
+  var _options = {};
+
+  var FlexDashboard = function() {
+
+    // default options
+    _options = $.extend(_options, {
+      theme: "cosmo",
+      fillPage: false,
+      orientation: 'columns',
+      storyboard: false,
+      defaultFigWidth: 576,
+      defaultFigHeight: 461,
+      defaultFigWidthMobile: 360,
+      defaultFigHeightMobile: 461,
+      isMobile: false,
+      isPortrait: false
+    });
+  };
+
+  function init(options) {
+
+    // extend default options
+    $.extend(true, _options, options);
+
+    // add ids to sections that don't have them (pandoc won't assign ids
+    // to e.g. sections with titles consisting of only chinese characters)
+    var nextId = 1;
+    $('.level1:not([id]),.level2:not([id]),.level3:not([id])').each(function() {
+      $(this).attr('id', 'dashboard-' + nextId++);
+    });
+
+    // find navbar items
+    var navbarItems = $('#flexdashboard-navbar');
+    if (navbarItems.length)
+      navbarItems = JSON.parse(navbarItems.html());
+    addNavbarItems(navbarItems);
+
+    // find the main dashboard container
+    var dashboardContainer = $('#dashboard-container');
+
+    // resolve mobile classes
+    resolveMobileClasses(dashboardContainer);
+
+    // one time global initialization for components
+    componentsInit(dashboardContainer);
+
+    // look for a global sidebar
+    var globalSidebar = dashboardContainer.find(".section.level1.sidebar");
+    if (globalSidebar.length > 0) {
+
+      // global layout for fullscreen displays
+      if (!isMobilePhone()) {
+
+         // hoist it up to the top level
+         globalSidebar.insertBefore(dashboardContainer);
+
+         // lay it out (set width/positions)
+         layoutSidebar(globalSidebar, dashboardContainer);
+
+      // tuck sidebar into first page for mobile phones
+      } else {
+
+        // convert it into a level3 section
+        globalSidebar.removeClass('sidebar');
+        globalSidebar.removeClass('level1');
+        globalSidebar.addClass('level3');
+        var h1 = globalSidebar.children('h1');
+        var h3 = $('<h3></h3>');
+        h3.html(h1.html());
+        h3.insertBefore(h1);
+        h1.remove();
+
+        // move it into the first page
+        var page = dashboardContainer.find('.section.level1').first();
+        if (page.length > 0)
+          page.prepend(globalSidebar);
+      }
+    }
+
+    // look for pages to layout
+    var pages = $('div.section.level1');
+    if (pages.length > 0) {
+
+        // find the navbar and collapse on clicked
+        var navbar = $('#navbar');
+        navbar.on("click", "a[data-toggle!=dropdown]", null, function () {
+           navbar.collapse('hide');
+        });
+
+        // envelop the dashboard container in a tab content div
+        dashboardContainer.wrapInner('<div class="tab-content"></div>');
+
+        pages.each(function(index) {
+
+          // lay it out
+          layoutDashboardPage($(this));
+
+          // add it to the navbar
+          addToNavbar($(this), index === 0);
+
+        });
+
+    } else {
+
+      // remove the navbar and navbar button if we don't
+      // have any navbuttons
+      if (navbarItems.length === 0) {
+        $('#navbar').remove();
+        $('#navbar-button').remove();
+      }
+
+      // add the storyboard class if requested
+      if (_options.storyboard)
+        dashboardContainer.addClass('storyboard');
+
+      // layout the entire page
+      layoutDashboardPage(dashboardContainer);
+    }
+
+    // if we are in shiny we need to trigger a window resize event to
+    // force correct layout of shiny-bound-output elements
+    if (isShinyDoc())
+      $(window).trigger('resize');
+
+    // make main components visible
+    $('.section.sidebar').css('visibility', 'visible');
+    dashboardContainer.css('visibility', 'visible');
+
+    // handle location hash
+    handleLocationHash();
+
+    // intialize prism highlighting
+    initPrismHighlighting();
+
+    // record mobile and orientation state then register a handler
+    // to refresh if it changes
+    _options.isMobile = isMobilePhone();
+    _options.isPortrait = isPortrait();
+    $(window).on('resize', function() {
+      if (_options.isMobile !== isMobilePhone() ||
+          _options.isPortrait !== isPortrait()) {
+        window.location.reload();
+      }
+    });
+
+    // trigger layoutcomplete event
+    dashboardContainer.trigger('flexdashboard:layoutcomplete');
+  }
+
+  function resolveMobileClasses(dashboardContainer) {
+     // add top level layout class
+    dashboardContainer.addClass(isMobilePhone() ? 'mobile-layout' :
+                                                  'desktop-layout');
+
+    // look for .mobile sections and add .no-mobile to their peers
+    var mobileSections = $('.section.mobile');
+    mobileSections.each(function() {
+       var id = $(this).attr('id');
+       var nomobileId = id.replace(/-\d+$/, '');
+       $('#' + nomobileId).addClass('no-mobile');
+    });
+  }
+
+  function addNavbarItems(navbarItems) {
+
+    var navbarLeft = $('ul.navbar-left');
+    var navbarRight = $('ul.navbar-right');
+
+    for (var i = 0; i<navbarItems.length; i++) {
+
+      // get the item
+      var item = navbarItems[i];
+
+      // determine the container
+      var container = null;
+      if (item.align === "left")
+        container = navbarLeft;
+      else
+        container = navbarRight;
+
+      // navbar menu if we have multiple items
+      if (item.items) {
+        var menu = navbarMenu(null, item.icon, item.title, container);
+        for (var j = 0; j<item.items.length; j++) {
+          var subItem = item.items[j];
+          var li = $('<li></li>');
+          li.append(navbarLink(subItem.icon, subItem.title, subItem.href, subItem.target));
+          menu.append(li);
+        }
+      } else {
+        var li = $('<li></li>');
+        li.append(navbarLink(item.icon, item.title, item.href, item.target));
+        container.append(li);
+      }
+    }
+  }
+
+  // create or get a reference to an existing dropdown menu
+  function navbarMenu(id, icon, title, container) {
+    var existingMenu = [];
+    if (id)
+      existingMenu = container.children('#' + id);
+    if (existingMenu.length > 0) {
+      return existingMenu.children('ul');
+    } else {
+      var li = $('<li></li>');
+      if (id)
+        li.attr('id', id);
+      li.addClass('dropdown');
+      // auto add "Share" title on mobile if necessary
+      if (!title && icon && (icon === "fa-share-alt") && isMobilePhone())
+        title = "Share";
+      if (title) {
+        title = title + ' <span class="caret"></span>';
+      }
+      var a = navbarLink(icon, title, "#");
+      a.addClass('dropdown-toggle');
+      a.attr('data-toggle', 'dropdown');
+      a.attr('role', 'button');
+      a.attr('aria-expanded', 'false');
+      li.append(a);
+      var ul = $('<ul class="dropdown-menu"></ul>');
+      ul.attr('role', 'menu');
+      li.append(ul);
+      container.append(li);
+      return ul;
+    }
+  }
+
+  function addToNavbar(page, active) {
+
+    // capture the id and data-icon attribute (if any)
+    var id = page.attr('id');
+    var icon = page.attr('data-icon');
+    var navmenu = page.attr('data-navmenu');
+
+    // get hidden state (transfer this to navbar)
+    var hidden = page.hasClass('hidden');
+    page.removeClass('hidden');
+
+    // sanitize the id for use with bootstrap tabs
+    id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+    page.attr('id', id);
+
+    // get the wrapper
+    var wrapper = page.closest('.dashboard-page-wrapper');
+
+    // move the id to the wrapper
+    page.removeAttr('id');
+    wrapper.attr('id', id);
+
+    // add the tab-pane class to the wrapper
+    wrapper.addClass('tab-pane');
+    if (active)
+      wrapper.addClass('active');
+
+    // get a reference to the h1, discover it's id and title, then remove it
+    var h1 = wrapper.find('h1').first();
+    var title = h1.html();
+    h1.remove();
+
+    // create a navbar item
+    var li = $('<li></li>');
+    var a = navbarLink(icon, title, '#' + id);
+    a.attr('data-toggle', 'tab');
+    li.append(a);
+
+    // add it to the navbar (or navbar menu if specified)
+    var container = $('ul.navbar-left');
+    if (navmenu) {
+      var menuId = navmenu.replace(/\s+/g, '');
+      var menu = navbarMenu(menuId, null, navmenu, container);
+      menu.append(li);
+    } else {
+      container.append(li);
+    }
+
+    // hide it if requested
+    if (hidden)
+      li.addClass('hidden');
+  }
+
+  function navbarLink(icon, title, href, target) {
+
+    var a = $('<a></a>');
+    if (icon) {
+
+      // get the name of the icon set and icon
+      var dashPos = icon.indexOf("-");
+      var iconSet = icon.substring(0, dashPos);
+      var iconName = icon.substring(dashPos + 1);
+
+      // create the icon
+      var iconElement = $('<span class="' + iconSet + ' ' + icon + '"></span>');
+      if (title)
+        iconElement.css('margin-right', '7px');
+      a.append(iconElement);
+      // if href is null see if we can auto-generate based on icon (e.g. social)
+      if (!href)
+        maybeGenerateLinkFromIcon(iconName, a);
+    }
+    if (title)
+      a.append(title);
+
+    // add the href.
+    if (href) {
+      if (href === "source_embed") {
+        a.attr('href', '#');
+        a.attr('data-featherlight', "#flexdashboard-source-code");
+        a.featherlight({
+            beforeOpen: function(event){
+              $('body').addClass('unselectable');
+            },
+            afterClose: function(event){
+              $('body').removeClass('unselectable');
+            }
+        });
+      } else {
+        a.attr('href', href);
+      }
+    }
+
+    // add the arget
+    if (target)
+      a.attr('target', target);
+
+    return a;
+  }
+
+  // auto generate a link from an icon name (e.g. twitter) when possible
+  function maybeGenerateLinkFromIcon(iconName, a) {
+
+     var serviceLinks = {
+      "twitter": "https://twitter.com/share?text=" + encodeURIComponent(document.title) + "&url="+encodeURIComponent(location.href),
+      "facebook": "https://www.facebook.com/sharer/sharer.php?s=100&p[url]="+encodeURIComponent(location.href),
+      "google-plus": "https://plus.google.com/share?url="+encodeURIComponent(location.href),
+      "linkedin": "https://www.linkedin.com/shareArticle?mini=true&url="+encodeURIComponent(location.href) + "&title=" + encodeURIComponent(document.title),
+      "pinterest": "https://pinterest.com/pin/create/link/?url="+encodeURIComponent(location.href) + "&description=" + encodeURIComponent(document.title)
+    };
+
+    var makeSocialLink = function(a, href) {
+      a.attr('href', '#');
+      a.on('click', function(e) {
+        e.preventDefault();
+        window.open(href);
+      });
+    };
+
+    $.each(serviceLinks, function(key, value) {
+      if (iconName.indexOf(key) !== -1)
+        makeSocialLink(a, value);
+    });
+  }
+
+  // layout a dashboard page
+  function layoutDashboardPage(page) {
+
+    // use a page wrapper so that free form content above the
+    // dashboard appears at the top rather than the side (as it
+    // would without the wrapper in a column orientation)
+    var wrapper = $('<div class="dashboard-page-wrapper"></div>');
+    page.wrap(wrapper);
+
+    // if there are no level2 or level3 headers synthesize a level3
+    // header to contain the (e.g. frame it, scroll container, etc.)
+    var headers = page.find('h2,h3');
+    if (headers.length === 0)
+      page.wrapInner('<div class="section level3"></div>');
+
+    // hoist up any content before level 2 or level 3 headers
+    var children = page.children();
+    children.each(function(index) {
+      if ($(this).hasClass('level2') || $(this).hasClass('level3'))
+        return false;
+      $(this).insertBefore(page);
+    });
+
+    // determine orientation and fillPage behavior for distinct media
+    var orientation, fillPage, storyboard;
+
+    // media: mobile phone
+    if (isMobilePhone()) {
+
+      // if there is a sidebar we need to ensure it's content
+      // is properly framed as an h3
+      var sidebar = page.find('.section.sidebar');
+      sidebar.removeClass('sidebar');
+      sidebar.wrapInner('<div class="section level3"></div>');
+      var h2 = sidebar.find('h2');
+      var h3 = $('<h3></h3>');
+      h3.html(h2.html());
+      h3.insertBefore(h2);
+      h2.remove();
+
+      // wipeout h2 elements then enclose them in a single h2
+      var level2 = page.find('div.section.level2');
+      level2.each(function() {
+        level2.children('h2').remove();
+        level2.children().unwrap();
+      });
+      page.wrapInner('<div class="section level2"></div>');
+
+      // substitute mobile images
+      if (isPortrait()) {
+        var mobileFigures = $('img.mobile-figure');
+        mobileFigures.each(function() {
+          // get the src (might be base64 encoded)
+          var src = $(this).attr('src');
+
+          // find it's peer
+          var id = $(this).attr('data-mobile-figure-id');
+          var img = $('img[data-figure-id=' + id + "]");
+          img.attr('src', src)
+             .attr('width', _options.defaultFigWidthMobile)
+             .attr('height', _options.defaultFigHeightMobile);
+        });
+      }
+
+      // hoist storyboard commentary into it's own section
+      if (page.hasClass('storyboard')) {
+        var commentaryHR = page.find('div.section.level3 hr');
+        commentaryHR.each(function() {
+          var commentary = $(this).nextAll().detach();
+          var commentarySection = $('<div class="section level3"></div>');
+          commentarySection.append(commentary);
+          commentarySection.insertAfter($(this).closest('div.section.level3'));
+          $(this).remove();
+        });
+      }
+
+      // force a non full screen layout by columns
+      orientation = _options.orientation = 'columns';
+      fillPage = _options.fillPage = false;
+      storyboard = _options.storyboard = false;
+
+    // media: desktop
+    } else {
+
+      // determine orientation
+      orientation = page.attr('data-orientation');
+      if (orientation !== 'rows' && orientation != 'columns')
+        orientation = _options.orientation;
+
+      // determine storyboard mode
+      storyboard = page.hasClass('storyboard');
+
+      // fillPage based on options (force for storyboard)
+      fillPage = _options.fillPage || storyboard;
+
+      // handle sidebar
+      var sidebar = page.find('.section.level2.sidebar');
+      if (sidebar.length > 0)
+        layoutSidebar(sidebar, page);
+    }
+
+    // give it and it's parent divs height: 100% if we are in fillPage mode
+    if (fillPage) {
+      page.addClass('vertical-layout-fill');
+      page.css('height', '100%');
+      page.parents('div').css('height', '100%');
+    } else {
+      page.addClass('vertical-layout-scroll');
+    }
+
+    // perform the layout
+    if (storyboard)
+      layoutPageAsStoryboard(page);
+    else if (orientation === 'rows')
+      layoutPageByRows(page, fillPage);
+    else if (orientation === 'columns')
+      layoutPageByColumns(page, fillPage);
+  }
+
+  function layoutSidebar(sidebar, content) {
+
+    // get it out of the header hierarchy
+    sidebar = sidebar.first();
+    if (sidebar.hasClass('level1')) {
+      sidebar.removeClass('level1');
+      sidebar.children('h1').remove();
+    } else if (sidebar.hasClass('level2')) {
+      sidebar.removeClass('level2');
+      sidebar.children('h2').remove();
+    }
+
+    // determine width
+    var sidebarWidth = isTablet() ? 220 : 250;
+    var dataWidth = parseInt(sidebar.attr('data-width'));
+    if (dataWidth)
+      sidebarWidth = dataWidth;
+
+    // set the width and shift the page right to accomodate the sidebar
+    sidebar.css('width', sidebarWidth + 'px');
+    content.css('padding-left', sidebarWidth + 'px');
+
+    // wrap it's contents in a form
+    sidebar.wrapInner($('<form></form>'));
+  }
+
+  function layoutPageAsStoryboard(page) {
+
+    // create storyboard navigation
+    var nav = $('<div class="storyboard-nav"></div>');
+
+    // add navigation buttons
+    var prev = $('<button class="sbprev"><i class="fa fa-angle-left"></i></button>');
+    nav.append(prev);
+    var next= $('<button class="sbnext"><i class="fa fa-angle-right"></i></button>');
+    nav.append(next);
+
+    // add navigation frame
+    var frameList = $('<div class="sbframelist"></div>');
+    nav.append(frameList);
+    var ul = $('<ul></ul>');
+    frameList.append(ul);
+
+     // find all the level3 sections (those are the storyboard frames)
+    var frames = page.find('div.section.level3');
+    frames.each(function() {
+
+      // mark it
+      $(this).addClass('sbframe');
+
+      // divide it into chart content and (optional) commentary
+      $(this).addClass('dashboard-column-orientation');
+
+      // stuff the chart into it's own div w/ flex
+      $(this).wrapInner('<div class="sbframe-component"></div>');
+      setFlex($(this), 1);
+      var frame = $(this).children('.sbframe-component');
+
+      // extract the title from the h3
+      var li = $('<li></li>');
+      var h3 = frame.children('h3');
+      li.html(h3.html());
+      h3.remove();
+      ul.append(li);
+
+      // extract commentary
+      var hr = frame.children('hr');
+      if (hr.length) {
+        var commentary = hr.nextAll().detach();
+        hr.remove();
+        var commentaryFrame = $('<div class="sbframe-commentary"></div>');
+        commentaryFrame.addClass('flowing-content-shim');
+        commentaryFrame.addClass('flowing-content-container');
+        commentaryFrame.append(commentary);
+        $(this).append(commentaryFrame);
+
+        // look for a data-commentary-width attribute
+        var commentaryWidth = $(this).attr('data-commentary-width');
+        if (commentaryWidth)
+          commentaryFrame.css('width', commentaryWidth + 'px');
+      }
+
+      // layout the chart (force flex)
+      var result = layoutChart(frame, true);
+
+      // ice the notes if there are none
+      if (!result.notes)
+        frame.find('.chart-notes').remove();
+
+      // set flex on chart
+      setFlex(frame, 1);
+    });
+
+    // create a div to hold all the frames
+    var frameContent = $('<div class="sbframe-content"></div>');
+    frameContent.addClass('dashboard-row-orientation');
+    frameContent.append(frames.detach());
+
+    // row orientation to stack nav and frame content
+    page.addClass('dashboard-row-orientation');
+    page.append(nav);
+    page.append(frameContent);
+    setFlex(frameContent, 1);
+
+    // initialize sly
+    var sly = new Sly(frameList, {
+    		horizontal: true,
+    		itemNav: 'basic',
+    		smart: true,
+    		activateOn: 'click',
+    		startAt: 0,
+    		scrollBy: 1,
+    		activatePageOn: 'click',
+    		speed: 200,
+    		moveBy: 600,
+    		dragHandle: true,
+    		dynamicHandle: true,
+    		clickBar: true,
+    		keyboardNavBy: 'items',
+    		next: next,
+    		prev: prev
+    	}).init();
+
+    // make first frame active
+    frames.removeClass('active');
+    frames.first().addClass('active');
+
+    // subscribe to frame changed events
+    sly.on('active', function (eventName, itemIndex) {
+      frames.removeClass('active');
+      frames.eq(itemIndex).addClass('active')
+                          .trigger('shown');
+    });
+  }
+
+  function layoutPageByRows(page, fillPage) {
+
+    // row orientation
+    page.addClass('dashboard-row-orientation');
+
+    // find all the level2 sections (those are the rows)
+    var rows = page.find('div.section.level2');
+
+    // if there are no level2 sections then treat the
+    // entire page as if it's a level 2 section
+    if (rows.length === 0) {
+      page.wrapInner('<div class="section level2"></div>');
+      rows = page.find('div.section.level2');
+    }
+
+    rows.each(function () {
+
+      // flags
+      var haveNotes = false;
+      var haveFlexHeight = true;
+
+      // remove the h2
+      $(this).children('h2').remove();
+
+      // check for a tabset
+      var isTabset = $(this).hasClass('tabset');
+      if (isTabset)
+        layoutTabset($(this));
+
+      // give it row layout semantics if it's not a tabset
+      if (!isTabset)
+        $(this).addClass('dashboard-row');
+
+      // find all of the level 3 subheads
+      var columns = $(this).find('div.section.level3');
+
+      // determine figureSizes sizes
+      var figureSizes = chartFigureSizes(columns);
+
+      // fixup the columns
+      columns.each(function(index) {
+
+        // layout the chart (force flex if we are in a tabset)
+        var result = layoutChart($(this), isTabset);
+
+        // update flexHeight state
+        if (!result.flex)
+          haveFlexHeight = false;
+
+        // update state
+        if (result.notes)
+          haveNotes = true;
+
+        // set the column flex based on the figure width
+        // (value boxes will just get the default figure width)
+        var chartWidth = figureSizes[index].width;
+        setFlex($(this), chartWidth + ' ' + chartWidth + ' 0px');
+
+      });
+
+      // remove empty chart note divs
+      if (isTabset)
+        $(this).find('.chart-notes').filter(function() {
+            return $(this).html() === "&nbsp;";
+        }).remove();
+      if (!haveNotes)
+        $(this).find('.chart-notes').remove();
+
+       // make it a flexbox row
+      if (haveFlexHeight)
+        $(this).addClass('dashboard-row-flex');
+
+      // now we can set the height on all the wrappers (based on maximum
+      // figure height + room for title and notes, or data-height on the
+      // container if specified). However, don't do this if there is
+      // no flex on any of the constituent columns
+      var flexHeight = null;
+      var dataHeight = parseInt($(this).attr('data-height'));
+      if (dataHeight)
+        flexHeight = adjustedHeight(dataHeight, columns.first());
+      else if (haveFlexHeight)
+        flexHeight = maxChartHeight(figureSizes, columns);
+      if (flexHeight) {
+        if (fillPage)
+          setFlex($(this), flexHeight + ' ' + flexHeight + ' 0px');
+        else {
+          $(this).css('height', flexHeight + 'px');
+          setFlex($(this), '0 0 ' + flexHeight + 'px');
+        }
+      }
+
+    });
+  }
+
+  function layoutPageByColumns(page, fillPage) {
+
+    // column orientation
+    page.addClass('dashboard-column-orientation');
+
+    // find all the level2 sections (those are the columns)
+    var columns = page.find('div.section.level2');
+
+    // if there are no level2 sections then treat the
+    // entire page as if it's a level 2 section
+    if (columns.length === 0) {
+      page.wrapInner('<div class="section level2"></div>');
+      columns = page.find('div.section.level2');
+    }
+
+    // layout each column
+    columns.each(function (index) {
+
+      // remove the h2
+      $(this).children('h2').remove();
+
+      // make it a flexbox column
+      $(this).addClass('dashboard-column');
+
+      // check for a tabset
+      var isTabset = $(this).hasClass('tabset');
+      if (isTabset)
+        layoutTabset($(this));
+
+      // find all the h3 elements
+      var rows = $(this).find('div.section.level3');
+
+      // get the figure sizes for the rows
+      var figureSizes = chartFigureSizes(rows);
+
+      // column flex is the max row width (or data-width if specified)
+      var flexWidth;
+      var dataWidth = parseInt($(this).attr('data-width'));
+      if (dataWidth)
+        flexWidth = dataWidth;
+      else
+        flexWidth = maxChartWidth(figureSizes);
+      setFlex($(this), flexWidth + ' ' + flexWidth + ' 0px');
+
+      // layout each chart
+      rows.each(function(index) {
+
+        // perform the layout
+        var result = layoutChart($(this), false);
+
+        // ice the notes if there are none
+        if (!result.notes)
+          $(this).find('.chart-notes').remove();
+
+        // set flex height based on figHeight, then adjust
+        if (result.flex) {
+          var chartHeight = figureSizes[index].height;
+          chartHeight = adjustedHeight(chartHeight, $(this));
+          if (fillPage)
+            setFlex($(this), chartHeight + ' ' + chartHeight + ' 0px');
+          else {
+            $(this).css('height', chartHeight + 'px');
+            setFlex($(this), chartHeight + ' ' + chartHeight + ' ' + chartHeight + 'px');
+          }
+        }
+      });
+    });
+  }
+
+  function chartFigureSizes(charts) {
+
+    // sizes
+    var figureSizes = new Array(charts.length);
+
+    // check each chart
+    charts.each(function(index) {
+
+      // start with default
+      figureSizes[index] = {
+        width: _options.defaultFigWidth,
+        height: _options.defaultFigHeight
+      };
+
+      // look for data-height or data-width then knit options
+      var dataWidth = parseInt($(this).attr('data-width'));
+      var dataHeight = parseInt($(this).attr('data-height'));
+      var knitrOptions = $(this).find('.knitr-options:first');
+      var knitrWidth, knitrHeight;
+      if (knitrOptions) {
+        knitrWidth = parseInt(knitrOptions.attr('data-fig-width'));
+        knitrHeight =  parseInt(knitrOptions.attr('data-fig-height'));
+      }
+
+      // width
+      if (dataWidth)
+        figureSizes[index].width = dataWidth;
+      else if (knitrWidth)
+        figureSizes[index].width = knitrWidth;
+
+      // height
+      if (dataHeight)
+        figureSizes[index].height = dataHeight;
+      else if (knitrHeight)
+        figureSizes[index].height = knitrHeight;
+    });
+
+    // return sizes
+    return figureSizes;
+  }
+
+  function maxChartHeight(figureSizes, charts) {
+
+    // first compute the maximum height
+    var maxHeight = _options.defaultFigHeight;
+    for (var i = 0; i<figureSizes.length; i++)
+      if (figureSizes[i].height > maxHeight)
+        maxHeight = figureSizes[i].height;
+
+    // now add offests for chart title and chart notes
+    if (charts.length)
+      maxHeight = adjustedHeight(maxHeight, charts.first());
+
+    return maxHeight;
+  }
+
+  function adjustedHeight(height, chart) {
+    if (chart.length > 0) {
+      var chartTitle = chart.find('.chart-title');
+      if (chartTitle.length)
+        height += chartTitle.first().outerHeight();
+      var chartNotes = chart.find('.chart-notes');
+      if (chartNotes.length)
+        height += chartNotes.first().outerHeight();
+    }
+    return height;
+  }
+
+  function maxChartWidth(figureSizes) {
+    var maxWidth = _options.defaultFigWidth;
+    for (var i = 0; i<figureSizes.length; i++)
+      if (figureSizes[i].width > maxWidth)
+        maxWidth = figureSizes[i].width;
+    return maxWidth;
+  }
+
+  // layout a chart
+  function layoutChart(chart, forceFlex) {
+
+    // state to return
+    var result = {
+      notes: false,
+      flex: false
+    };
+
+    // extract the title
+    var title = extractTitle(chart);
+
+    // find components that apply to this container
+    var components = componentsFind(chart);
+
+    // if it's a custom component then call it and return
+    var customComponents = componentsCustom(components);
+    if (customComponents.length) {
+      componentsLayout(customComponents, title, chart);
+      result.notes = false;
+      result.flex = forceFlex || componentsFlex(customComponents);
+      return result;
+    }
+
+    // put all the content in a chart wrapper div
+    chart.addClass('chart-wrapper');
+    chart.wrapInner('<div class="chart-stage"></div>');
+    var chartContent = chart.children('.chart-stage');
+
+    // flex the content if appropriate
+    result.flex = forceFlex || componentsFlex(components);
+    if (result.flex) {
+      // add flex classes
+      chart.addClass('chart-wrapper-flex');
+      chartContent.addClass('chart-stage-flex');
+
+      // additional shim to break out of flexbox sizing
+      chartContent.wrapInner('<div class="chart-shim"></div>');
+      chartContent = chartContent.children('.chart-shim');
+    }
+
+    // set custom data-padding attribute
+    var pad = chart.attr('data-padding');
+    if (pad) {
+      if (pad === "0")
+        chart.addClass('no-padding');
+      else {
+        pad = pad + 'px';
+        chartContent.css('left', pad)
+                    .css('top', pad)
+                    .css('right', pad)
+                    .css('bottom', pad)
+      }
+    }
+
+    // call compoents
+    componentsLayout(components, title, chartContent);
+
+    // also activate components on shiny output
+    findShinyOutput(chartContent).on('shiny:value',
+      function(event) {
+        var element = $(event.target);
+        setTimeout(function() {
+
+          // see if we opted out of flex based on our output (for shiny
+          // we can't tell what type of output we have until after the
+          // value is bound)
+          var components = componentsFind(element);
+          var flex = forceFlex || componentsFlex(components);
+          if (!flex) {
+            chart.css('height', "");
+            setFlex(chart, "");
+            chart.removeClass('chart-wrapper-flex');
+            chartContent.removeClass('chart-stage-flex');
+            chartContent.children().unwrap();
+          }
+
+          // perform layout
+          componentsLayout(components, title, element.parent());
+        }, 10);
+      });
+
+    // add the title
+    var chartTitle = $('<div class="chart-title"></div>');
+    chartTitle.html(title);
+    chart.prepend(chartTitle);
+
+    // add the notes section
+    var chartNotes = $('<div class="chart-notes"></div>');
+    chartNotes.html('&nbsp;');
+    chart.append(chartNotes);
+
+    // attempt to extract notes if we have a component
+    if (components.length)
+      result.notes = extractChartNotes(chartContent, chartNotes);
+
+    // return result
+    return result;
+  }
+
+  // build a tabset from a section div with the .tabset class
+  function layoutTabset(tabset) {
+
+    // check for fade option
+    var fade = tabset.hasClass("tabset-fade");
+    var navClass = "nav-tabs";
+
+    // determine the heading level of the tabset and tabs
+    var match = tabset.attr('class').match(/level(\d) /);
+    if (match === null)
+      return;
+    var tabsetLevel = Number(match[1]);
+    var tabLevel = tabsetLevel + 1;
+
+    // find all subheadings immediately below
+    var tabs = tabset.find("div.section.level" + tabLevel);
+    if (!tabs.length)
+      return;
+
+    // create tablist and tab-content elements
+    var tabList = $('<ul class="nav ' + navClass + '" role="tablist"></ul>');
+    $(tabs[0]).before(tabList);
+    var tabContent = $('<div class="tab-content"></div>');
+    $(tabs[0]).before(tabContent);
+
+    // build the tabset
+    tabs.each(function(i) {
+
+      // get the tab div
+      var tab = $(tabs[i]);
+
+      // get the id then sanitize it for use with bootstrap tabs
+      var id = tab.attr('id');
+
+      // sanitize the id for use with bootstrap tabs
+      id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+      tab.attr('id', id);
+
+      // get the heading element within it and grab it's text
+      var heading = tab.find('h' + tabLevel + ':first');
+      var headingText = heading.html();
+
+      // build and append the tab list item
+      var a = $('<a role="tab" data-toggle="tab">' + headingText + '</a>');
+      a.attr('href', '#' + id);
+      a.attr('aria-controls', id);
+      var li = $('<li role="presentation"></li>');
+      li.append(a);
+      if (i === 0)
+        li.attr('class', 'active');
+      tabList.append(li);
+
+      // set it's attributes
+      tab.attr('role', 'tabpanel');
+      tab.addClass('tab-pane');
+      tab.addClass('tabbed-pane');
+      tab.addClass('no-title');
+      if (fade)
+        tab.addClass('fade');
+      if (i === 0) {
+        tab.addClass('active');
+        if (fade)
+          tab.addClass('in');
+      }
+
+      // move it into the tab content div
+      tab.detach().appendTo(tabContent);
+    });
+
+    // add nav-tabs-custom
+    tabset.addClass('nav-tabs-custom');
+
+    // internal layout is dashboard-column with tab-content flexing
+    tabset.addClass('dashboard-column');
+    setFlex(tabContent, 1);
+  }
+
+  // one time global initialization for components
+  function componentsInit(dashboardContainer) {
+    for (var i=0; i<window.FlexDashboardComponents.length; i++) {
+      var component = window.FlexDashboardComponents[i];
+      if (component.init)
+        component.init(dashboardContainer);
+    }
+  }
+
+  // find components that apply within a container
+  function componentsFind(container) {
+
+    // look for components
+    var components = [];
+    for (var i=0; i<window.FlexDashboardComponents.length; i++) {
+      var component = window.FlexDashboardComponents[i];
+      if (component.find(container).length)
+        components.push(component);
+    }
+
+    // if there were none then use a special flowing content component
+    // that just adds a scrollbar in fillPage mode
+    if (components.length == 0) {
+      components.push({
+        find: function(container) {
+          return container;
+        },
+
+        flex: function(fillPage) {
+          return fillPage;
+        },
+
+        layout: function(title, container, element, fillPage) {
+          if (fillPage) {
+            container.addClass('flowing-content-shim');
+            container.addClass('flowing-content-container');
+          }
+        }
+      });
+    }
+
+    return components;
+  }
+
+  // if there is a custom component then pick it out
+  function componentsCustom(components) {
+    var customComponent = [];
+    for (var i=0; i<components.length; i++)
+      if (components[i].type === "custom") {
+        customComponent.push(components[i]);
+        break;
+      }
+    return customComponent;
+  }
+
+  // query all components for flex
+  function componentsFlex(components) {
+
+    // no components at all means no flex
+    if (components.length === 0)
+      return false;
+
+    // otherwise query components (assume true unless we see false)
+    var isMobile = isMobilePhone();
+    for (var i=0; i<components.length; i++)
+      if (components[i].flex && !components[i].flex(_options.fillPage))
+        return false;
+    return true;
+  }
+
+  // layout all components
+  function componentsLayout(components, title, container) {
+    var isMobile = isMobilePhone();
+    for (var i=0; i<components.length; i++) {
+      var element = components[i].find(container);
+      if (components[i].layout) {
+        // call layout (don't call other components if it returns false)
+        var result = components[i].layout(title, container, element, _options.fillPage);
+        if (result === false)
+          return;
+      }
+    }
+  }
+
+  // get a reference to the h3, discover it's inner html, and remove it
+  function extractTitle(container) {
+    var h3 = container.children('h3').first();
+    var title = '';
+    if (!container.hasClass('no-title'))
+      title = h3.html();
+    h3.remove();
+    return title;
+  }
+
+  // extract chart notes
+  function extractChartNotes(chartContent, chartNotes) {
+    // look for a terminating blockquote or image caption
+    var blockquote = chartContent.children('blockquote:last-child');
+    var caption = chartContent.children('div.image-container')
+                              .children('p.caption');
+    if (blockquote.length) {
+      chartNotes.html(blockquote.children('p:first-child').html());
+      blockquote.remove();
+      return true;
+    } else if (caption.length) {
+      chartNotes.html(caption.html());
+      caption.remove();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function findShinyOutput(chartContent) {
+    return chartContent.find('.shiny-text-output, .shiny-html-output');
+  }
+
+  // safely detect rendering on a mobile phone
+  function isMobilePhone() {
+    try
+    {
+      return ! window.matchMedia("only screen and (min-width: 768px)").matches;
+    }
+    catch(e) {
+      return false;
+    }
+  }
+
+  function isFillPage() {
+    return _options.fillPage;
+  }
+
+  // detect portrait mode
+  function isPortrait() {
+    return ($(window).width() < $(window).height());
+  }
+
+  // safely detect rendering on a tablet
+  function isTablet() {
+    try
+    {
+      return window.matchMedia("only screen and (min-width: 769px) and (max-width: 992px)").matches;
+    }
+    catch(e) {
+      return false;
+    }
+  }
+
+  // test whether this is a shiny doc
+  function isShinyDoc() {
+    return (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings);
+  }
+
+  // set flex using vendor specific prefixes
+  function setFlex(el, flex) {
+    el.css('-webkit-box-flex', flex)
+      .css('-webkit-flex', flex)
+      .css('-ms-flex', flex)
+      .css('flex', flex);
+  }
+
+  // support bookmarking of pages
+  function handleLocationHash() {
+
+    // restore tab/page from bookmark
+    var hash = window.location.hash;
+    if (hash.length > 0)
+      $('ul.nav a[href="' + hash + '"]').tab('show');
+    FlexDashboardUtils.manageActiveNavbarMenu();
+
+    // navigate to a tab when the history changes
+    window.addEventListener("popstate", function(e) {
+      var hash = window.location.hash;
+      var activeTab = $('ul.nav a[href="' + hash + '"]');
+      if (activeTab.length) {
+        activeTab.tab('show');
+      } else {
+        $('ul.nav a:first').tab('show');
+      }
+      FlexDashboardUtils.manageActiveNavbarMenu();
+    });
+
+    // add a hash to the URL when the user clicks on a tab/page
+    $('.navbar-nav a[data-toggle="tab"]').on('click', function(e) {
+      var baseUrl = FlexDashboardUtils.urlWithoutHash(window.location.href);
+      var hash = FlexDashboardUtils.urlHash($(this).attr('href'));
+      var href = baseUrl + hash;
+      FlexDashboardUtils.setLocation(href);
+    });
+
+    // handle clicks of other links that should activate pages
+    var navPages = $('ul.navbar-nav li a[data-toggle=tab]');
+    navPages.each(function() {
+      var href =  $(this).attr('href');
+      var links = $('a[href="' + href + '"][data-toggle!=tab]');
+      links.each(function() {
+        $(this).on('click', function(e) {
+          window.FlexDashboardUtils.showPage(href);
+        });
+      });
+    });
+  }
+
+  // tweak Prism highlighting
+  function initPrismHighlighting() {
+
+    if (window.Prism) {
+      Prism.languages.insertBefore('r', 'comment', {
+        'heading': [
+          {
+            // title 1
+        	  // =======
+
+        	  // title 2
+        	  // -------
+        	  pattern: /\w+.*(?:\r?\n|\r)(?:====+|----+)/,
+            alias: 'operator'
+          },
+          {
+            // ### title 3
+            pattern: /(^\s*)###[^#].+/m,
+            lookbehind: true,
+            alias: 'operator'
+          }
+        ]
+      });
+
+      // prism highlight
+      Prism.highlightAll();
+    }
+  }
+
+
+  // get theme color
+  var themeColors = {
+    bootstrap: {
+      primary: "rgba(51, 122, 183, 0.4)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    cerulean: {
+      primary: "rgb(47, 164, 231)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    journal: {
+      primary: "rgba(235, 104, 100, 0.70)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    flatly: {
+      primary: "rgba(44, 62, 80, 0.70)",
+      info: "rgba(52, 152, 219, 0.70)",
+      success: "rgba(24, 188, 156, 0.70)",
+      warning: "rgba(243, 156, 18, 0.70)",
+      danger: "rgba(231, 76, 60, 0.70)"
+    },
+    readable: {
+      primary: "rgba(69, 130, 236, 0.4)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    spacelab: {
+      primary: "rgba(68, 110, 155, 0.25)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    united: {
+      primary: "rgba(221, 72, 20, 0.30)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    cosmo: {
+      primary: "rgba(39, 128, 227, 0.7)",
+      info: "rgba(153, 84, 187, 0.7)",
+      success: "rgba(63, 182, 24, 0.7)",
+      warning: "rgba(255, 117, 24, 0.7)",
+      danger: "rgba(255, 0, 57, 0.7)"
+    },
+    lumen: {
+      primary: "rgba(21, 140, 186, 0.70)",
+      info: "rgba(117, 202, 235, 0.90)",
+      success: "rgba(40, 182, 44, 0.70)",
+      warning: "rgba(255, 133, 27, 0.70)",
+      danger: "rgba(255, 65, 54, 0.70)"
+    },
+    paper: {
+      primary: "rgba(33, 150, 243, 0.35)",
+      info: "rgb(225, 190, 231)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(255, 224, 178)",
+      danger: "rgb(249, 189, 187)"
+    },
+    sandstone: {
+      primary: "rgba(50, 93, 136, 0.3)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    simplex: {
+      primary: "rgba(217, 35, 15, 0.25)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    yeti: {
+      primary: "rgba(0, 140, 186, 0.298039)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    }
+  }
+  function themeColor(color) {
+    return themeColors[_options.theme][color];
+  }
+
+  FlexDashboard.prototype = {
+    constructor: FlexDashboard,
+    init: init,
+    isMobilePhone: isMobilePhone,
+    isFillPage: isFillPage,
+    themeColor: themeColor
+  };
+
+  return FlexDashboard;
+
+})();
+
+// utils
+window.FlexDashboardUtils = {
+  resizableImage: function(img) {
+    var src = img.attr('src');
+    var url = 'url("' + src + '")';
+    img.parent().css('background', url)
+                .css('background-size', 'contain')
+                .css('background-repeat', 'no-repeat')
+                .css('background-position', 'center')
+                .addClass('image-container');
+  },
+  setLocation: function(href) {
+    if (history && history.pushState) {
+      history.pushState(null, null, href);
+    } else {
+      window.location.replace(href);
+    }
+    setTimeout(function() {
+        window.scrollTo(0, 0);
+    }, 10);
+    this.manageActiveNavbarMenu();
+  },
+  showPage: function(href) {
+    $('ul.navbar-nav li a[href="' + href + '"]').tab('show');
+    var baseUrl = this.urlWithoutHash(window.location.href);
+    var loc = baseUrl + href;
+    this.setLocation(loc);
+  },
+  showLinkedValue: function(href) {
+    // check for a page link
+    if ($('ul.navbar-nav li a[data-toggle=tab][href="' + href + '"]').length > 0)
+      this.showPage(href);
+    else
+      window.open(href);
+  },
+  urlWithoutHash: function(url) {
+    var hashLoc = url.indexOf('#');
+    if (hashLoc != -1)
+      return url.substring(0, hashLoc);
+    else
+      return url;
+  },
+  urlHash: function(url) {
+    var hashLoc = url.indexOf('#');
+    if (hashLoc != -1)
+      return url.substring(hashLoc);
+    else
+      return "";
+  },
+  manageActiveNavbarMenu: function () {
+    // remove active from anyone currently active
+    $('.navbar ul.nav').find('li').removeClass('active');
+    // find the active tab
+    var activeTab = $('.dashboard-page-wrapper.tab-pane.active');
+    if (activeTab.length > 0) {
+      var tabId = activeTab.attr('id');
+      if (tabId)
+        $(".navbar ul.nav a[href='#" + tabId + "']").parents('li').addClass('active');
+    }
+  }
+};
+
+window.FlexDashboard = new FlexDashboard();
+
+// empty content
+window.FlexDashboardComponents.push({
+  find: function(container) {
+    if (container.find('p').length == 0)
+      return container;
+    else
+      return $();
+  }
+})
+
+// plot image
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.children('p')
+                    .children('img:only-child');
+  },
+
+  layout: function(title, container, element, fillPage) {
+    FlexDashboardUtils.resizableImage(element);
+  }
+});
+
+// plot image (figure style)
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.children('div.figure').children('img');
+  },
+
+  layout: function(title, container, element, fillPage) {
+    FlexDashboardUtils.resizableImage(element);
+  }
+});
+
+// htmlwidget
+window.FlexDashboardComponents.push({
+
+  init: function(dashboardContainer) {
+    // trigger "shown" after initial layout to force static htmlwidgets
+    // in runtime: shiny to be resized after the dom has been transformed
+    dashboardContainer.on('flexdashboard:layoutcomplete', function(event) {
+      setTimeout(function() {
+        dashboardContainer.trigger('shown');
+      }, 200);
+    });
+  },
+
+  find: function(container) {
+    return container.children('div[id^="htmlwidget-"],div.html-widget');
+  }
+});
+
+// gauge
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.children('div.html-widget.gauge');
+  },
+
+  flex: function(fillPage) {
+    return false;
+  },
+
+  layout: function(title, container, element, fillPage) {
+
+
+  }
+
+});
+
+// shiny output
+window.FlexDashboardComponents.push({
+  find: function(container) {
+    return container.children('div[class^="shiny-"]');
+  }
+});
+
+// datatables
+window.FlexDashboardComponents.push({
+  find: function(container) {
+    return container.find('.datatables');
+  },
+  flex: function(fillPage) {
+    return fillPage;
+  }
+});
+
+// bootstrap table
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    var bsTable = container.find('table.table');
+    if (bsTable.length !== 0)
+      return bsTable;
+    else
+      return container.find('tr.header').parent('thead').parent('table');
+  },
+
+  flex: function(fillPage) {
+    return fillPage;
+  },
+
+  layout: function(title, container, element, fillPage) {
+
+    // alias variables
+    var bsTable = element;
+
+    // fixup xtable generated tables with a proper thead
+    var headerRow = bsTable.find('tbody > tr:first-child > th').parent();
+    if (headerRow.length > 0) {
+      var thead = $('<thead></thead>');
+      bsTable.prepend(thead);
+      headerRow.detach().appendTo(thead);
+    }
+
+    // improve appearance
+    container.addClass('bootstrap-table');
+
+    // for fill page provide scrolling w/ sticky headers
+    if (fillPage) {
+      // force scrollbar on overflow
+      container.addClass('flowing-content-shim');
+
+      // stable table headers when scrolling
+      bsTable.stickyTableHeaders({
+        scrollableArea: container
+      });
+    }
+  }
+});
+
+// embedded shiny app
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.find('iframe.shiny-frame');
+  },
+
+  flex: function(fillPage) {
+    return fillPage;
+  },
+
+  layout: function(title, container, element, fillPage) {
+    if (fillPage) {
+      element.attr('height', '100%');
+    } else {
+      // provide default height if necessary
+      var height = element.get(0).style.height;
+      if (!height)
+        height = element.attr('height');
+      if (!height)
+        element.attr('height', 500);
+    }
+  }
+});
+
+// shiny fillRow or fillCol
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.find('.flexfill-container');
+  },
+
+  flex: function(fillPage) {
+    return fillPage;
+  },
+
+  layout: function(title, container, element, fillPage) {
+    if (fillPage)
+      element.css('height', '100%');
+    else {
+      // provide default height if necessary
+      var height = element.get(0).style.height;
+      if (height === "100%" || height === "auto" || height === "initial" ||
+          height === "inherit" || !height) {
+        element.css('height', 500);
+      }
+    }
+  }
+});
+
+// valueBox
+window.FlexDashboardComponents.push({
+
+  type: "custom",
+
+  find: function(container) {
+    if (container.find('span.value-output, .shiny-valuebox-output').length)
+      return container;
+    else
+      return $();
+  },
+
+  flex: function(fillPage) {
+    return false;
+  },
+
+  layout: function(title, container, element, fillPage) {
+
+    // alias variables
+    var chartTitle = title;
+    var valueBox = element;
+
+    // add value-box class to container
+    container.addClass('value-box');
+
+    // value paragraph
+    var value = $('<p class="value"></p>');
+
+    // if we have shiny-text-output then just move it in
+    var valueOutputSpan = [];
+    var shinyOutput = valueBox.find('.shiny-valuebox-output').detach();
+    if (shinyOutput.length) {
+      valueBox.children().remove();
+      shinyOutput.html("&mdash;");
+      value.append(shinyOutput);
+    } else {
+      // extract the value (remove leading vector index)
+      var chartValue = valueBox.text().trim();
+      chartValue = chartValue.replace("[1] ", "");
+      valueOutputSpan = valueBox.find('span.value-output').detach();
+      valueBox.children().remove();
+      value.text(chartValue);
+    }
+
+    // caption
+    var caption = $('<p class="caption"></p>');
+    caption.html(chartTitle);
+
+    // build inner div for value box and add it
+    var inner = $('<div class="inner"></div>');
+    inner.append(value);
+    inner.append(caption);
+    valueBox.append(inner);
+
+    // add icon if specified
+    var icon = $('<div class="icon"><i></i></div>');
+    valueBox.append(icon);
+    function setIcon(chartIcon) {
+      var iconLib = "";
+      var components = chartIcon.split("-");
+      if (components.length > 1)
+        iconLib = components[0];
+      icon.children('i').attr('class', iconLib + ' ' + chartIcon);
+    }
+    var chartIcon = valueBox.attr('data-icon');
+    if (chartIcon)
+      setIcon(chartIcon);
+
+    // set color based on data-background if necessary
+    var dataBackground = valueBox.attr('data-background');
+    if (dataBackground)
+      valueBox.css('background-color', bgColor);
+    else {
+      // default to bg-primary if no other background is specified
+      if (!valueBox.hasClass('bg-primary') &&
+          !valueBox.hasClass('bg-info') &&
+          !valueBox.hasClass('bg-warning') &&
+          !valueBox.hasClass('bg-success') &&
+          !valueBox.hasClass('bg-danger')) {
+        valueBox.addClass('bg-primary');
+      }
+    }
+
+    // handle data attributes in valueOutputSpan
+    function handleValueOutput(valueOutput) {
+
+      // caption
+      var dataCaption = valueOutput.attr('data-caption');
+      if (dataCaption)
+        caption.html(dataCaption);
+
+      // icon
+      var dataIcon = valueOutput.attr('data-icon');
+      if (dataIcon)
+        setIcon(dataIcon);
+
+      // color
+      var dataColor = valueOutput.attr('data-color');
+      if (dataColor) {
+        if (dataColor.indexOf('bg-') === 0) {
+          valueBox.css('background-color', '');
+          if (!valueBox.hasClass(dataColor)) {
+             valueBox.removeClass('bg-primary bg-info bg-warning bg-danger bg-success');
+             valueBox.addClass(dataColor);
+          }
+        } else {
+          valueBox.removeClass('bg-primary bg-info bg-warning bg-danger bg-success');
+          valueBox.css('background-color', dataColor);
+        }
+      }
+
+      // url
+      var dataHref = valueOutput.attr('data-href');
+      if (dataHref) {
+        valueBox.addClass('linked-value');
+        valueBox.off('click.value-box');
+        valueBox.on('click.value-box', function(e) {
+          window.FlexDashboardUtils.showLinkedValue(dataHref);
+        });
+      }
+    }
+
+    // check for a valueOutputSpan
+    if (valueOutputSpan.length > 0) {
+      handleValueOutput(valueOutputSpan);
+    }
+
+    // if we have a shinyOutput then bind a listener to handle
+    // new valueOutputSpan values
+    shinyOutput.on('shiny:value',
+      function(event) {
+        var element = $(event.target);
+        setTimeout(function() {
+          var valueOutputSpan = element.find('span.value-output');
+          if (valueOutputSpan.length > 0)
+            handleValueOutput(valueOutputSpan);
+        }, 10);
+      }
+    );
+  }
+});
+
+
+</script>
+
+<div id="dashboard-container">
+
+<div id="resumo" class="section level1">
+<h1>Resumo</h1>
+<div id="row" class="section level2">
+<h2>Row</h2>
+<div id="tested" class="section level3 value-box">
+<h3>Tested</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Total de Testes Realizados" data-icon="fas fa-user-md" data-color="purple">187</span>
+</div>
+<div id="positive-cases" class="section level3 value-box">
+<h3>Positive Cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Total Casos Confirmados" data-icon="fas fa-diagnoses" data-color="#CE1256">67 </span>
+</div>
+<div id="ative-cases" class="section level3 value-box">
+<h3>Ative Cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Total Casos Ativos" data-icon="far fa-plus-square" data-color="#1f77b4">63  ( 94 %)</span>
+</div>
+<div id="recovered-cases" class="section level3 value-box">
+<h3>Recovered Cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Total Recuperados" data-icon="fas fa-file-medical-alt" data-color="forestgreen">1  ( 1.5 %)</span>
+</div>
+<div id="death-cases" class="section level3 value-box">
+<h3>Death Cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Total Óbitos" data-color="#E41317">1  ( 1.5 %)</span>
+</div>
+<div id="evacuated-cases" class="section level3 value-box">
+<h3>Evacuated Cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Total Evacuados" data-icon="fas fa-plane" data-color="grey">2  ( 3 %)</span>
+</div>
+</div>
+<div id="row-1" class="section level2">
+<h2>Row</h2>
+<div id="distribuição-do-total-de-casos" class="section level3">
+<h3>Distribuição do Total de Casos</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-c8c43e4c9a57e0f52bd2" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c8c43e4c9a57e0f52bd2">{"x":{"visdat":{"70462a23c0":["function () ","plotlyVisDat"]},"cur_data":"70462a23c0","attrs":{"70462a23c0":{"x":{},"y":{},"mode":"none","name":"Ativos","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"70462a23c0.1":{"x":{},"y":{},"mode":"none","name":"Óbitos","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","marker":{"color":"#E41317"},"inherit":true},"70462a23c0.2":{"x":{},"y":{},"mode":"none","name":"Evacuados","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","marker":{"color":"grey"},"inherit":true},"70462a23c0.3":{"x":{},"y":{},"mode":"none","name":"Recuperados","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","marker":{"color":"forestgreen"},"inherit":true}},"layout":{"margin":{"b":10,"l":60,"t":10,"r":10,"pad":2},"annotations":[{"text":"Estado de Emergência","x":"2020-03-27","y":3,"xref":"x","yref":"y","arrowhead":5,"arrowhead.1":3,"arrowsize":1,"showarrow":true,"ax":10,"ay":-90},{"text":"PEE","x":"2020-04-18","y":1,"xref":"x","yref":"y","arrowhead":3,"arrowhead.1":3,"arrowsize":0.05,"showarrow":true,"ax":5,"ay":-90}],"barmode":"stack","legend":{"orientation":"h","xanchor":"center","x":0.5,"y":8},"yaxis":{"domain":[0,1],"automargin":true,"title":"Casos Acumulados"},"xaxis":{"domain":[0,1],"automargin":true,"title":"Data"},"hovermode":"compared","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20"],"y":[1,3,3,3,2,1,2,2,3,3,3,3,3,3,3,4,4,4,4,4,4,4,5,7,7,8,51,51,52,54,57,63],"mode":"none","name":"Ativos","type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20"],"y":[0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"mode":"none","name":"Óbitos","type":"bar","marker":{"color":"#E41317","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20"],"y":[0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"mode":"none","name":"Evacuados","type":"bar","marker":{"color":"grey","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20"],"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],"mode":"none","name":"Recuperados","type":"bar","marker":{"color":"forestgreen","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="row-2" class="section level2 tabset">
+<h2>Row</h2>
+<div id="casos-por-concelho" class="section level3">
+<h3>Casos por Concelho</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-a7b9d452672cad1e23aa" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a7b9d452672cad1e23aa">{"x":{"visdat":{"7043d14bd82":["function () ","plotlyVisDat"]},"cur_data":"7043d14bd82","attrs":{"7043d14bd82":{"y":{},"x":{},"orientation":"h","marker":{"color":"#1f77b4"},"name":"Ativos","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"7043d14bd82.1":{"y":{},"x":{},"orientation":"h","marker":{"color":"forestgreen"},"name":"Recuperados","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","inherit":true},"7043d14bd82.2":{"y":{},"x":{},"orientation":"h","marker":{"color":"red"},"name":"Óbitos","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","inherit":true}},"layout":{"margin":{"b":10,"l":60,"t":10,"r":10,"pad":2},"title":"","barmode":"stack","yaxis":{"domain":[0,1],"automargin":true,"title":"Concelho","type":"category","categoryorder":"array","categoryarray":["Boa Vista","Praia","São Vicente","Tarrafal"]},"xaxis":{"domain":[0,1],"automargin":true,"title":"Casos"},"hovermode":"compare","legend":{"x":0.65,"y":0.9},"showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"y":["Boa Vista","Praia","São Vicente","Tarrafal"],"x":[52,13,1,1],"orientation":"h","marker":{"color":"#1f77b4","line":{"color":"rgba(31,119,180,1)"}},"name":"Ativos","type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Boa Vista","Praia","São Vicente","Tarrafal"],"x":[0,1,0,0],"orientation":"h","marker":{"color":"forestgreen","line":{"color":"rgba(255,127,14,1)"}},"name":"Recuperados","type":"bar","error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Boa Vista","Praia","São Vicente","Tarrafal"],"x":[1,0,0,0],"orientation":"h","marker":{"color":"red","line":{"color":"rgba(44,160,44,1)"}},"name":"Óbitos","type":"bar","error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<!-- ### Islands with cases -->
+<!-- ```{r} -->
+<!-- max_date <- max(cv_city$Data) -->
+<!-- cv_city %>%  -->
+<!--   dplyr::filter(Data == max_date) %>% -->
+<!--   dplyr::group_by(cidade,ilha) %>% -->
+<!--   dplyr::summarise(casos=sum(confirmados_acumulados)) %>% -->
+<!--   dplyr::arrange(-casos) %>% -->
+<!--   # dplyr::mutate(country = factor(Country.Region, levels = Country.Region)) %>% -->
+<!--   dplyr::ungroup() %>% -->
+<!--   plotly::plot_ly(x = ~ cidade, -->
+<!--                   y = ~ casos, -->
+<!--                   text = ~ casos, -->
+<!--                   color = ~ ilha, -->
+<!--                   textposition = 'auto', -->
+<!--                   type = "bar") %>% -->
+<!--   plotly::layout(yaxis = list(title = "Casos Acumulados"), -->
+<!--                  xaxis = list(title = ""), -->
+<!--                  margin =  list( -->
+<!--                    l = 10, -->
+<!--                    r = 10, -->
+<!--                    b = 10, -->
+<!--                    t = 10, -->
+<!--                    pad = 2 -->
+<!--                  )) -->
+<!-- ``` -->
+</div>
+<div id="casos-confirmados-diários" class="section level3">
+<h3>Casos Confirmados Diários</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-b28cb9cff99439bf4f9b" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b28cb9cff99439bf4f9b">{"x":{"visdat":{"704462aaddf":["function () ","plotlyVisDat"]},"cur_data":"704462aaddf","attrs":{"704462aaddf":{"x":{},"y":{},"mode":"markers","name":"Casos Confirmados","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"},"704462aaddf.1":{"x":{},"y":{},"mode":"lines","name":"Trend Line","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","line":{"color":"red","width":3},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"annotations":[{"text":"Estado de Emergência","x":"2020-03-27","y":1,"xref":"x","yref":"y","arrowhead":3,"arrowhead.1":3,"arrowsize":1,"showarrow":true,"ax":10,"ay":-90},{"text":"Prorrogação EE","x":"2020-04-18","y":1,"xref":"x","yref":"y","arrowhead":3,"arrowhead.1":3,"arrowsize":0.05,"showarrow":true,"ax":10,"ay":-90}],"title":"","legend":{"x":0.1,"y":0.9},"yaxis":{"domain":[0,1],"automargin":true,"title":"Casos Confirmados"},"xaxis":{"domain":[0,1],"automargin":true,"title":"Média Móvel para Calcular a Linha de Tendência"},"hovermode":"compare","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20"],"y":[1,2,0,0,0,1,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,2,0,1,44,0,1,2,3,6],"mode":"markers","name":"Casos Confirmados","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20"],"y":[0.6,0.6,0.4,0.4,0.6,0.6,0.4,0.2,0.2,0,0,0.2,0.2,0.2,0.2,0.2,0,0,0.2,0.6,0.6,0.8,9.6,9.4,9.2,9.6,10,2.4],"mode":"lines","name":"Trend Line","type":"scatter","line":{"color":"red","width":3},"marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="demografia" class="section level1">
+<h1>Demografia</h1>
+<div id="row-3" class="section level2">
+<h2>Row</h2>
+<div id="casosf" class="section level3 value-box">
+<h3>CasosF</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Casos Confirmados do Sexo Feminino" data-icon="fas fa-female" data-color="red">38  ( 56.7 %)</span>
+</div>
+<div id="casesm" class="section level3 value-box">
+<h3>CasesM</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Casos Confirmados do Sexo Masculino" data-icon="fas fa-male" data-color="blue">29  ( 43.3 %)</span>
+</div>
+<div id="casosfa" class="section level3 value-box">
+<h3>CasosFA</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Casos Ativos do Sexo Feminino" data-icon="fas fa-female" data-color="pink">37  ( 58.7 %)</span>
+</div>
+<div id="casesma" class="section level3 value-box">
+<h3>CasesMA</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Casos Ativos do Sexo Masculino" data-icon="fas fa-male" data-color="lightblue">26  ( 41.3 %)</span>
+</div>
+<div id="agegroup-cases" class="section level3 value-box">
+<h3>AgeGroup Cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Grupo Etário Mais Afetado" data-icon="fas fa-cross" data-color="purple">[30-40] (41.8%)</span>
+</div>
+</div>
+<div id="row-4" class="section level2">
+<h2>Row</h2>
+<div id="distribuição-por-sexo-dos-casos-confirmados-acumulados" class="section level3">
+<h3>Distribuição por Sexo dos Casos Confirmados Acumulados</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-84fb1758b8c69bcf12ea" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-84fb1758b8c69bcf12ea">{"x":{"visdat":{"70431c7247":["function () ","plotlyVisDat"]},"cur_data":"70431c7247","attrs":{"70431c7247":{"x":{},"y":{},"fillcolor":"blue","mode":"none","stackgroup":"one","name":"Masculino","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"},"70431c7247.1":{"x":{},"y":{},"fillcolor":"red","mode":"none","stackgroup":"one","name":"Feminino","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"","legend":{"x":0.1,"y":0.9},"yaxis":{"domain":[0,1],"automargin":true,"title":"Casos Confirmados Acumulados"},"xaxis":{"domain":[0,1],"automargin":true,"title":"Data"},"hovermode":"compared","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20"],"y":[1,2,2,2,2,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,6,24,24,25,25,26,29],"fillcolor":"blue","mode":"none","stackgroup":"one","name":"Masculino","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20"],"y":[0,1,1,1,1,1,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,4,5,5,5,31,31,31,33,35,38],"fillcolor":"red","mode":"none","stackgroup":"one","name":"Feminino","type":"scatter","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="row-5" class="section level2">
+<h2>Row</h2>
+<div id="relação-entre-casos-confirmados-sexo-grupo-etário" class="section level3">
+<h3>Relação entre Casos Confirmados, Sexo, Grupo Etário</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-51ada5b9bcb75bcbddca" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-51ada5b9bcb75bcbddca">{"x":{"visdat":{"704576e6e1d":["function () ","plotlyVisDat"]},"cur_data":"704576e6e1d","attrs":{"704576e6e1d":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","orientation":"h","hoverinfo":"text","text":{},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"bargap":0.1,"barmode":"normal","xaxis":{"domain":[0,1],"automargin":true,"tickmode":"array","tickvals":[-1000,-500,0,500,1000],"ticktext":["1000","500","0","500","1000"],"title":"Nr. Casos Ativos"},"yaxis":{"domain":[0,1],"automargin":true,"title":"grupo_etario","type":"category","categoryorder":"array","categoryarray":["[10,20]","[20,30]","[30,40]","[40,50]","[50,60]","[60,70]"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[5,15,12,2,2,1],"y":["[10,20]","[20,30]","[30,40]","[40,50]","[50,60]","[60,70]"],"type":"bar","orientation":"h","hoverinfo":["text","text","text","text","text","text"],"text":[5,15,12,2,2,1],"name":"F","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5,16,2,3,0],"y":["[20,30]","[30,40]","[40,50]","[50,60]","[60,70]"],"type":"bar","orientation":"h","hoverinfo":["text","text","text","text","text"],"text":[5,16,2,3,0],"name":"M","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="relação-entre-casos-confirmados-ativos-sexo-grupo-etário" class="section level3">
+<h3>Relação entre Casos Confirmados Ativos, Sexo, Grupo Etário</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-fca0e2bf9af49e45c9bc" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fca0e2bf9af49e45c9bc">{"x":{"visdat":{"7043ba65df3":["function () ","plotlyVisDat"]},"cur_data":"7043ba65df3","attrs":{"7043ba65df3":{"x":{},"y":{},"text":{},"mode":"markers","hovertemplate":"<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","name":{},"color":{},"size":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":70,"r":10},"title":"<b>Grupo Etario vs Casos Ativos<\/b>","xaxis":{"domain":[0,1],"automargin":true,"title":"<b>Grupo Etário<\/b>","type":"category","categoryorder":"array","categoryarray":["[10,20]","[20,30]","[30,40]","[40,50]","[50,60]","[60,70]"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"<b>Casos Ativos<\/b>"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["[10,20]","[20,30]","[30,40]","[40,50]","[50,60]","[60,70]"],"y":[5,15,12,2,2,1],"text":["F","F","F","F","F","F"],"mode":"markers","hovertemplate":["<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}"],"name":"F","type":"scatter","marker":{"color":"rgba(102,194,165,1)","size":[38.125,94.375,77.5,21.25,21.25,15.625],"sizemode":"area","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)","size":[38.125,94.375,77.5,21.25,21.25,15.625]},"error_y":{"color":"rgba(102,194,165,1)","width":[]},"error_x":{"color":"rgba(102,194,165,1)","width":[]},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["[20,30]","[30,40]","[40,50]","[50,60]","[60,70]"],"y":[5,16,2,3,0],"text":["M","M","M","M","M"],"mode":"markers","hovertemplate":["<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}","<b>Sexo<\/b>: %{text}<br><b>Grupo Etario<\/b>: %{x}<br><b>Casos Ativos<\/b>: %{y}"],"name":"M","type":"scatter","marker":{"color":"rgba(141,160,203,1)","size":[38.125,100,21.25,26.875,10],"sizemode":"area","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)","size":[38.125,100,21.25,26.875,10]},"error_y":{"color":"rgba(141,160,203,1)","width":[]},"error_x":{"color":"rgba(141,160,203,1)","width":[]},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="mapa-cv" class="section level1">
+<h1>Mapa CV</h1>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-2771cbb1be9c7b4d3daa" style="width:576px;height:460.8px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2771cbb1be9c7b4d3daa">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",1,"CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter",2,"CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenStreetMap",3,"OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",4,"Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenTopoMap",5,"OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"createMapPane","args":["polygon",420]},{"method":"addPolygons","args":[[[[{"lng":[-22.6821182929999,-22.6783748039999,-22.6708064439999,-22.6665746739999,-22.6725154289999,-22.6756078769999,-22.6771134109999,-22.6797989569999,-22.6964412099999,-22.7510880199999,-22.7875870429999,-22.8061417309999,-22.8636775379999,-22.8738907539999,-22.8836563789999,-22.897775845,-22.9092911449999,-22.9455460279999,-22.9577530589999,-22.9639786449999,-22.9632462229999,-22.9577530589999,-22.9474177729999,-22.9326065749999,-22.9135636059999,-22.9244278639999,-22.915598111,-22.9116104809999,-22.9072159499999,-22.8950902989999,-22.8779190749999,-22.8525284499999,-22.82941647,-22.8193253249999,-22.8116755849999,-22.7938126289999,-22.734689908,-22.7238663399999,-22.7138565749999,-22.7098282539999,-22.7037654289999,-22.6995743479999,-22.6824845039999,-22.6787003249999,-22.6821182929999],"lat":[16.1135928410001,16.1118838560001,16.102240302,16.0914574240001,16.0863304710001,16.0820173200001,16.0726585960001,16.0632184920001,16.052923895,16.0105654970001,15.9916039080001,15.9859072940001,15.982367255,15.9838727890001,15.988714911,16.000474351,16.0037295590001,16.0196800800001,16.0308291690001,16.0521914730001,16.0711937520001,16.0890160180001,16.102240302,16.1074079450001,16.1255557310001,16.2129580750001,16.2439639340001,16.2367210960001,16.231431382,16.22284577,16.2149112000001,16.2066104190001,16.2040062520001,16.2129580750001,16.2284203150001,16.2313500020001,16.2168643250001,16.212632554,16.205755927,16.1986351580001,16.1795921900001,16.1756859400001,16.168646552,16.1517601580001,16.1135928410001]}]],[[{"lng":[-23.4714675570849,-23.4778946609999,-23.4704483709999,-23.4802139959999,-23.4863175119999,-23.4940079419999,-23.5082901679999,-23.5162247389999,-23.5318497389999,-23.5392960279999,-23.5476311187811,-23.5604649030328,-23.5640803925961,-23.5363980783087,-23.5109303490564,-23.4909990828414,-23.4714675570849],"lat":[14.9737215225962,14.9690615910001,14.9622256530001,14.9466006530001,14.930853583,14.9186872420001,14.913804429,14.9128278670001,14.908636786,14.9076195330001,14.9257132774458,14.9417555073108,14.9607225105354,14.9662589726734,14.9828683617854,14.9861902388884,14.9737215225962]}]],[[{"lng":[-24.9197485019999,-24.9229223299999,-24.9144587879999,-24.9001358709999,-24.8858943349999,-24.8810929029999,-24.87629147,-24.8736059239999,-24.875070767,-24.8911026679999,-24.9155167309999,-24.9428604809999,-24.9681290359999,-24.9745173819999,-24.9842016269999,-24.9880264959999,-24.9952286449999,-25.058176236,-25.0682266919999,-25.0761612619999,-25.0811254549999,-25.0941462879999,-25.0897517569999,-25.078195767,-25.0635880199999,-25.050119595,-25.0187882149999,-25.0059708319999,-25.0121964179999,-24.9839981759999,-24.978098111,-24.9712621739999,-24.9651993479999,-24.9551895819999,-24.9377335279999,-24.9277237619999,-24.918771939,-24.9147029289999,-24.9197485019999],"lat":[16.8950869810001,16.89081452,16.8814151060001,16.872015692,16.8677432310001,16.862290757,16.849839585,16.8359235700001,16.8261579450001,16.8139509140001,16.8054873720001,16.800482489,16.7988955750001,16.7966983090001,16.787339585,16.7851423200001,16.786118882,16.8096377620001,16.8150902360001,16.822455145,16.8323428410001,16.8261579450001,16.8474795590001,16.8650576840001,16.8770205750001,16.8814151060001,16.882025458,16.887681382,16.9012718770001,16.915961005,16.9230003930001,16.9230003930001,16.9089216170001,16.9107933610001,16.9230003930001,16.9177920590001,16.9082705750001,16.8991559920001,16.8950869810001]}],[{"lng":[-24.5926596010363,-24.5695120310343,-24.5752989235348,-24.5897661547861,-24.6013399397871,-24.6042333860373,-24.5926596010363],"lat":[16.6243124208719,16.6199722514965,16.6055050202453,16.6069517433704,16.6098451896207,16.6214189746216,16.6243124208719]}],[{"lng":[-24.7734999916767,-24.7489056985496,-24.7358851904235,-24.7257581285477,-24.7069507279211,-24.6953769429201,-24.6838031579191,-24.6852498810442,-24.7026105585457,-24.7228646822974,-24.7402253597989,-24.7489056985496,-24.7546925910501,-24.7734999916767,-24.787967222928,-24.787967222928,-24.7734999916767],"lat":[16.8022593652621,16.7935790265113,16.7791117952601,16.7574109483832,16.7530707790079,16.7603043946335,16.7559642252581,16.742943717132,16.7357101015064,16.7342633783813,16.7342633783813,16.742943717132,16.754517502133,16.7617511177586,16.7747716258847,16.7892388571359,16.8022593652621]}]],[[{"lng":[-23.7701309889999,-23.7667537099999,-23.7658585279999,-23.7636612619999,-23.7586970689999,-23.7538142569999,-23.7515763009999,-23.7549535799999,-23.7632950509999,-23.7744034499999,-23.7857559889999,-23.7791235019999,-23.7584122389999,-23.7730606759999,-23.7795304029999,-23.7515763009999,-23.7441300119999,-23.7435603509999,-23.7420141269999,-23.7398982409999,-23.7379451159999,-23.7192276679999,-23.7032364569999,-23.6978246739999,-23.7106827459999,-23.697336392,-23.6817520819999,-23.6485489569999,-23.6560766269999,-23.6703804787761,-23.6858825749209,-23.7246378143836,-23.7545347137061,-23.7701309889999],"lat":[15.1839867210001,15.1937523460001,15.205511786,15.2162946640001,15.223089911,15.2280947940001,15.2334658870001,15.2503115910001,15.26976146,15.285630601,15.2918154970001,15.294134833,15.30487702,15.3106143250001,15.3116722680001,15.3327497420001,15.3327497420001,15.325140692,15.3209496110001,15.317328192,15.3116722680001,15.3229027360001,15.313462632,15.2963320980001,15.284369208,15.2660179710001,15.254828192,15.2372093770001,15.2297223980001,15.2065414593209,15.1843956080708,15.1799664380007,15.183288316003,15.1839867210001]}]]],null,". - c_acumulados",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"polygon","stroke":true,"color":"#333333","weight":1,"opacity":[0.9,0.9,0.9,0.9],"fill":true,"fillColor":["#FDE725","#440154","#440154","#440154"],"fillOpacity":[0.6,0.6,0.6,0.6],"smoothFactor":1,"noClip":false},["<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"lib/popup/popup.css\"><\/head><body><div class=\"scrollableContainer\"><table class=\"popup scrollable\" id=\"popup\"><tr class='coord'><td><\/td><td><b>Feature ID<\/b><\/td><td align='right'>1&emsp;<\/td><\/tr><tr class='alt'><td>1<\/td><td><b>cidade&emsp;<\/b><\/td><td align='right'>Boa Vista&emsp;<\/td><\/tr><tr><td>2<\/td><td><b>n&emsp;<\/b><\/td><td align='right'>1&emsp;<\/td><\/tr><tr class='alt'><td>3<\/td><td><b>geometry&emsp;<\/b><\/td><td align='right'>sfc_MULTIPOLYGON&emsp;<\/td><\/tr><tr><td>4<\/td><td><b>c_acumulados&emsp;<\/b><\/td><td align='right'>52&emsp;<\/td><\/tr><\/table><\/div><\/body><\/html>","<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"lib/popup/popup.css\"><\/head><body><div class=\"scrollableContainer\"><table class=\"popup scrollable\" id=\"popup\"><tr class='coord'><td><\/td><td><b>Feature ID<\/b><\/td><td align='right'>2&emsp;<\/td><\/tr><tr class='alt'><td>1<\/td><td><b>cidade&emsp;<\/b><\/td><td align='right'>Praia&emsp;<\/td><\/tr><tr><td>2<\/td><td><b>n&emsp;<\/b><\/td><td align='right'>1&emsp;<\/td><\/tr><tr class='alt'><td>3<\/td><td><b>geometry&emsp;<\/b><\/td><td align='right'>sfc_MULTIPOLYGON&emsp;<\/td><\/tr><tr><td>4<\/td><td><b>c_acumulados&emsp;<\/b><\/td><td align='right'>13&emsp;<\/td><\/tr><\/table><\/div><\/body><\/html>","<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"lib/popup/popup.css\"><\/head><body><div class=\"scrollableContainer\"><table class=\"popup scrollable\" id=\"popup\"><tr class='coord'><td><\/td><td><b>Feature ID<\/b><\/td><td align='right'>3&emsp;<\/td><\/tr><tr class='alt'><td>1<\/td><td><b>cidade&emsp;<\/b><\/td><td align='right'>São Vicente&emsp;<\/td><\/tr><tr><td>2<\/td><td><b>n&emsp;<\/b><\/td><td align='right'>1&emsp;<\/td><\/tr><tr class='alt'><td>3<\/td><td><b>geometry&emsp;<\/b><\/td><td align='right'>sfc_MULTIPOLYGON&emsp;<\/td><\/tr><tr><td>4<\/td><td><b>c_acumulados&emsp;<\/b><\/td><td align='right'> 1&emsp;<\/td><\/tr><\/table><\/div><\/body><\/html>","<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"lib/popup/popup.css\"><\/head><body><div class=\"scrollableContainer\"><table class=\"popup scrollable\" id=\"popup\"><tr class='coord'><td><\/td><td><b>Feature ID<\/b><\/td><td align='right'>4&emsp;<\/td><\/tr><tr class='alt'><td>1<\/td><td><b>cidade&emsp;<\/b><\/td><td align='right'>Tarrafal&emsp;<\/td><\/tr><tr><td>2<\/td><td><b>n&emsp;<\/b><\/td><td align='right'>1&emsp;<\/td><\/tr><tr class='alt'><td>3<\/td><td><b>geometry&emsp;<\/b><\/td><td align='right'>sfc_MULTIPOLYGON&emsp;<\/td><\/tr><tr><td>4<\/td><td><b>c_acumulados&emsp;<\/b><\/td><td align='right'> 1&emsp;<\/td><\/tr><\/table><\/div><\/body><\/html>"],{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},["52","13","1","1"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},{"stroke":true,"weight":2,"opacity":0.9,"fillOpacity":0.84,"bringToFront":false,"sendToBack":false}]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-25.0941462879999,14.9076195330001,-22.6665746739999,16.9230003930001,". - c_acumulados","Zoom to . - c_acumulados","<strong> . - c_acumulados <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],". - c_acumulados",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addLegend","args":[{"colors":["#440154","#21908C","#FDE725"],"labels":["1","13","52"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":". - c_acumulados","extra":null,"layerId":null,"className":"info legend","group":". - c_acumulados"}]}],"limits":{"lat":[14.9076195330001,16.9230003930001],"lng":[-25.0941462879999,-22.6665746739999]}},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+</div>
+<div id="áfrica" class="section level1">
+<h1>África</h1>
+<div id="row-6" class="section level2">
+<h2>Row</h2>
+<div id="confirmados" class="section level3 value-box">
+<h3>Confirmados</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Casos Confirmados" data-icon="fas fa-globe-africa" data-color="#003399">23,937</span>
+</div>
+<div id="ativos" class="section level3 value-box">
+<h3>Ativos</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Casos Ativos" data-icon="fas fa-cross" data-color="blue">16,468  ( 68.8 %)</span>
+</div>
+<div id="recovered" class="section level3 value-box">
+<h3>Recovered</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Recuperados" data-icon="fas fa-heartbeat" data-color="green">6,313  ( 26.4 %)</span>
+</div>
+<div id="death" class="section level3 value-box">
+<h3>Death</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-caption="Óbitos" data-color="red">1,156  ( 4.8 %)</span>
+</div>
+</div>
+<div id="row-7" class="section level2">
+<h2>Row</h2>
+<div id="casos-diários" class="section level3">
+<h3>Casos Diários</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-7bf13229dcf0135a420e" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7bf13229dcf0135a420e">{"x":{"visdat":{"70427097280":["function () ","plotlyVisDat"]},"cur_data":"70427097280","attrs":{"70427097280":{"x":{},"y":{},"fillcolor":"#1f77b4","mode":"none","stackgroup":"one","name":"Ativos","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"},"70427097280.1":{"x":{},"y":{},"fillcolor":"forestgreen","mode":"none","stackgroup":"one","name":"Recuperados","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","inherit":true},"70427097280.2":{"x":{},"y":{},"fillcolor":"#E41317","mode":"none","stackgroup":"one","name":"Óbitos","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Covid19 em África","yaxis":{"domain":[0,1],"automargin":true,"title":"Casos acumulados"},"xaxis":{"domain":[0,1],"automargin":true,"title":"Data"},"legend":{"x":0.1,"y":0.9},"hovermode":"compare","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["2020-01-22","2020-01-23","2020-01-24","2020-01-25","2020-01-26","2020-01-27","2020-01-28","2020-01-29","2020-01-30","2020-01-31","2020-02-01","2020-02-02","2020-02-03","2020-02-04","2020-02-05","2020-02-06","2020-02-07","2020-02-08","2020-02-09","2020-02-10","2020-02-11","2020-02-12","2020-02-13","2020-02-14","2020-02-15","2020-02-16","2020-02-17","2020-02-18","2020-02-19","2020-02-20","2020-02-21","2020-02-22","2020-02-23","2020-02-24","2020-02-25","2020-02-26","2020-02-27","2020-02-28","2020-02-29","2020-03-01","2020-03-02","2020-03-03","2020-03-04","2020-03-05","2020-03-06","2020-03-07","2020-03-08","2020-03-09","2020-03-10","2020-03-11","2020-03-12","2020-03-13","2020-03-14","2020-03-15","2020-03-16","2020-03-17","2020-03-18","2020-03-19","2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20","2020-04-21"],"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,3,7,10,20,23,42,42,80,88,100,87,94,132,203,265,345,418,527,672,840,1017,1206,1571,1993,2430,2988,3477,3763,4260,4590,5049,5512,6023,6726,7231,7762,8327,8734,9250,9778,9831,10267,10609,11234,11863,12490,12770,13759,14619,15242,15775,16468],"fillcolor":"#1f77b4","mode":"none","stackgroup":"one","name":"Ativos","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020-01-22","2020-01-23","2020-01-24","2020-01-25","2020-01-26","2020-01-27","2020-01-28","2020-01-29","2020-01-30","2020-01-31","2020-02-01","2020-02-02","2020-02-03","2020-02-04","2020-02-05","2020-02-06","2020-02-07","2020-02-08","2020-02-09","2020-02-10","2020-02-11","2020-02-12","2020-02-13","2020-02-14","2020-02-15","2020-02-16","2020-02-17","2020-02-18","2020-02-19","2020-02-20","2020-02-21","2020-02-22","2020-02-23","2020-02-24","2020-02-25","2020-02-26","2020-02-27","2020-02-28","2020-02-29","2020-03-01","2020-03-02","2020-03-03","2020-03-04","2020-03-05","2020-03-06","2020-03-07","2020-03-08","2020-03-09","2020-03-10","2020-03-11","2020-03-12","2020-03-13","2020-03-14","2020-03-15","2020-03-16","2020-03-17","2020-03-18","2020-03-19","2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20","2020-04-21"],"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,2,2,2,28,36,37,41,35,42,48,49,69,77,89,143,143,137,211,184,227,251,281,326,408,500,566,695,802,899,980,1140,1385,1601,2112,2328,2793,2901,3190,3410,4231,4554,4933,5435,6013,6313],"fillcolor":"forestgreen","mode":"none","stackgroup":"one","name":"Recuperados","type":"scatter","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020-01-22","2020-01-23","2020-01-24","2020-01-25","2020-01-26","2020-01-27","2020-01-28","2020-01-29","2020-01-30","2020-01-31","2020-02-01","2020-02-02","2020-02-03","2020-02-04","2020-02-05","2020-02-06","2020-02-07","2020-02-08","2020-02-09","2020-02-10","2020-02-11","2020-02-12","2020-02-13","2020-02-14","2020-02-15","2020-02-16","2020-02-17","2020-02-18","2020-02-19","2020-02-20","2020-02-21","2020-02-22","2020-02-23","2020-02-24","2020-02-25","2020-02-26","2020-02-27","2020-02-28","2020-02-29","2020-03-01","2020-03-02","2020-03-03","2020-03-04","2020-03-05","2020-03-06","2020-03-07","2020-03-08","2020-03-09","2020-03-10","2020-03-11","2020-03-12","2020-03-13","2020-03-14","2020-03-15","2020-03-16","2020-03-17","2020-03-18","2020-03-19","2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-04","2020-04-05","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-10","2020-04-11","2020-04-12","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-18","2020-04-19","2020-04-20","2020-04-21"],"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,2,3,6,7,8,8,11,17,20,26,35,47,55,61,70,87,111,127,145,164,191,224,271,315,362,420,463,509,550,603,667,716,762,808,847,883,936,985,1025,1088,1126,1156],"fillcolor":"#E41317","mode":"none","stackgroup":"one","name":"Óbitos","type":"scatter","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"line":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="taxa-de-recuperação-vs-taxa-de-mortandade" class="section level3">
+<h3>Taxa de Recuperação vs Taxa de Mortandade</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-647b772ad6ef2cd4cd90" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-647b772ad6ef2cd4cd90">{"x":{"visdat":{"7041ff84e95":["function () ","plotlyVisDat"]},"cur_data":"7041ff84e95","attrs":{"7041ff84e95":{"x":{},"y":{},"marker":{"sizemode":"diameter","opacity":0.5},"hoverinfo":"text","hovertemplate":{},"color":{},"size":{},"alpha_stroke":1,"sizes":[5,30],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":70,"r":10},"title":"","xaxis":{"domain":[0,1],"automargin":true,"title":"<b>Taxa de Mortandade<\/b>","ticksuffix":"%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"<b>Taxa de Recuperação<\/b>","ticksuffix":"%"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[13.9452152258983],"y":[40.9818569903949],"marker":{"color":"rgba(121,191,160,1)","size":[29.1739683687483],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(121,191,160,1)"}},"hoverinfo":"text","hovertemplate":"Algeria<br>Confirmados: 2811<br>Ativos: 1267 (45.1 %)<br>Recuperados: 1152 (41 %)<br>Óbitos: 392 (13.9 %)","type":"scatter","mode":"markers","name":"Algeria","textfont":{"color":"rgba(121,191,160,1)","size":29.1739683687483},"error_y":{"color":"rgba(121,191,160,1)","width":29.1739683687483},"error_x":{"color":"rgba(121,191,160,1)","width":29.1739683687483},"line":{"color":"rgba(121,191,160,1)","width":29.1739683687483},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.33333333333333],"y":[25],"marker":{"color":"rgba(138,188,155,1)","size":[10.9887119432676],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(138,188,155,1)"}},"hoverinfo":"text","hovertemplate":"Angola<br>Confirmados: 24<br>Ativos: 16 (66.7 %)<br>Recuperados: 6 (25 %)<br>Óbitos: 2 (8.3 %)","type":"scatter","mode":"markers","name":"Angola","textfont":{"color":"rgba(138,188,155,1)","size":10.9887119432676},"error_y":{"color":"rgba(138,188,155,1)","width":10.9887119432676},"error_x":{"color":"rgba(138,188,155,1)","width":10.9887119432676},"line":{"color":"rgba(138,188,155,1)","width":10.9887119432676},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.85185185185185],"y":[50],"marker":{"color":"rgba(217,161,119,1)","size":[14.084707218816],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(217,161,119,1)"}},"hoverinfo":"text","hovertemplate":"Benin<br>Confirmados: 54<br>Ativos: 26 (48.1 %)<br>Recuperados: 27 (50 %)<br>Óbitos: 1 (1.9 %)","type":"scatter","mode":"markers","name":"Benin","textfont":{"color":"rgba(217,161,119,1)","size":14.084707218816},"error_y":{"color":"rgba(217,161,119,1)","width":14.084707218816},"error_x":{"color":"rgba(217,161,119,1)","width":14.084707218816},"line":{"color":"rgba(217,161,119,1)","width":14.084707218816},"xaxis":"x","yaxis":"y","frame":null},{"x":[5],"y":[0],"marker":{"color":"rgba(234,152,109,1)","size":[10.2926388815208],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(234,152,109,1)"}},"hoverinfo":"text","hovertemplate":"Botswana<br>Confirmados: 20<br>Ativos: 19 (95 %)<br>Recuperados: 0 (0 %)<br>Óbitos: 1 (5 %)","type":"scatter","mode":"markers","name":"Botswana","textfont":{"color":"rgba(234,152,109,1)","size":10.2926388815208},"error_y":{"color":"rgba(234,152,109,1)","width":10.2926388815208},"error_x":{"color":"rgba(234,152,109,1)","width":10.2926388815208},"line":{"color":"rgba(234,152,109,1)","width":10.2926388815208},"xaxis":"x","yaxis":"y","frame":null},{"x":[6.33333333333333],"y":[60.3333333333333],"marker":{"color":"rgba(251,142,99,1)","size":[23.2778388583639],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(251,142,99,1)"}},"hoverinfo":"text","hovertemplate":"Burkina Faso<br>Confirmados: 600<br>Ativos: 200 (33.3 %)<br>Recuperados: 362 (60.3 %)<br>Óbitos: 38 (6.3 %)","type":"scatter","mode":"markers","name":"Burkina Faso","textfont":{"color":"rgba(251,142,99,1)","size":23.2778388583639},"error_y":{"color":"rgba(251,142,99,1)","width":23.2778388583639},"error_x":{"color":"rgba(251,142,99,1)","width":23.2778388583639},"line":{"color":"rgba(251,142,99,1)","width":23.2778388583639},"xaxis":"x","yaxis":"y","frame":null},{"x":[20],"y":[80],"marker":{"color":"rgba(247,143,105,1)","size":[5],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(247,143,105,1)"}},"hoverinfo":"text","hovertemplate":"Burundi<br>Confirmados: 5<br>Ativos: 0 (0 %)<br>Recuperados: 4 (80 %)<br>Óbitos: 1 (20 %)","type":"scatter","mode":"markers","name":"Burundi","textfont":{"color":"rgba(247,143,105,1)","size":5},"error_y":{"color":"rgba(247,143,105,1)","width":5},"error_x":{"color":"rgba(247,143,105,1)","width":5},"line":{"color":"rgba(247,143,105,1)","width":5},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.47058823529412],"y":[1.47058823529412],"marker":{"color":"rgba(244,143,109,1)","size":[14.9648078041591],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(244,143,109,1)"}},"hoverinfo":"text","hovertemplate":"Cabo Verde<br>Confirmados: 68<br>Ativos: 66 (97.1 %)<br>Recuperados: 1 (1.5 %)<br>Óbitos: 1 (1.5 %)","type":"scatter","mode":"markers","name":"Cabo Verde","textfont":{"color":"rgba(244,143,109,1)","size":14.9648078041591},"error_y":{"color":"rgba(244,143,109,1)","width":14.9648078041591},"error_x":{"color":"rgba(244,143,109,1)","width":14.9648078041591},"line":{"color":"rgba(244,143,109,1)","width":14.9648078041591},"xaxis":"x","yaxis":"y","frame":null},{"x":[3.69733447979364],"y":[28.2889079965606],"marker":{"color":"rgba(237,145,117,1)","size":[25.8045888300598],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(237,145,117,1)"}},"hoverinfo":"text","hovertemplate":"Cameroon<br>Confirmados: 1163<br>Ativos: 791 (68 %)<br>Recuperados: 329 (28.3 %)<br>Óbitos: 43 (3.7 %)","type":"scatter","mode":"markers","name":"Cameroon","textfont":{"color":"rgba(237,145,117,1)","size":25.8045888300598},"error_y":{"color":"rgba(237,145,117,1)","width":25.8045888300598},"error_x":{"color":"rgba(237,145,117,1)","width":25.8045888300598},"line":{"color":"rgba(237,145,117,1)","width":25.8045888300598},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[24.2424242424242],"marker":{"color":"rgba(227,147,129,1)","size":[12.2045147673675],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(227,147,129,1)"}},"hoverinfo":"text","hovertemplate":"Chad<br>Confirmados: 33<br>Ativos: 25 (75.8 %)<br>Recuperados: 8 (24.2 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Chad","textfont":{"color":"rgba(227,147,129,1)","size":12.2045147673675},"error_y":{"color":"rgba(227,147,129,1)","width":12.2045147673675},"error_x":{"color":"rgba(227,147,129,1)","width":12.2045147673675},"line":{"color":"rgba(227,147,129,1)","width":12.2045147673675},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.41921397379913],"y":[33.0786026200873],"marker":{"color":"rgba(201,153,157,1)","size":[24.8931128084961],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(201,153,157,1)"}},"hoverinfo":"text","hovertemplate":"Cote d'Ivoire<br>Confirmados: 916<br>Ativos: 600 (65.5 %)<br>Recuperados: 303 (33.1 %)<br>Óbitos: 13 (1.4 %)","type":"scatter","mode":"markers","name":"Cote d'Ivoire","textfont":{"color":"rgba(201,153,157,1)","size":24.8931128084961},"error_y":{"color":"rgba(201,153,157,1)","width":24.8931128084961},"error_x":{"color":"rgba(201,153,157,1)","width":24.8931128084961},"line":{"color":"rgba(201,153,157,1)","width":24.8931128084961},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.211640211640212],"y":[11.8518518518519],"marker":{"color":"rgba(168,157,185,1)","size":[25.0121091429592],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(168,157,185,1)"}},"hoverinfo":"text","hovertemplate":"Djibouti<br>Confirmados: 945<br>Ativos: 831 (87.9 %)<br>Recuperados: 112 (11.9 %)<br>Óbitos: 2 (0.2 %)","type":"scatter","mode":"markers","name":"Djibouti","textfont":{"color":"rgba(168,157,185,1)","size":25.0121091429592},"error_y":{"color":"rgba(168,157,185,1)","width":25.0121091429592},"error_x":{"color":"rgba(168,157,185,1)","width":25.0121091429592},"line":{"color":"rgba(168,157,185,1)","width":25.0121091429592},"xaxis":"x","yaxis":"y","frame":null},{"x":[7.56446991404011],"y":[24.9283667621776],"marker":{"color":"rgba(145,160,201,1)","size":[30],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(145,160,201,1)"}},"hoverinfo":"text","hovertemplate":"Egypt<br>Confirmados: 3490<br>Ativos: 2356 (67.5 %)<br>Recuperados: 870 (24.9 %)<br>Óbitos: 264 (7.6 %)","type":"scatter","mode":"markers","name":"Egypt","textfont":{"color":"rgba(145,160,201,1)","size":30},"error_y":{"color":"rgba(145,160,201,1)","width":30},"error_x":{"color":"rgba(145,160,201,1)","width":30},"line":{"color":"rgba(145,160,201,1)","width":30},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[8.43373493975904],"marker":{"color":"rgba(147,159,203,1)","size":[15.7258273252393],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(147,159,203,1)"}},"hoverinfo":"text","hovertemplate":"Equatorial Guinea<br>Confirmados: 83<br>Ativos: 76 (91.6 %)<br>Recuperados: 7 (8.4 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Equatorial Guinea","textfont":{"color":"rgba(147,159,203,1)","size":15.7258273252393},"error_y":{"color":"rgba(147,159,203,1)","width":15.7258273252393},"error_x":{"color":"rgba(147,159,203,1)","width":15.7258273252393},"line":{"color":"rgba(147,159,203,1)","width":15.7258273252393},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[15.3846153846154],"marker":{"color":"rgba(151,158,202,1)","size":[12.8422991864651],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(151,158,202,1)"}},"hoverinfo":"text","hovertemplate":"Eritrea<br>Confirmados: 39<br>Ativos: 33 (84.6 %)<br>Recuperados: 6 (15.4 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Eritrea","textfont":{"color":"rgba(151,158,202,1)","size":12.8422991864651},"error_y":{"color":"rgba(151,158,202,1)","width":12.8422991864651},"error_x":{"color":"rgba(151,158,202,1)","width":12.8422991864651},"line":{"color":"rgba(151,158,202,1)","width":12.8422991864651},"xaxis":"x","yaxis":"y","frame":null},{"x":[2.63157894736842],"y":[14.0350877192982],"marker":{"color":"rgba(163,156,201,1)","size":[16.9374462235135],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(163,156,201,1)"}},"hoverinfo":"text","hovertemplate":"Ethiopia<br>Confirmados: 114<br>Ativos: 95 (83.3 %)<br>Recuperados: 16 (14 %)<br>Óbitos: 3 (2.6 %)","type":"scatter","mode":"markers","name":"Ethiopia","textfont":{"color":"rgba(163,156,201,1)","size":16.9374462235135},"error_y":{"color":"rgba(163,156,201,1)","width":16.9374462235135},"error_x":{"color":"rgba(163,156,201,1)","width":16.9374462235135},"line":{"color":"rgba(163,156,201,1)","width":16.9374462235135},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.641025641025641],"y":[10.2564102564103],"marker":{"color":"rgba(177,154,200,1)","size":[18.1349380679859],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(177,154,200,1)"}},"hoverinfo":"text","hovertemplate":"Gabon<br>Confirmados: 156<br>Ativos: 139 (89.1 %)<br>Recuperados: 16 (10.3 %)<br>Óbitos: 1 (0.6 %)","type":"scatter","mode":"markers","name":"Gabon","textfont":{"color":"rgba(177,154,200,1)","size":18.1349380679859},"error_y":{"color":"rgba(177,154,200,1)","width":18.1349380679859},"error_x":{"color":"rgba(177,154,200,1)","width":18.1349380679859},"line":{"color":"rgba(177,154,200,1)","width":18.1349380679859},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.863723608445297],"y":[9.50095969289827],"marker":{"color":"rgba(191,150,199,1)","size":[25.3851582624456],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(191,150,199,1)"}},"hoverinfo":"text","hovertemplate":"Ghana<br>Confirmados: 1042<br>Ativos: 934 (89.6 %)<br>Recuperados: 99 (9.5 %)<br>Óbitos: 9 (0.9 %)","type":"scatter","mode":"markers","name":"Ghana","textfont":{"color":"rgba(191,150,199,1)","size":25.3851582624456},"error_y":{"color":"rgba(191,150,199,1)","width":25.3851582624456},"error_x":{"color":"rgba(191,150,199,1)","width":25.3851582624456},"line":{"color":"rgba(191,150,199,1)","width":25.3851582624456},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.872093023255814],"y":[18.4593023255814],"marker":{"color":"rgba(204,147,198,1)","size":[23.8003442165745],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(204,147,198,1)"}},"hoverinfo":"text","hovertemplate":"Guinea<br>Confirmados: 688<br>Ativos: 555 (80.7 %)<br>Recuperados: 127 (18.5 %)<br>Óbitos: 6 (0.9 %)","type":"scatter","mode":"markers","name":"Guinea","textfont":{"color":"rgba(204,147,198,1)","size":23.8003442165745},"error_y":{"color":"rgba(204,147,198,1)","width":23.8003442165745},"error_x":{"color":"rgba(204,147,198,1)","width":23.8003442165745},"line":{"color":"rgba(204,147,198,1)","width":23.8003442165745},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[6],"marker":{"color":"rgba(207,146,197,1)","size":[13.7908828983086],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(207,146,197,1)"}},"hoverinfo":"text","hovertemplate":"Guinea-Bissau<br>Confirmados: 50<br>Ativos: 47 (94 %)<br>Recuperados: 3 (6 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Guinea-Bissau","textfont":{"color":"rgba(207,146,197,1)","size":13.7908828983086},"error_y":{"color":"rgba(207,146,197,1)","width":13.7908828983086},"error_x":{"color":"rgba(207,146,197,1)","width":13.7908828983086},"line":{"color":"rgba(207,146,197,1)","width":13.7908828983086},"xaxis":"x","yaxis":"y","frame":null},{"x":[4.72972972972973],"y":[25],"marker":{"color":"rgba(212,172,156,1)","size":[20.5802725819316],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(212,172,156,1)"}},"hoverinfo":"text","hovertemplate":"Kenya<br>Confirmados: 296<br>Ativos: 208 (70.3 %)<br>Recuperados: 74 (25 %)<br>Óbitos: 14 (4.7 %)","type":"scatter","mode":"markers","name":"Kenya","textfont":{"color":"rgba(212,172,156,1)","size":20.5802725819316},"error_y":{"color":"rgba(212,172,156,1)","width":20.5802725819316},"error_x":{"color":"rgba(212,172,156,1)","width":20.5802725819316},"line":{"color":"rgba(212,172,156,1)","width":20.5802725819316},"xaxis":"x","yaxis":"y","frame":null},{"x":[7.92079207920792],"y":[6.93069306930693],"marker":{"color":"rgba(192,195,123,1)","size":[16.475191029952],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(192,195,123,1)"}},"hoverinfo":"text","hovertemplate":"Liberia<br>Confirmados: 101<br>Ativos: 86 (85.1 %)<br>Recuperados: 7 (6.9 %)<br>Óbitos: 8 (7.9 %)","type":"scatter","mode":"markers","name":"Liberia","textfont":{"color":"rgba(192,195,123,1)","size":16.475191029952},"error_y":{"color":"rgba(192,195,123,1)","width":16.475191029952},"error_x":{"color":"rgba(192,195,123,1)","width":16.475191029952},"line":{"color":"rgba(192,195,123,1)","width":16.475191029952},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.96078431372549],"y":[29.4117647058824],"marker":{"color":"rgba(190,197,119,1)","size":[13.8664860011729],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(190,197,119,1)"}},"hoverinfo":"text","hovertemplate":"Libya<br>Confirmados: 51<br>Ativos: 35 (68.6 %)<br>Recuperados: 15 (29.4 %)<br>Óbitos: 1 (2 %)","type":"scatter","mode":"markers","name":"Libya","textfont":{"color":"rgba(190,197,119,1)","size":13.8664860011729},"error_y":{"color":"rgba(190,197,119,1)","width":13.8664860011729},"error_x":{"color":"rgba(190,197,119,1)","width":13.8664860011729},"line":{"color":"rgba(190,197,119,1)","width":13.8664860011729},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[36.3636363636364],"marker":{"color":"rgba(177,208,100,1)","size":[17.164958835214],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(177,208,100,1)"}},"hoverinfo":"text","hovertemplate":"Madagascar<br>Confirmados: 121<br>Ativos: 77 (63.6 %)<br>Recuperados: 44 (36.4 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Madagascar","textfont":{"color":"rgba(177,208,100,1)","size":17.164958835214},"error_y":{"color":"rgba(177,208,100,1)","width":17.164958835214},"error_x":{"color":"rgba(177,208,100,1)","width":17.164958835214},"line":{"color":"rgba(177,208,100,1)","width":17.164958835214},"xaxis":"x","yaxis":"y","frame":null},{"x":[11.1111111111111],"y":[16.6666666666667],"marker":{"color":"rgba(174,211,95,1)","size":[9.89039014028143],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(174,211,95,1)"}},"hoverinfo":"text","hovertemplate":"Malawi<br>Confirmados: 18<br>Ativos: 13 (72.2 %)<br>Recuperados: 3 (16.7 %)<br>Óbitos: 2 (11.1 %)","type":"scatter","mode":"markers","name":"Malawi","textfont":{"color":"rgba(174,211,95,1)","size":9.89039014028143},"error_y":{"color":"rgba(174,211,95,1)","width":9.89039014028143},"error_x":{"color":"rgba(174,211,95,1)","width":9.89039014028143},"line":{"color":"rgba(174,211,95,1)","width":9.89039014028143},"xaxis":"x","yaxis":"y","frame":null},{"x":[5.42635658914729],"y":[22.093023255814],"marker":{"color":"rgba(169,216,83,1)","size":[20.0557029728279],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(169,216,83,1)"}},"hoverinfo":"text","hovertemplate":"Mali<br>Confirmados: 258<br>Ativos: 187 (72.5 %)<br>Recuperados: 57 (22.1 %)<br>Óbitos: 14 (5.4 %)","type":"scatter","mode":"markers","name":"Mali","textfont":{"color":"rgba(169,216,83,1)","size":20.0557029728279},"error_y":{"color":"rgba(169,216,83,1)","width":20.0557029728279},"error_x":{"color":"rgba(169,216,83,1)","width":20.0557029728279},"line":{"color":"rgba(169,216,83,1)","width":20.0557029728279},"xaxis":"x","yaxis":"y","frame":null},{"x":[14.2857142857143],"y":[85.7142857142857],"marker":{"color":"rgba(177,216,81,1)","size":[6.28459444980725],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(177,216,81,1)"}},"hoverinfo":"text","hovertemplate":"Mauritania<br>Confirmados: 7<br>Ativos: 0 (0 %)<br>Recuperados: 6 (85.7 %)<br>Óbitos: 1 (14.3 %)","type":"scatter","mode":"markers","name":"Mauritania","textfont":{"color":"rgba(177,216,81,1)","size":6.28459444980725},"error_y":{"color":"rgba(177,216,81,1)","width":6.28459444980725},"error_x":{"color":"rgba(177,216,81,1)","width":6.28459444980725},"line":{"color":"rgba(177,216,81,1)","width":6.28459444980725},"xaxis":"x","yaxis":"y","frame":null},{"x":[2.74390243902439],"y":[74.0853658536585],"marker":{"color":"rgba(180,216,80,1)","size":[20.9721888894387],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(180,216,80,1)"}},"hoverinfo":"text","hovertemplate":"Mauritius<br>Confirmados: 328<br>Ativos: 76 (23.2 %)<br>Recuperados: 243 (74.1 %)<br>Óbitos: 9 (2.7 %)","type":"scatter","mode":"markers","name":"Mauritius","textfont":{"color":"rgba(180,216,80,1)","size":20.9721888894387},"error_y":{"color":"rgba(180,216,80,1)","width":20.9721888894387},"error_x":{"color":"rgba(180,216,80,1)","width":20.9721888894387},"line":{"color":"rgba(180,216,80,1)","width":20.9721888894387},"xaxis":"x","yaxis":"y","frame":null},{"x":[4.51854160174509],"y":[12.2468058585229],"marker":{"color":"rgba(202,217,72,1)","size":[29.6795221236137],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(202,217,72,1)"}},"hoverinfo":"text","hovertemplate":"Morocco<br>Confirmados: 3209<br>Ativos: 2671 (83.2 %)<br>Recuperados: 393 (12.2 %)<br>Óbitos: 145 (4.5 %)","type":"scatter","mode":"markers","name":"Morocco","textfont":{"color":"rgba(202,217,72,1)","size":29.6795221236137},"error_y":{"color":"rgba(202,217,72,1)","width":29.6795221236137},"error_x":{"color":"rgba(202,217,72,1)","width":29.6795221236137},"line":{"color":"rgba(202,217,72,1)","width":29.6795221236137},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[20.5128205128205],"marker":{"color":"rgba(205,217,71,1)","size":[12.8422991864651],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(205,217,71,1)"}},"hoverinfo":"text","hovertemplate":"Mozambique<br>Confirmados: 39<br>Ativos: 31 (79.5 %)<br>Recuperados: 8 (20.5 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Mozambique","textfont":{"color":"rgba(205,217,71,1)","size":12.8422991864651},"error_y":{"color":"rgba(205,217,71,1)","width":12.8422991864651},"error_x":{"color":"rgba(205,217,71,1)","width":12.8422991864651},"line":{"color":"rgba(205,217,71,1)","width":12.8422991864651},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[37.5],"marker":{"color":"rgba(212,217,68,1)","size":[9.4407143054934],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(212,217,68,1)"}},"hoverinfo":"text","hovertemplate":"Namibia<br>Confirmados: 16<br>Ativos: 10 (62.5 %)<br>Recuperados: 6 (37.5 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Namibia","textfont":{"color":"rgba(212,217,68,1)","size":9.4407143054934},"error_y":{"color":"rgba(212,217,68,1)","width":9.4407143054934},"error_x":{"color":"rgba(212,217,68,1)","width":9.4407143054934},"line":{"color":"rgba(212,217,68,1)","width":9.4407143054934},"xaxis":"x","yaxis":"y","frame":null},{"x":[3.0441400304414],"y":[19.3302891933029],"marker":{"color":"rgba(228,217,61,1)","size":[23.6243237645813],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(228,217,61,1)"}},"hoverinfo":"text","hovertemplate":"Niger<br>Confirmados: 657<br>Ativos: 510 (77.6 %)<br>Recuperados: 127 (19.3 %)<br>Óbitos: 20 (3 %)","type":"scatter","mode":"markers","name":"Niger","textfont":{"color":"rgba(228,217,61,1)","size":23.6243237645813},"error_y":{"color":"rgba(228,217,61,1)","width":23.6243237645813},"error_x":{"color":"rgba(228,217,61,1)","width":23.6243237645813},"line":{"color":"rgba(228,217,61,1)","width":23.6243237645813},"xaxis":"x","yaxis":"y","frame":null},{"x":[3.30827067669173],"y":[28.2706766917293],"marker":{"color":"rgba(232,217,60,1)","size":[23.6705310691221],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(232,217,60,1)"}},"hoverinfo":"text","hovertemplate":"Nigeria<br>Confirmados: 665<br>Ativos: 455 (68.4 %)<br>Recuperados: 188 (28.3 %)<br>Óbitos: 22 (3.3 %)","type":"scatter","mode":"markers","name":"Nigeria","textfont":{"color":"rgba(232,217,60,1)","size":23.6705310691221},"error_y":{"color":"rgba(232,217,60,1)","width":23.6705310691221},"error_x":{"color":"rgba(232,217,60,1)","width":23.6705310691221},"line":{"color":"rgba(232,217,60,1)","width":23.6705310691221},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[56],"marker":{"color":"rgba(249,211,84,1)","size":[17.9851999768432],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(249,211,84,1)"}},"hoverinfo":"text","hovertemplate":"Rwanda<br>Confirmados: 150<br>Ativos: 66 (44 %)<br>Recuperados: 84 (56 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Rwanda","textfont":{"color":"rgba(249,211,84,1)","size":17.9851999768432},"error_y":{"color":"rgba(249,211,84,1)","width":17.9851999768432},"error_x":{"color":"rgba(249,211,84,1)","width":17.9851999768432},"line":{"color":"rgba(249,211,84,1)","width":17.9851999768432},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.21359223300971],"y":[58.7378640776699],"marker":{"color":"rgba(242,205,110,1)","size":[21.8426917597122],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(242,205,110,1)"}},"hoverinfo":"text","hovertemplate":"Senegal<br>Confirmados: 412<br>Ativos: 165 (40 %)<br>Recuperados: 242 (58.7 %)<br>Óbitos: 5 (1.2 %)","type":"scatter","mode":"markers","name":"Senegal","textfont":{"color":"rgba(242,205,110,1)","size":21.8426917597122},"error_y":{"color":"rgba(242,205,110,1)","width":21.8426917597122},"error_x":{"color":"rgba(242,205,110,1)","width":21.8426917597122},"line":{"color":"rgba(242,205,110,1)","width":21.8426917597122},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[45.4545454545455],"marker":{"color":"rgba(240,204,117,1)","size":[8.0101976888329],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(240,204,117,1)"}},"hoverinfo":"text","hovertemplate":"Seychelles<br>Confirmados: 11<br>Ativos: 6 (54.5 %)<br>Recuperados: 5 (45.5 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Seychelles","textfont":{"color":"rgba(240,204,117,1)","size":8.0101976888329},"error_y":{"color":"rgba(240,204,117,1)","width":8.0101976888329},"error_x":{"color":"rgba(240,204,117,1)","width":8.0101976888329},"line":{"color":"rgba(240,204,117,1)","width":8.0101976888329},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[12],"marker":{"color":"rgba(239,203,120,1)","size":[13.7908828983086],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(239,203,120,1)"}},"hoverinfo":"text","hovertemplate":"Sierra Leone<br>Confirmados: 50<br>Ativos: 44 (88 %)<br>Recuperados: 6 (12 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Sierra Leone","textfont":{"color":"rgba(239,203,120,1)","size":13.7908828983086},"error_y":{"color":"rgba(239,203,120,1)","width":13.7908828983086},"error_x":{"color":"rgba(239,203,120,1)","width":13.7908828983086},"line":{"color":"rgba(239,203,120,1)","width":13.7908828983086},"xaxis":"x","yaxis":"y","frame":null},{"x":[2.7972027972028],"y":[1.3986013986014],"marker":{"color":"rgba(235,200,133,1)","size":[20.449062695072],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(235,200,133,1)"}},"hoverinfo":"text","hovertemplate":"Somalia<br>Confirmados: 286<br>Ativos: 274 (95.8 %)<br>Recuperados: 4 (1.4 %)<br>Óbitos: 8 (2.8 %)","type":"scatter","mode":"markers","name":"Somalia","textfont":{"color":"rgba(235,200,133,1)","size":20.449062695072},"error_y":{"color":"rgba(235,200,133,1)","width":20.449062695072},"error_x":{"color":"rgba(235,200,133,1)","width":20.449062695072},"line":{"color":"rgba(235,200,133,1)","width":20.449062695072},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.67388167388167],"y":[30.4473304473304],"marker":{"color":"rgba(234,199,136,1)","size":[29.9725532108057],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(234,199,136,1)"}},"hoverinfo":"text","hovertemplate":"South Africa<br>Confirmados: 3465<br>Ativos: 2352 (67.9 %)<br>Recuperados: 1055 (30.4 %)<br>Óbitos: 58 (1.7 %)","type":"scatter","mode":"markers","name":"South Africa","textfont":{"color":"rgba(234,199,136,1)","size":29.9725532108057},"error_y":{"color":"rgba(234,199,136,1)","width":29.9725532108057},"error_x":{"color":"rgba(234,199,136,1)","width":29.9725532108057},"line":{"color":"rgba(234,199,136,1)","width":29.9725532108057},"xaxis":"x","yaxis":"y","frame":null},{"x":[11.214953271028],"y":[7.47663551401869],"marker":{"color":"rgba(229,196,148,1)","size":[16.6955116878096],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(229,196,148,1)"}},"hoverinfo":"text","hovertemplate":"Sudan<br>Confirmados: 107<br>Ativos: 87 (81.3 %)<br>Recuperados: 8 (7.5 %)<br>Óbitos: 12 (11.2 %)","type":"scatter","mode":"markers","name":"Sudan","textfont":{"color":"rgba(229,196,148,1)","size":16.6955116878096},"error_y":{"color":"rgba(229,196,148,1)","width":16.6955116878096},"error_x":{"color":"rgba(229,196,148,1)","width":16.6955116878096},"line":{"color":"rgba(229,196,148,1)","width":16.6955116878096},"xaxis":"x","yaxis":"y","frame":null},{"x":[3.93700787401575],"y":[4.33070866141732],"marker":{"color":"rgba(218,192,156,1)","size":[19.9960481351619],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(218,192,156,1)"}},"hoverinfo":"text","hovertemplate":"Tanzania<br>Confirmados: 254<br>Ativos: 233 (91.7 %)<br>Recuperados: 11 (4.3 %)<br>Óbitos: 10 (3.9 %)","type":"scatter","mode":"markers","name":"Tanzania","textfont":{"color":"rgba(218,192,156,1)","size":19.9960481351619},"error_y":{"color":"rgba(218,192,156,1)","width":19.9960481351619},"error_x":{"color":"rgba(218,192,156,1)","width":19.9960481351619},"line":{"color":"rgba(218,192,156,1)","width":19.9960481351619},"xaxis":"x","yaxis":"y","frame":null},{"x":[6.97674418604651],"y":[65.1162790697674],"marker":{"color":"rgba(212,190,159,1)","size":[15.8613858942933],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(212,190,159,1)"}},"hoverinfo":"text","hovertemplate":"Togo<br>Confirmados: 86<br>Ativos: 24 (27.9 %)<br>Recuperados: 56 (65.1 %)<br>Óbitos: 6 (7 %)","type":"scatter","mode":"markers","name":"Togo","textfont":{"color":"rgba(212,190,159,1)","size":15.8613858942933},"error_y":{"color":"rgba(212,190,159,1)","width":15.8613858942933},"error_x":{"color":"rgba(212,190,159,1)","width":15.8613858942933},"line":{"color":"rgba(212,190,159,1)","width":15.8613858942933},"xaxis":"x","yaxis":"y","frame":null},{"x":[4.29864253393665],"y":[16.7420814479638],"marker":{"color":"rgba(209,189,162,1)","size":[24.7573533696378],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(209,189,162,1)"}},"hoverinfo":"text","hovertemplate":"Tunisia<br>Confirmados: 884<br>Ativos: 698 (79 %)<br>Recuperados: 148 (16.7 %)<br>Óbitos: 38 (4.3 %)","type":"scatter","mode":"markers","name":"Tunisia","textfont":{"color":"rgba(209,189,162,1)","size":24.7573533696378},"error_y":{"color":"rgba(209,189,162,1)","width":24.7573533696378},"error_x":{"color":"rgba(209,189,162,1)","width":24.7573533696378},"line":{"color":"rgba(209,189,162,1)","width":24.7573533696378},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[62.2950819672131],"marker":{"color":"rgba(205,187,164,1)","size":[14.550062056888],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(205,187,164,1)"}},"hoverinfo":"text","hovertemplate":"Uganda<br>Confirmados: 61<br>Ativos: 23 (37.7 %)<br>Recuperados: 38 (62.3 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Uganda","textfont":{"color":"rgba(205,187,164,1)","size":14.550062056888},"error_y":{"color":"rgba(205,187,164,1)","width":14.550062056888},"error_x":{"color":"rgba(205,187,164,1)","width":14.550062056888},"line":{"color":"rgba(205,187,164,1)","width":14.550062056888},"xaxis":"x","yaxis":"y","frame":null},{"x":[0],"y":[0],"marker":{"color":"rgba(185,181,176,1)","size":[5.69607306174683],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(185,181,176,1)"}},"hoverinfo":"text","hovertemplate":"Western Sahara<br>Confirmados: 6<br>Ativos: 6 (100 %)<br>Recuperados: 0 (0 %)<br>Óbitos: 0 (0 %)","type":"scatter","mode":"markers","name":"Western Sahara","textfont":{"color":"rgba(185,181,176,1)","size":5.69607306174683},"error_y":{"color":"rgba(185,181,176,1)","width":5.69607306174683},"error_x":{"color":"rgba(185,181,176,1)","width":5.69607306174683},"line":{"color":"rgba(185,181,176,1)","width":5.69607306174683},"xaxis":"x","yaxis":"y","frame":null},{"x":[4.28571428571429],"y":[50],"marker":{"color":"rgba(181,180,178,1)","size":[15.0754773481158],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(181,180,178,1)"}},"hoverinfo":"text","hovertemplate":"Zambia<br>Confirmados: 70<br>Ativos: 32 (45.7 %)<br>Recuperados: 35 (50 %)<br>Óbitos: 3 (4.3 %)","type":"scatter","mode":"markers","name":"Zambia","textfont":{"color":"rgba(181,180,178,1)","size":15.0754773481158},"error_y":{"color":"rgba(181,180,178,1)","width":15.0754773481158},"error_x":{"color":"rgba(181,180,178,1)","width":15.0754773481158},"line":{"color":"rgba(181,180,178,1)","width":15.0754773481158},"xaxis":"x","yaxis":"y","frame":null},{"x":[10.7142857142857],"y":[7.14285714285714],"marker":{"color":"rgba(179,179,179,1)","size":[11.577233331328],"sizemode":"diameter","opacity":0.5,"line":{"color":"rgba(179,179,179,1)"}},"hoverinfo":"text","hovertemplate":"Zimbabwe<br>Confirmados: 28<br>Ativos: 23 (82.1 %)<br>Recuperados: 2 (7.1 %)<br>Óbitos: 3 (10.7 %)","type":"scatter","mode":"markers","name":"Zimbabwe","textfont":{"color":"rgba(179,179,179,1)","size":11.577233331328},"error_y":{"color":"rgba(179,179,179,1)","width":11.577233331328},"error_x":{"color":"rgba(179,179,179,1)","width":11.577233331328},"line":{"color":"rgba(179,179,179,1)","width":11.577233331328},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="dados" class="section level1">
+<h1>Dados</h1>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-c212f3d87f41e005ffe6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c212f3d87f41e005ffe6">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1584662400000\" data-max=\"1587340800000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;F&quot;,&quot;M&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;[10,20]&quot;,&quot;[20,30]&quot;,&quot;[30,40]&quot;,&quot;[40,50]&quot;,&quot;[50,60]&quot;,&quot;[60,70]&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;confirmado&quot;,&quot;evacuado&quot;,&quot;obito&quot;,&quot;recuperado&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n<\/tr>","fillContainer":true,"data":[["2020-03-20","2020-03-21","2020-03-21","2020-03-24","2020-03-25","2020-03-25","2020-03-25","2020-04-11","2020-03-28","2020-04-04","2020-04-18","2020-04-12","2020-04-12","2020-04-14","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-15","2020-04-17","2020-04-20","2020-04-19","2020-04-19","2020-04-20","2020-04-18","2020-04-20","2020-03-26","2020-04-19","2020-04-20","2020-04-20","2020-04-20"],["Boa Vista","Boa Vista","Boa Vista","Boa Vista","Praia","Boa Vista","Boa Vista","Praia","Boa Vista","São Vicente","Praia","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Boa Vista","Praia","Praia","Praia","Praia","Praia","Praia","Praia","Tarrafal","Praia","Praia","Praia","Boa Vista","Praia"],["M","F","M","M","M","M","F","F","M","F","F","F","M","M","F","F","F","F","F","F","F","M","F","F","F","M","F","F","F","F","F","M","F","M","M","F","M","M","M","F","M","M","M","M","F","F","F","F","M","F","M","M","F","F","F","M","M","M","M","M","F","F","M","F","F","M","F","F","F","M","M"],["[60,70]","[50,60]","[50,60]","[60,70]","[40,50]","[50,60]","[50,60]","[10,20]","[30,40]","[50,60]","[10,20]","[20,30]","[30,40]","[20,30]","[10,20]","[10,20]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[20,30]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[40,50]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[30,40]","[50,60]","[50,60]","[50,60]","[50,60]","[40,50]","[40,50]","[10,20]","[20,30]","[30,40]","[30,40]","[30,40]","[20,30]","[40,50]","[40,50]","[60,70]","[30,40]","[30,40]"],["Inglesa","Holandesa","Inglesa","Inglesa","Cabo-verdiana","Inglesa","Holandesa","Cabo-verdiana","Cabo-verdiana","Chinesa","Cabo-verdiana","Cabo-verdiana","","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","Cabo-verdiana","","Cabo-verdiana"],["confirmado","confirmado","confirmado","obito","confirmado","evacuado","evacuado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","recuperado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado","confirmado"]],"container":"<table class=\"display fill-container\">\n  <thead>\n    <tr>\n      <th>Data<\/th>\n      <th>Concelho<\/th>\n      <th>Sexo<\/th>\n      <th>Grupo Etario<\/th>\n      <th>Nacionalidade<\/th>\n      <th>Tipo de Caso<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searchHighlight":true,"pageLength":20,"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,20,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="sobre" class="section level1">
+<h1>Sobre</h1>
+<p><strong>Dashboard Covid19</strong></p>
+<p>Este Dashboard da Covid19 fornece uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. Este dashboard foi construído com R usando a estrutura R Markdown.</p>
+<p><strong>Autoria</strong></p>
+<p>O dashboard foi desenvolvido e é mantido por <a href="www.marovski">Mário Cardoso</a>.</p>
+<p><strong>Dados</strong></p>
+<p>Os dados de entrada para este dashboard são os pacotes R <a href="https://marovski.github.io/covid19cvdata/">covid19cvdata</a> e <a href="https://github.com/RamiKrispin/coronavirus">coronavirus</a> R (versão de desenvolvimento). Os dados e o dashboard são atualizados diariamente.</p>
+<p><strong>Fonte de dados</strong></p>
+<p>Os dados brutos do pacote <a href="https://github.com/marovski/covid19cvdata">covid19cvdata</a> são obtidos do website <a href="https://covid19.cv">covi19.cv</a> e o pacote coronavírus do Centro de Ciência e Engenharia da Universidade Johns Hopkins (JHU CCSE).</p>
+<p><strong>Pacotes</strong></p>
+<ul>
+<li>Interface do dashboard - o pacote <a href="https://rmarkdown.rstudio.com/flexdashboard/">flexdashboard</a>.</li>
+<li>Visualização - o pacote <a href="https://plot.ly/r/">plotly</a> para os gráficos e <a href="https://r-spatial.github.io/mapview/">mapview</a> para o mapa</li>
+<li>Manipulação de dados - <a href="https://dplyr.tidyverse.org/">dplyr</a> e <a href="https://tidyr.tidyverse.org/">tidyr</a></li>
+<li>Tabelas - o pacote <a href="https://rstudio.github.io/DT/">DT</a></li>
+</ul>
+<p>**Referências*</p>
+<ul>
+<li><p>Dashboard do <a href="https://rpubs.com/joaosilva/covid19-dash">João Silva</a>: o excelente trabalho desenvolvido pelo Engenheiro João serviu de base para este dashboard. Grande obrigado.</p></li>
+<li><p>Dashboards do <a href="https://ramikrispin.github.io/coronavirus_dashboard">Rami Krispin</a>: This amazing work helped me a lot to understand and use the structure behind flexdashboads, mapview and plotly. Big Thanks Rami!</p></li>
+</ul>
+<p><strong>Contribuição</strong></p>
+<p>O dashboard foi implementado no <em>Github docs</em>, caso deseje modificar na sua conta do Github, pode aplicar as seguintes etapas:</p>
+<ul>
+<li><em>Fork</em> o repositório do dashboard ou;</li>
+<li>Clonar o repositório para sua conta do Github.</li>
+</ul>
+</div>
+
+</div>
+
+<script>
+
+$(document).ready(function () {
+
+  // add bootstrap table styles to pandoc tables
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+
+  // initialize mathjax
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+  document.getElementsByTagName("head")[0].appendChild(script);
+
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  FlexDashboard.init({
+    theme: "cosmo",
+    fillPage: true,
+    orientation: "rows",
+    storyboard: false,
+    defaultFigWidth: 576,
+    defaultFigHeight: 460,
+    defaultFigWidthMobile: 360,
+    defaultFigHeightMobile: 460
+  });
+});
+</script>
+
+</body>
+</html>
