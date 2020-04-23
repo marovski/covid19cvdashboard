@@ -16,14 +16,15 @@ output:
 library(covid19cvdata)
 library(flexdashboard)
 library(readr)
+library(stringr)
 library(dplyr)
 library(tidyr)
 library(lubridate)
 library(sp)
 library(rworldmap)
 library(reshape2)
-library(ggplot2)
 library(plyr)
+library(leaflet)
 library(rnaturalearth)
 
 #------------------ Parameters ------------------
@@ -72,17 +73,16 @@ joint_s[is.na(joint_s)]<-0
 
 age_group<-covid_demo %>% group_by(grupo_etario) %>%dplyr::summarise(confirmados=sum(confirmados),c_ativos=sum(confirmados_ativos),evacuados=sum(evacuados),recuperados=sum(recuperados),obitos=sum(obitos))
 
-#cv map
+#CV MAP
 
 cv_city<-covid19cvdata::covid19cv_concelhos
 
-cv_city$concelho<-gsub("Sal Rei", "Boa Vista",cv_city$concelho)
-
-cv_city$concelho<-gsub("Sao Vicente", "São Vicente",cv_city$concelho)
+cv_city$concelho<-stringr::str_replace_all(cv_city$concelho, c("Sal Rei", "Boa Vista"),c("Sao Vicente", "São Vicente"))
 
 cv_city$concelho<- as.character(cv_city$concelho)
 
 
+# CV MAP
 cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass = "sf") %>%
   dplyr::select(concelho = name, region, geometry) %>%
   dplyr::group_by(concelho) %>%
@@ -101,11 +101,12 @@ world<-utils::read.csv('https://raw.githubusercontent.com/RamiKrispin/coronaviru
 
 #Get Africa Countries
 countries <- read_csv("./data-raw/africa.csv")
-countries$Country<-gsub("Cape Verde", "Cabo Verde",countries$Country)
+
+
 #Africa Cases
 africa<-semi_join(world,countries, by=c("Country.Region"="Country"))
 
-#topCountries
+#Africa Countries covid19 stats
 africa_countries<-africa %>%
   dplyr::group_by( type,Country.Region) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
@@ -113,6 +114,57 @@ africa_countries<-africa %>%
                      values_from = total) %>%
   dplyr::ungroup() %>%
   dplyr::mutate(active =  confirmed - death - recovered)
+
+#PALOP-TIL
+timor<-world%>%filter(Country.Region=="Timor-Leste") %>%dplyr::group_by( type,Country.Region) %>%
+  dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
+  tidyr::pivot_wider(names_from = type,
+                     values_from = total) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(active =  confirmed - death - recovered) %>% data.frame()
+
+palop<-africa_countries %>% filter(Country.Region %in% c("Angola", "Guinea-Bissau", "Timor-Leste", "Mozambique","Sao Tome and Principe","Cabo Verde"))%>% rbind(timor)
+
+get.geocode.country<-function(x, place) {
+    nrow <- nrow(x)
+    counter <- 1
+    x$long[counter] <- 0
+    x$lat[counter] <- 0
+    
+    while (counter <= nrow) {
+        CityName <-
+            gsub(' ', '%20', x[[place]][counter]) #remove space for URLs
+        
+       
+        url <- paste(
+            "http://nominatim.openstreetmap.org/search?country="
+            ,
+            CityName
+            ,
+            "&limit=9&format=json"
+            ,
+            sep = ""
+        )
+        
+        
+        y <- RJSONIO::fromJSON(url)
+        
+        
+        if (is.vector(y)) {
+            x$long[counter]  <- y[[1]]$lon
+            x$lat[counter]  <- y[[1]]$lat
+            
+        }
+        counter <- counter + 1
+    }
+    print("Got lat and long!")
+    return (x)
+}
+
+palop<-get.geocode.country(palop,"Country.Region")
+
+palop$lat<-as.numeric(palop$lat)
+palop$long<-as.numeric(palop$long)
 
 #Daily Cases Africa
 africa_daily <- africa %>% 
@@ -478,8 +530,62 @@ cabo_verde_map%>% mutate(c_acumulados=replace_na(c_acumulados,"Sem casos"))%>%
                col.regions = colorRampPalette(c("yellow", "red", "snow"))) 
 ```
 
+PALOP
+======================================================================
+Row
+-----------------------------------------------------------------------
+### Confirmados {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(palop$confirmed), big.mark = ","),sep=" "),
+         caption = "Casos Confirmados",
+         icon = "fas fa-globe-africa", color = '#003399')
+```
 
 
+### Ativos {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(palop$active), big.mark = ",")," (",round(100 * sum(palop$active) / sum(palop$confirmed), 1), 
+                       "%)",sep=" "),caption = "Casos Ativos",icon = "fas fa-cross", color = 'blue')
+```
+
+### Recovered {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(palop$recovered), big.mark = ",")," (",round(100 * sum(palop$recovered) / sum(palop$confirmed), 1), 
+                       "%)",sep=" "),
+         caption = "Recuperados",
+         icon = "fas fa-heartbeat", color = 'green')
+```
+
+
+### Death {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(palop$death), big.mark = ",")," (",round(100 * sum(palop$death) / sum(palop$confirmed), 1), 
+                       "%)",sep=" "),
+         caption = "Óbitos",
+         color = 'red')
+```
+
+Row
+-------------------
+```{r}
+
+pal <- colorNumeric(palette = "Reds", domain = c(0:90))
+
+leaflet(data = palop)%>%
+   addProviderTiles("Esri.WorldImagery") %>% 
+  addCircleMarkers(lng = ~ long, 
+                   lat= ~ lat,  #use the pallete
+                   color = ~pal(confirmed),
+                   label = paste(palop$Country.Region,'\n',"Confirmados:", palop$confirmed,'\n', "Obitos:",palop$death,'\n',"Recuperados:",palop$recovered),
+                   clusterOptions = markerClusterOptions(freezeAtZoom=5)
+
+                   ) %>% 
+  addLegend(title = "Casos",pal=pal,values = ~confirmed )
+```
 
 África
 ======================================================================
@@ -571,16 +677,37 @@ plotly::plot_ly(data=africa_countries,
          margin = list(t = 70))
 ```
 
+
 Dados
 =====================================================
-
+Row {.tabset}
+---------------------------
+### Cabo Verde
 ```{r}
 covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho, c("Sal Rei"= "Boa Vista", "Mindelo"="São Vicente"))) %>%
   dplyr::select(Data = data, Concelho = concelho, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>%
+  DT::datatable(rownames = FALSE,extensions = 'Buttons',
+            options = list(dom='Bfrtip',searchHighlight = TRUE, 
+                           pageLength = 20,buttons=c('csv')), filter = 'top')
+```
+
+### PALOP-TL
+```{r}
+palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1),"%"), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1),"%")) %>%
   DT::datatable(rownames = FALSE,
             options = list(searchHighlight = TRUE, 
                            pageLength = 20), filter = 'top')
 ```
+
+### África
+
+```{r}
+africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1),"%"), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1),"%")) %>%
+  DT::datatable(rownames = FALSE,
+            options = list(searchHighlight = TRUE, 
+                           pageLength = 20), filter = 'top')
+```
+
 
 
 Sobre
@@ -592,7 +719,7 @@ Este Dashboard da Covid19 fornece uma visão geral do novo surto do novo Coronav
 
 **Autoria**
 
-O dashboard foi desenvolvido e é mantido por [Mário Cardoso](https://www.marovski.github.io).
+O dashboard foi desenvolvido e é mantido por [Mário Cardoso](https://marovski.github.io/).
 
 **Dados**
 
