@@ -77,10 +77,9 @@ age_group<-covid_demo %>% group_by(grupo_etario) %>%dplyr::summarise(confirmados
 
 cv_city<-covid19cvdata::covid19cv_concelhos
 
-cv_city$concelho<-stringr::str_replace_all(cv_city$concelho, c("Sal Rei", "Boa Vista"),c("Sao Vicente", "São Vicente"))
+cv_city$concelho<-stringr::str_replace_all(cv_city$concelho, c("Sal Rei" = "Boa Vista","Sao Vicente" = "São Vicente"))
 
 cv_city$concelho<- as.character(cv_city$concelho)
-
 
 # CV MAP
 cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass = "sf") %>%
@@ -191,7 +190,7 @@ Row
 ### Tested {.value-box}
 
 ```{r}
-valueBox(value = format(187, big.mark = ","),caption = "Total de Testes Realizados",icon = "fas fa-user-md", color = tested_color)
+valueBox(value = format(241, big.mark = ","),caption = "Total de Testes Realizados",icon = "fas fa-user-md", color = tested_color)
 ```
 
 
