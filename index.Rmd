@@ -569,7 +569,7 @@ valueBox(value = paste(format(sum(palop$death), big.mark = ",")," (",round(100 *
 ```
 
 Row
--------------------
+--------------------------------------------------------------
 ```{r}
 
 pal <- colorNumeric(palette = "Reds", domain = c(0:90))
@@ -579,11 +579,11 @@ leaflet(data = palop)%>%
   addCircleMarkers(lng = ~ long, 
                    lat= ~ lat,  #use the pallete
                    color = ~pal(confirmed),
-                   label = paste(palop$Country.Region,'\n',"Confirmados:", palop$confirmed,'\n', "Obitos:",palop$death,'\n',"Recuperados:",palop$recovered),
+                   label = paste(palop$Country.Region,'<br>',"Confirmados:", palop$confirmed,'<br>', "Obitos:",palop$death,'<br>',"Recuperados:",palop$recovered),
                    clusterOptions = markerClusterOptions(freezeAtZoom=5)
 
                    ) %>% 
-  addLegend(title = "Casos",pal=pal,values = ~confirmed )
+  addLegend(title = "Casos",pal=pal,values = palop$confirmed )
 ```
 
 África
@@ -648,7 +648,7 @@ plotly::plot_ly(data = africa_daily,
                  yaxis = list(title = "Casos acumulados"),
                  xaxis = list(title = "Data"),
                  legend = list(x = 0.1, y = 0.9),
-                 hovermode = "compare")
+                 hovermode = "compare", margin = list(t = 70))
 ```
 
 
@@ -660,7 +660,7 @@ plotly::plot_ly(data=africa_countries,
                 y=~(recovered/confirmed)*100,
                 size = ~log(confirmed),
                 color = ~Country.Region,
-                sizes = c(5, 30),
+                sizes = c(5, 20),
                 marker = list(sizemode = 'diameter' , opacity = 0.5),
                 type = 'scatter',
                hoverinfo='text',
@@ -692,7 +692,7 @@ covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho
 
 ### PALOP-TL
 ```{r}
-palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1),"%"), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1),"%")) %>%
+palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
             options = list(searchHighlight = TRUE, 
                            pageLength = 20), filter = 'top')
@@ -701,7 +701,7 @@ palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbit
 ### África
 
 ```{r}
-africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1),"%"), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1),"%")) %>%
+africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
             options = list(searchHighlight = TRUE, 
                            pageLength = 20), filter = 'top')
