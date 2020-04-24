@@ -12,9 +12,12 @@ output:
 ---
 
 ```{r setup, include=FALSE, results='hide',warning=FALSE}
-#-------------------Packages---------------------------
-### covid19cvdata Required the dev version from Github 
+#-------------------Packages---------------------------#
+
+### -------covid19cvdata-----------------------------#
 library(covid19cvdata)
+#-----Required the dev version from Github---------------# 
+
 library(flexdashboard)
 library(readr)
 library(stringr)
@@ -32,14 +35,14 @@ library(rnaturalearth)
 # Set colors
 # https://www.w3.org/TR/css-color-3/#svg-color
 tested_color <- "purple"
-positive_color <- RColorBrewer::brewer.pal(9, "PuRd")[7]
+positive_color <- "lightblue"
 active_color <- "#1f77b4"
 recovered_color <- "forestgreen"
 death_color <- "#E41317"
 
 
 
-#------------------ Data ------------------
+#------------------ Data ----------------------------------------------------#
 
 ##---------- Get Nacional total cases----------------------------------------#
 cv_total_today<- covid19cvdata::covid19cv_nacional %>% filter(Data==max(Data))
