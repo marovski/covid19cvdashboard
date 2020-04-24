@@ -4,13 +4,14 @@ output:
   flexdashboard::flex_dashboard:
     favicon: ./img/favicon_io/favicon.ico
     logo: ./img/covid19.png
-    orientation: rows
+    orientation: columns
+    vertical_layout: scroll
     css: style.css
     social: menu
-    vertical_layout: fill
+   
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, results='hide',warning=FALSE}
 #-------------------Packages---------------------------
 ### covid19cvdata Required the dev version from Github 
 library(covid19cvdata)
@@ -40,20 +41,20 @@ death_color <- "#E41317"
 
 #------------------ Data ------------------
 
-## get confirmed cases
+##---------- Get Nacional total cases----------------------------------------#
 cv_total_today<- covid19cvdata::covid19cv_nacional %>% filter(Data==max(Data))
 
 ## Moving Average
 total_nacional<-covid19cvdata::covid19cv_nacional  %>%
-dplyr::mutate(novos_casos = round((confirmados +
-                                    dplyr::lag(confirmados, n = 1) +
-                                    dplyr::lag(confirmados, n = 2) +
-                                    dplyr::lag(confirmados, n = 3) +
-                                    dplyr::lag(confirmados, n = 4)) / 5))
+  dplyr::mutate(novos_casos = round((confirmados +
+                                       dplyr::lag(confirmados, n = 1) +
+                                       dplyr::lag(confirmados, n = 2) +
+                                       dplyr::lag(confirmados, n = 3) +
+                                       dplyr::lag(confirmados, n = 4)) / 5))
 
-# total_nacional<-total_nacional%>%mutate(diff_date=Data-lag(Data),diff_growthConfirmados=confirmados-lag(confirmados),percentagem=(diff_growthConfirmados / diff_date) /confirmados*100)
 
-#Get demographic data
+#----------------------Get demographic data-----------------------------#
+
 covid_demo<-covid19cvdata::covid19cv_pop
 
 covid19cv<-covid19cvdata::covid19cv %>% group_by(data,grupo_etario,sexo,nacionalidade)%>%dplyr::summarise(confirmados=sum(tipo_caso=="confirmado"),evacuados=sum(tipo_caso=="evacuado"),recuperados=sum(tipo_caso=="recuperado"),obitos=sum(tipo_caso=="obito"))
@@ -72,10 +73,14 @@ joint_s<-joint_s %>% mutate(masculino_acum=cumsum(masculino_confirmado),feminino
 
 joint_s[is.na(joint_s)]<-0
 
+
+#--------------------------Age Group--------------------------------------#
 age_group<-covid_demo %>% group_by(grupo_etario) %>%dplyr::summarise(confirmados=sum(confirmados),c_ativos=sum(confirmados_ativos),evacuados=sum(evacuados),recuperados=sum(recuperados),obitos=sum(obitos))
 
-#####################################################
-#CV MAP
+
+
+#------------#CV MAP------------------------------------------------------#
+
 
 cv_city<-covid19cvdata::covid19cv_concelhos
 
@@ -89,18 +94,22 @@ cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass =
   dplyr::group_by(concelho) %>%
   dplyr::summarise(n = dplyr::n()) %>%
   dplyr::left_join(cv_city %>%
-              dplyr::filter(Data == max(Data)) %>%
-                dplyr::group_by(concelho) %>%
-                dplyr::summarise(c_acumulados = sum(confirmados_acumulados)), # subseting for the most recent day
-            by = c("concelho" = "concelho"))
+                     dplyr::filter(Data == max(Data)) %>%
+                     dplyr::group_by(concelho) %>%
+                     dplyr::summarise(c_acumulados = sum(confirmados_acumulados)), # subseting for the most recent day
+                   by = c("concelho" = "concelho"))
 
 
-#####################################################
+#------------------------World Cases-----------------------------#
 
-#World Cases
+
 world<-utils::read.csv('https://raw.githubusercontent.com/RamiKrispin/coronavirus-csv/master/coronavirus_dataset.csv')
-#####################################################
-#Get Africa Countries
+
+
+#------------------------#Get Africa Countries-------------------#
+
+
+
 countries <- read_csv("./data-raw/africa.csv")
 
 
@@ -115,8 +124,10 @@ africa_countries<-africa %>%
                      values_from = total) %>%
   dplyr::ungroup() %>%
   dplyr::mutate(active =  confirmed - death - recovered)
-#####################################################
-#PALOP-TIL
+
+
+#---------------------#PALOP-TIL-----------------------------#
+
 timor<-world%>%filter(Country.Region=="Timor-Leste") %>%dplyr::group_by( type,Country.Region) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(names_from = type,
@@ -127,39 +138,39 @@ timor<-world%>%filter(Country.Region=="Timor-Leste") %>%dplyr::group_by( type,Co
 palop<-africa_countries %>% filter(Country.Region %in% c("Angola", "Guinea-Bissau", "Timor-Leste", "Mozambique","Sao Tome and Principe","Cabo Verde"))%>% rbind(timor)
 
 get.geocode.country<-function(x, place) {
-    nrow <- nrow(x)
-    counter <- 1
-    x$long[counter] <- 0
-    x$lat[counter] <- 0
+  nrow <- nrow(x)
+  counter <- 1
+  x$long[counter] <- 0
+  x$lat[counter] <- 0
+  
+  while (counter <= nrow) {
+    CityName <-
+      gsub(' ', '%20', x[[place]][counter]) #remove space for URLs
     
-    while (counter <= nrow) {
-        CityName <-
-            gsub(' ', '%20', x[[place]][counter]) #remove space for URLs
-        
-       
-        url <- paste(
-            "http://nominatim.openstreetmap.org/search?country="
-            ,
-            CityName
-            ,
-            "&limit=9&format=json"
-            ,
-            sep = ""
-        )
-        
-        
-        y <- RJSONIO::fromJSON(url)
-        
-        
-        if (is.vector(y)) {
-            x$long[counter]  <- y[[1]]$lon
-            x$lat[counter]  <- y[[1]]$lat
-            
-        }
-        counter <- counter + 1
+    
+    url <- paste(
+      "http://nominatim.openstreetmap.org/search?country="
+      ,
+      CityName
+      ,
+      "&limit=9&format=json"
+      ,
+      sep = ""
+    )
+    
+    
+    y <- RJSONIO::fromJSON(url)
+    
+    
+    if (is.vector(y)) {
+      x$long[counter]  <- y[[1]]$lon
+      x$lat[counter]  <- y[[1]]$lat
+      
     }
-    print("Got lat and long!")
-    return (x)
+    counter <- counter + 1
+  }
+  print("Got lat and long!")
+  return (x)
 }
 
 palop<-get.geocode.country(palop,"Country.Region")
@@ -182,8 +193,9 @@ palop_daily<-world %>% filter(Country.Region %in% c("Angola", "Guinea-Bissau", "
                 recovered_cum = cumsum(recovered),
                 active_cum = cumsum(active)) 
 
-#####################################################
-#Daily Cases Africa
+
+#-----------------------------------Daily Cases Africa------------------------------#
+
 africa_daily <- africa %>% 
   dplyr::mutate(date=as.Date(date))%>%
   dplyr::group_by(date, type) %>%
@@ -200,7 +212,7 @@ africa_daily <- africa %>%
 ```
 
 
-Resumo 
+Resumo {data-orientation=rows}
 ======================================================================
 Row
 -----------------------------------------------------------------------
@@ -263,7 +275,7 @@ valueBox(value = paste(format(sum(total_nacional$evacuados), big.mark = ","), " 
 ```
 
 
-Row {data-height=500}
+Row
 -----------------------------------------------------------------------
 
 ### Distribuição do Total de Casos
@@ -276,15 +288,15 @@ plotly::plot_ly(data = total_nacional,
                 type = 'bar') %>%
   plotly::add_trace( y = ~ obitos,
                      name = "Óbitos",
-                      marker = list(color=death_color))%>%
-    plotly::add_trace(y = ~evacuados,
+                     marker = list(color=death_color))%>%
+  plotly::add_trace(y = ~evacuados,
                     name = 'Evacuados',
-                       marker = list(color='grey')) %>%
+                    marker = list(color='grey')) %>%
   plotly::add_trace(y = ~recuperados,
                     name = 'Recuperados',
                     marker = list(color=recovered_color)) %>%
   plotly::add_annotations(x = as.Date("2020-03-27"),
-                          y = 3,
+                          y = 0,
                           text ="Estado de Emergência",
                           xref = "x",
                           yref = "y",
@@ -292,10 +304,10 @@ plotly::plot_ly(data = total_nacional,
                           arrowhead = 3,
                           arrowsize = 1,
                           showarrow = TRUE,
-                          ax = 10,
+                          ax = 15,
                           ay = -90)%>% 
   plotly::add_annotations(x = as.Date("2020-04-18"),
-                          y = 50,
+                          y = 29,
                           text ="Prorrogação EE",
                           xref = "x",
                           yref = "y",
@@ -303,32 +315,32 @@ plotly::plot_ly(data = total_nacional,
                           arrowhead = 3,
                           arrowsize = .05,
                           showarrow = TRUE,
-                           ax = 1,
+                          ax = 1,
                           ay = -90)%>%
   plotly::layout(barmode='stack',
                  legend = list(orientation = "h",   # show entries horizontally
-                     xanchor = "center",  # use center of legend as anchor
-                     x = 0.5,y=8),
+                               xanchor = "center",  # use center of legend as anchor
+                               x = 0.5,y=8),
                  yaxis = list(title = "Casos Acumulados"),
                  xaxis = list(title = "Data"),
                  hovermode = "compared",margin=list(b=10,t=10,pad=2),annotations = list(
-                  text = paste0("Última Atualização:", format(max(total_nacional$Data), '%d/%m'), sep = " "),
+                   text = paste0("Última Atualização:", format(max(total_nacional$Data), '%d/%m'), sep = " "),
                    xref = "paper",
                    yref = "paper",
                    showarrow = FALSE,
-                  x = 1,
-                  y = 1
+                   x = .05,
+                   y = 1
                  ))
 ```
 
-Row {data-height=400}
-----------------------------------------------
 
+Row
+----------------------------------------------------------------
 ### Casos por Concelho
 
 ```{r}
 cv_city %>%
-dplyr::select(concelho, confirmados,c_ativos_acumulados, recuperados, obitos, confirmados_acumulados) %>%
+  dplyr::select(concelho, confirmados,c_ativos_acumulados, recuperados, obitos, confirmados_acumulados) %>%
   dplyr::group_by(concelho) %>%
   dplyr::summarise(cumulative_positive_cases = sum(confirmados),
                    recovered = sum(recuperados),
@@ -337,28 +349,26 @@ dplyr::select(concelho, confirmados,c_ativos_acumulados, recuperados, obitos, co
   dplyr::ungroup() %>%
   dplyr::arrange(-cumulative_cases) %>%
   dplyr::mutate(region = factor(concelho , levels = concelho)) %>%
-plotly::plot_ly(
-          y = ~ region, 
-          x = ~ cumulative_positive_cases, 
-          orientation = 'h',
-          # text =  ~ cumulative_positive_cases,
-          # textposition = 'auto',
-          type = "bar", 
-          name = "Ativos",
-          marker = list(color = "#1f77b4")) %>%
+  plotly::plot_ly(
+    y = ~ region, 
+    x = ~ cumulative_positive_cases, 
+    orientation = 'h',
+    type = "bar", 
+    name = "Ativos",
+    marker = list(color = "#1f77b4")) %>%
   plotly::add_trace(x = ~ recovered,
-            name = "Recuperados",
-            marker = list(color = "forestgreen")) %>%
+                    name = "Recuperados",
+                    marker = list(color = "forestgreen")) %>%
   plotly::add_trace(x = ~ death, 
-            name = "Óbitos",
-            marker = list(color = "red")) %>%
+                    name = "Óbitos",
+                    marker = list(color = "red")) %>%
   plotly::layout(title = "",
-         barmode = 'stack',
-         yaxis = list(title = "Concelho"),
-         xaxis = list(title = "Casos"),
-         hovermode = "compare",
-         legend = list(x = 0.65, y = 0.9),
-        hovermode = "compared",margin=list(b=10,t=10,pad=2))
+                 barmode = 'stack',
+                 yaxis = list(title = ""),
+                 xaxis = list(title = "Casos"),
+                 hovermode = "compare",
+                 legend = list(x = 0.65, y = 0.9),
+                 hovermode = "compared",margin=list(b=10,t=10,pad=2))
 ```
 
 
@@ -382,10 +392,10 @@ plotly::plot_ly(data = total_nacional,
                           yref = "y",
                           arrowhead = 3,
                           arrowhead = 3,
-                          arrowsize = 0.3,
+                          arrowsize = 0.5,
                           showarrow = TRUE,
                           ax = 10,
-                          ay = -90)%>%
+                          ay = -70)%>%
   plotly::add_annotations(x = as.Date("2020-04-18"),
                           y = 0,
                           text ="Prorrogação EE",
@@ -395,20 +405,20 @@ plotly::plot_ly(data = total_nacional,
                           arrowhead = 3,
                           arrowsize = .05,
                           showarrow = TRUE,
-                          ax = 10,
-                          ay = -90)%>%
+                          ax = 9,
+                          ay = -80)%>%
   plotly::layout(title = "",
-                legend = list(orientation = "h",   # show entries horizontally
-                     xanchor = "center",  # use center of legend as anchor
-                     x = 0.5,y=8),
+                 legend = list(orientation = "h",   # show entries horizontally
+                               xanchor = "center",  # use center of legend as anchor
+                               x = 0.5,y=8),
                  yaxis = list(title = "Casos Confirmados"),
                  xaxis = list(title = "Média Móvel de 5dias para a Linha de Tendência"),
                  hovermode = "compare",margin=list(b=10,t=10,pad=2))
-  
+
 ```
 
 
-Demografia 
+Demografia {data-orientation=rows}
 ======================================================================
 Row
 -----------------------------------------------------------------------
@@ -456,22 +466,22 @@ valueBox(value = paste(x$grupo_etario<-gsub(",","-",x$grupo_etario)," (",round(1
 
 
 Row
-------------------------------------
+----------------------------------------------------------
 
 ### Distribuição por Sexo dos Casos Confirmados Acumulados
 
 ```{r}
 plotly::plot_ly(data = joint_s,
-        x = ~ Data,
-        y = ~ cumsum(masculino_confirmado), 
-        name = 'Masculino', 
-        fillcolor = 'blue',
-        type = 'scatter',
-        mode = 'none', 
-        stackgroup = 'one') %>%
+                x = ~ Data,
+                y = ~ cumsum(masculino_confirmado), 
+                name = 'Masculino', 
+                fillcolor = 'blue',
+                type = 'scatter',
+                mode = 'none', 
+                stackgroup = 'one') %>%
   plotly::add_trace( y = ~cumsum(feminino_confirmado), 
-             name = "Feminino",
-             fillcolor = 'red') %>%
+                     name = "Feminino",
+                     fillcolor = 'red') %>%
   plotly::add_annotations(x = as.Date("2020-03-27"),
                           y = 4,
                           text ="Estado de Emergência",
@@ -482,7 +492,7 @@ plotly::plot_ly(data = joint_s,
                           arrowsize = 1,
                           showarrow = TRUE,
                           ax = 10,
-                          ay = -90)%>%
+                          ay = -70)%>%
   plotly::add_annotations(x = as.Date("2020-04-18"),
                           y = 1,
                           text ="Prorrogação EE",
@@ -493,32 +503,46 @@ plotly::plot_ly(data = joint_s,
                           arrowsize = .05,
                           showarrow = TRUE,
                           ax = -10,
-                          ay = -90)%>%
+                          ay = -80)%>%
   plotly::layout(title = "",
-         legend = list(x = 0.1, y = 0.9),
-         yaxis = list(title = "Casos Confirmados Acumulados"),
-         xaxis = list(title = "Data"),
-         hovermode = "compared",  annotations = list(
-                  text = paste0("Última Atualização:", format(max(total_nacional$Data), '%d/%m'), sep = " "),
+                 legend = list( xanchor = "center",  # use center of legend as anchor
+                                x = 0.5,y=8,orientation = "h"),
+                 yaxis = list(title = "Casos Confirmados Acumulados"),
+                 xaxis = list(title = "Data"),
+                 hovermode = "compared",  margin=list(b=10,t=10,pad=2),annotations = list(
+                   text = paste0("Última Atualização:", format(max(total_nacional$Data), '%d/%m'), sep = " "),
                    xref = "paper",
                    yref = "paper",
                    showarrow = FALSE,
-                  x = 0.95,
-                  y = 1
+                   x = .05,
+                   y = 1
                  ))
 ```
 
-Row {.tabset}
--------------------------------------------------------
+
+### Nacionalidade dos Casos
+
+```{r}
+plotly::plot_ly(data=covid19cv%>%mutate(nacionalidade=sub("^$","NãoDivulgado",nacionalidade)),
+                labels = ~nacionalidade, values = ~confirmados,
+                type = 'pie', showlegend = FALSE,hole=.4,
+                textposition = 'inside', textinfo = 'label+percent') %>% 
+  plotly::layout(title = "<b>Nacionalidades dos Casos Confirmados</b>")
+```
+
+
+Row
+------------------------------------------------------
+
 ### Relação entre Casos Confirmados, Sexo, Grupo Etário
 
 ```{r}
 plotly::plot_ly(data=covid_demo, x=~confirmados, y=~grupo_etario,color=~sexo) %>% 
   plotly::add_bars(orientation = 'h', hoverinfo = 'text', text = ~confirmados) %>%
   plotly::layout(bargap = 0.1, barmode = 'normal',
-         xaxis = list(tickmode = 'array', tickvals = c(-1000, -500, 0, 500, 1000),
-                      ticktext = c('1000', '500', '0', '500', '1000'),title="Casos Confirmados"))
-  
+                 xaxis = list(tickmode = 'array', tickvals = c(-1000, -500, 0, 500, 1000),
+                              ticktext = c('1000', '500', '0', '500', '1000'),title="Casos Confirmados"))
+
 ```
 
 
@@ -526,46 +550,57 @@ plotly::plot_ly(data=covid_demo, x=~confirmados, y=~grupo_etario,color=~sexo) %>
 
 ```{r}
 plotly::plot_ly(data= covid_demo,
-    x = ~grupo_etario, y = ~confirmados_ativos,
-    color = ~sexo, size=~confirmados_ativos*10,
-    text = ~`sexo`, name = ~`sexo`,
-    type = "scatter", mode = 'markers',
-    hovertemplate = paste0(
-      '<b>Sexo</b>: %{text}',
-      '<br><b>Grupo Etario</b>: %{x}<br>',
-      '<b>Casos Ativos</b>: %{y}')) %>% 
+                x = ~grupo_etario, y = ~confirmados_ativos,
+                color = ~sexo, size=~confirmados_ativos*10,
+                text = ~`sexo`, name = ~`sexo`,
+                type = "scatter", mode = 'markers',
+                hovertemplate = paste0(
+                  '<b>Sexo</b>: %{text}',
+                  '<br><b>Grupo Etario</b>: %{x}<br>',
+                  '<b>Casos Ativos</b>: %{y}')) %>% 
   plotly::layout(
     title = "<b>Grupo Etario vs Casos Ativos</b>",
     xaxis = list(title = "<b>Grupo Etário</b>"),
     yaxis = list(title = "<b>Casos Ativos</b>"),
     margin = list(t = 70)
-    ) 
-  
+  ) 
+
 ```
 
-### Nacionalidade dos Casos
 
-```{r}
-plotly::plot_ly(data=covid19cv%>%mutate(nacionalidade=sub("^$","NãoDivulgado",nacionalidade)),
-    labels = ~nacionalidade, values = ~confirmados,
-    type = 'pie', showlegend = FALSE,hole=.4,
-    textposition = 'inside', textinfo = 'label+percent') %>% 
-  plotly::layout(title = "<b>Nacionalidades dos Casos Confirmados</b>")
-```
-
-Mapa CV
-=====================================================================
-
-```{r map}
+Mapa CV {data-orientation=rows}
+======================================================================
+Row
+-----------------------------------------------------------------------
+### Distribuição Geográfica dos Casos
+```{r }
 
 cabo_verde_map%>% mutate(c_acumulados=replace_na(c_acumulados,"Sem casos"))%>% 
   mapview::mapview(legend=TRUE,zcol = "c_acumulados",raster.palette = grey.colors,
-               col.regions = colorRampPalette(c("yellow", "red", "snow"))) 
+                   col.regions = colorRampPalette(c("yellow", "red", "snow"))) 
 ```
 
-PALOP-TL
-======================================================================
 Row
+---------------------------------------------------------------------
+### Concelhos Afetados
+```{r}
+  cv_city %>%
+ dplyr::select(Concelho=concelho, Ilha=ilha, Confirmados=confirmados,Recuperados=recuperados,Óbitos= obitos, `Ativos Acumulados`=c_ativos_acumulados, `Conf. Acumulados`=confirmados_acumulados)%>% dplyr::group_by(Concelho) %>%
+  dplyr::summarise(Confirmados = sum(Confirmados),
+                   Recuperados = sum(Recuperados),
+                   Óbitos = sum(Óbitos),
+                   Ativos = cumsum(Confirmados-Recuperados-Óbitos) )%>%
+  dplyr::ungroup() %>%
+  DT::datatable(rownames = FALSE,extensions = 'Buttons',
+                options = list(dom='Bfrtip',searchHighlight = TRUE, 
+                               pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:4)), autoWidth = TRUE), filter = 'top')
+
+```
+
+
+PALOP-TL {data-orientation=rows}
+======================================================================
+Row 
 -----------------------------------------------------------------------
 ### Confirmados {.value-box}
 
@@ -604,53 +639,49 @@ valueBox(value = paste(format(sum(palop$death), big.mark = ",")," (",round(100 *
 
 Row
 --------------------------------------------------------------
+### Casos Confirmados Diários
+
+```{r}
+
+palop_daily%>% filter(date>="2020-03-18")%>%
+  plotly::plot_ly(
+    x = ~date, y = ~(confirmed_cum), name = ~`Country.Region`,
+    type = 'scatter', mode = 'lines',color = ~`Country.Region`
+  ) %>% 
+  plotly::layout(
+    title = "<b>PALOP-TL</b>",
+    xaxis = list(title = "<b>Data</b>"),
+    yaxis = list(title = "<b>Casos Confirmados Acumulados</b>",type="linear"),
+    margin = list(t = 70),hovermode="compare",  annotations = list(
+      text = paste0("Última Atualização:", format(max(palop_daily$date), '%d/%m'), sep = " "),
+      xref = "paper",
+      yref = "paper",
+      showarrow = FALSE,
+      x = .05,
+      y = 1
+    ))
+```
+
 ### Países PALOP e Timor Leste 
 ```{r}
 
 pal <- colorNumeric(palette = "Reds", domain = c(0:90))
 
 leaflet(data = palop)%>%
-   addProviderTiles("Esri.WorldImagery") %>% 
+  addProviderTiles("Esri.WorldImagery") %>% 
   addCircleMarkers(lng = ~ long, 
                    lat= ~ lat,  #use the pallete
                    color = ~pal(confirmed),stroke = FALSE, fillOpacity = 0.5,
-                  label= ~paste0("",Country.Region,'\n |',"Confirmados:", confirmed,'\n', "Obitos:",death,'\n',"Recuperados:",recovered)
-                   ) %>%
+                   label= ~paste0("",Country.Region,'\n |',"Confirmados:", confirmed,'\n', "Obitos:",death,'\n',"Recuperados:",recovered)
+  ) %>%
   addLegend(title = "Casos",pal=pal,values = palop$confirmed )
 ```
 
-### Casos Confirmados Diários
-
-```{r}
-
-palop_daily%>% filter(date>="2020-03-18")%>%
-plotly::plot_ly(
-    x = ~date, y = ~(confirmed_cum), name = ~`Country.Region`,
-    type = 'scatter', mode = 'lines',color = ~`Country.Region`
-  ) %>% 
- # plotly::add_trace(y = ~recovered, name = 'Recuperados',  
- #            legendgroup = 'Recuperados', showlegend = FALSE,
- #            fillcolor = 'rgba(255, 188, 101, 0.8)',
- #            hovertemplate = paste('<i>Data</i>: %{x}',
- #                                  '<br><i>Recuperados</i>: %{y: .2f}%'))%>%
-  plotly::layout(
-    title = "<b>PALOP-TL</b>",
-    xaxis = list(title = "<b>Data</b>"),
-    yaxis = list(title = "<b>Casos Confirmados Acumulados</b>",type="linear"),
-    margin = list(t = 70),hovermode="compare",  annotations = list(
-                  text = paste0("Última Atualização:", format(max(palop_daily$date), '%d/%m'), sep = " "),
-                   xref = "paper",
-                   yref = "paper",
-                   showarrow = FALSE,
-                  x = 0.95,
-                  y = 1
-                 ))
-```
 
 
-África
+África  
 ======================================================================
-Row
+Column {data-width=100}
 -----------------------------------------------------------------------
 ### Confirmados {.value-box}
 
@@ -687,7 +718,7 @@ valueBox(value = paste(format(sum(africa_daily$death), big.mark = ",")," (",roun
          color = 'red')
 ```
 
-Row
+Column {data-width=650}
 ---------------------------------------------------------
 ### Distribuição dos Casos
 
@@ -712,12 +743,12 @@ plotly::plot_ly(data = africa_daily,
                  legend = list(x = 0.1, y = 0.9),
                  hovermode = "compare", margin = list(t = 70),
                  annotations = list(
-                  text = paste0("Última Atualização:", format(max(africa_daily$date), '%d/%m'), sep = " "),
+                   text = paste0("Última Atualização:", format(max(africa_daily$date), '%d/%m'), sep = " "),
                    xref = "paper",
                    yref = "paper",
                    showarrow = FALSE,
-                  x = 0.95,
-                  y = 1
+                   x = 0.95,
+                   y = 1
                  ))
 ```
 
@@ -733,17 +764,17 @@ plotly::plot_ly(data=africa_countries,
                 sizes = c(5, 20),
                 marker = list(sizemode = 'diameter' , opacity = 0.5),
                 type = 'scatter',mode='markers',
-               hoverinfo='text',
+                hoverinfo='text',
                 hovertemplate = ~paste0("",Country.Region,'<br>',
-                               "Confirmados: ",confirmed,'<br>',
-                                "Ativos: ",active," (",round(100*(active/confirmed),1),' %)','<br>',
-                               "Recuperados: ", recovered," (",round(100*(recovered/confirmed),1),' %)','<br>',
-                               "Óbitos: ", death," (",round(100*(death/confirmed),1),' %)',sep=""))%>%
+                                        "Confirmados: ",confirmed,'<br>',
+                                        "Ativos: ",active," (",round(100*(active/confirmed),1),' %)','<br>',
+                                        "Recuperados: ", recovered," (",round(100*(recovered/confirmed),1),' %)','<br>',
+                                        "Óbitos: ", death," (",round(100*(death/confirmed),1),' %)',sep=""))%>%
   plotly::layout(title = "",
-         xaxis = list(title = "<b>Taxa de Mortandade</b>",ticksuffix = "%"),
-         yaxis = list(title = "<b>Taxa de Recuperação</b>",ticksuffix = "%"),
-         # set the top margin so the plot helper buttons don't cover the title
-         margin = list(t = 70))
+                 xaxis = list(title = "<b>Taxa de Mortandade</b>",ticksuffix = "%"),
+                 yaxis = list(title = "<b>Taxa de Recuperação</b>",ticksuffix = "%"),
+                 # set the top margin so the plot helper buttons don't cover the title
+                 margin = list(t = 70))
 ```
 
 
@@ -756,27 +787,27 @@ Row {.tabset}
 covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho, c("Sal Rei"= "Boa Vista", "Mindelo"="São Vicente"))) %>%
   dplyr::select(Data = data, Concelho = concelho, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>%
   DT::datatable(rownames = FALSE,extensions = 'Buttons',
-            options = list(dom='Bfrtip',searchHighlight = TRUE, 
-                           pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:4)), autoWidth = TRUE), filter = 'top')
+                options = list(dom='Bfrtip',searchHighlight = TRUE, 
+                               pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:4)), autoWidth = TRUE), filter = 'top')
 ```
 
 ### PALOP-TL
 ```{r}
 palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
-            options = list(searchHighlight = TRUE, 
-                           pageLength = 6,columnDefs = list(list(className = 'dt-center', targets = 0:4))
-,autoWidth = TRUE), filter = 'top')
+                options = list(searchHighlight = TRUE, 
+                               pageLength = 6,columnDefs = list(list(className = 'dt-center', targets = 0:4))
+                               ,autoWidth = TRUE), filter = 'top')
 ```
 
 ### África
 
 ```{r}
 africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
-   DT::datatable(rownames = FALSE,
-            options = list(searchHighlight = TRUE, 
-                           pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:4))
-,autoWidth = TRUE), filter = 'top')
+  DT::datatable(rownames = FALSE,
+                options = list(searchHighlight = TRUE, 
+                               pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:4))
+                               ,autoWidth = TRUE), filter = 'top')
 ```
 
 
