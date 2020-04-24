@@ -43,12 +43,13 @@ death_color <- "#E41317"
 ## get confirmed cases
 cv_total_today<- covid19cvdata::covid19cv_nacional %>% filter(Data==max(Data))
 
+## Moving Average
 total_nacional<-covid19cvdata::covid19cv_nacional  %>%
-dplyr::mutate(novos_casos = (confirmados +
+dplyr::mutate(novos_casos = round((confirmados +
                                     dplyr::lag(confirmados, n = 1) +
                                     dplyr::lag(confirmados, n = 2) +
                                     dplyr::lag(confirmados, n = 3) +
-                                    dplyr::lag(confirmados, n = 4)) / 5)
+                                    dplyr::lag(confirmados, n = 4)) / 5))
 
 # total_nacional<-total_nacional%>%mutate(diff_date=Data-lag(Data),diff_growthConfirmados=confirmados-lag(confirmados),percentagem=(diff_growthConfirmados / diff_date) /confirmados*100)
 
@@ -73,6 +74,7 @@ joint_s[is.na(joint_s)]<-0
 
 age_group<-covid_demo %>% group_by(grupo_etario) %>%dplyr::summarise(confirmados=sum(confirmados),c_ativos=sum(confirmados_ativos),evacuados=sum(evacuados),recuperados=sum(recuperados),obitos=sum(obitos))
 
+#####################################################
 #CV MAP
 
 cv_city<-covid19cvdata::covid19cv_concelhos
@@ -93,11 +95,11 @@ cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass =
             by = c("concelho" = "concelho"))
 
 
-
+#####################################################
 
 #World Cases
 world<-utils::read.csv('https://raw.githubusercontent.com/RamiKrispin/coronavirus-csv/master/coronavirus_dataset.csv')
-
+#####################################################
 #Get Africa Countries
 countries <- read_csv("./data-raw/africa.csv")
 
@@ -113,7 +115,7 @@ africa_countries<-africa %>%
                      values_from = total) %>%
   dplyr::ungroup() %>%
   dplyr::mutate(active =  confirmed - death - recovered)
-
+#####################################################
 #PALOP-TIL
 timor<-world%>%filter(Country.Region=="Timor-Leste") %>%dplyr::group_by( type,Country.Region) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
@@ -165,6 +167,22 @@ palop<-get.geocode.country(palop,"Country.Region")
 palop$lat<-as.numeric(palop$lat)
 palop$long<-as.numeric(palop$long)
 
+palop_daily<-world %>% filter(Country.Region %in% c("Angola", "Guinea-Bissau", "Timor-Leste", "Mozambique","Sao Tome and Principe","Cabo Verde"))%>%
+  dplyr::mutate(date=as.Date(date))%>%
+  dplyr::group_by(date, Country.Region, type) %>%
+  dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
+  tidyr::pivot_wider(names_from = type,
+                     values_from = total) %>%
+  dplyr::arrange(date) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(Country.Region)%>%
+  dplyr::mutate(active =  confirmed - death - recovered) %>%
+  dplyr::mutate(confirmed_cum = cumsum(confirmed),
+                death_cum = cumsum(death),
+                recovered_cum = cumsum(recovered),
+                active_cum = cumsum(active)) 
+
+#####################################################
 #Daily Cases Africa
 africa_daily <- africa %>% 
   dplyr::mutate(date=as.Date(date))%>%
@@ -182,7 +200,7 @@ africa_daily <- africa %>%
 ```
 
 
-Resumo
+Resumo 
 ======================================================================
 Row
 -----------------------------------------------------------------------
@@ -245,7 +263,7 @@ valueBox(value = paste(format(sum(total_nacional$evacuados), big.mark = ","), " 
 ```
 
 
-Row
+Row {data-height=500}
 -----------------------------------------------------------------------
 
 ### Distribuição do Total de Casos
@@ -277,7 +295,7 @@ plotly::plot_ly(data = total_nacional,
                           ax = 10,
                           ay = -90)%>% 
   plotly::add_annotations(x = as.Date("2020-04-18"),
-                          y = 1,
+                          y = 50,
                           text ="Prorrogação EE",
                           xref = "x",
                           yref = "y",
@@ -285,7 +303,7 @@ plotly::plot_ly(data = total_nacional,
                           arrowhead = 3,
                           arrowsize = .05,
                           showarrow = TRUE,
-                           ax = -10,
+                           ax = 1,
                           ay = -90)%>%
   plotly::layout(barmode='stack',
                  legend = list(orientation = "h",   # show entries horizontally
@@ -293,10 +311,17 @@ plotly::plot_ly(data = total_nacional,
                      x = 0.5,y=8),
                  yaxis = list(title = "Casos Acumulados"),
                  xaxis = list(title = "Data"),
-                 hovermode = "compared",margin=list(b=10,t=10,pad=2))
+                 hovermode = "compared",margin=list(b=10,t=10,pad=2),annotations = list(
+                  text = paste0("Última Atualização:", format(max(total_nacional$Data), '%d/%m'), sep = " "),
+                   xref = "paper",
+                   yref = "paper",
+                   showarrow = FALSE,
+                  x = 1,
+                  y = 1
+                 ))
 ```
 
-Row {.tabset}
+Row {data-height=400}
 ----------------------------------------------
 
 ### Casos por Concelho
@@ -349,20 +374,20 @@ plotly::plot_ly(data = total_nacional,
   plotly::add_lines(x = ~ Data, 
                     y = ~ novos_casos,
                     line = list(color = "red", width = 3),
-                    name = "Trend Line") %>%
+                    name = "Linha de Tendência") %>%
   plotly::add_annotations(x = as.Date("2020-03-27"),
-                          y = 1,
+                          y = 0,
                           text ="Estado de Emergência",
                           xref = "x",
                           yref = "y",
                           arrowhead = 3,
                           arrowhead = 3,
-                          arrowsize = 1,
+                          arrowsize = 0.3,
                           showarrow = TRUE,
                           ax = 10,
                           ay = -90)%>%
   plotly::add_annotations(x = as.Date("2020-04-18"),
-                          y = 1,
+                          y = 0,
                           text ="Prorrogação EE",
                           xref = "x",
                           yref = "y",
@@ -373,15 +398,17 @@ plotly::plot_ly(data = total_nacional,
                           ax = 10,
                           ay = -90)%>%
   plotly::layout(title = "",
-                 legend = list(x = 0.1, y = 0.9),
+                legend = list(orientation = "h",   # show entries horizontally
+                     xanchor = "center",  # use center of legend as anchor
+                     x = 0.5,y=8),
                  yaxis = list(title = "Casos Confirmados"),
-                 xaxis = list(title = "Média Móvel para Calcular a Linha de Tendência"),
-                 hovermode = "compare")
+                 xaxis = list(title = "Média Móvel de 5dias para a Linha de Tendência"),
+                 hovermode = "compare",margin=list(b=10,t=10,pad=2))
   
 ```
 
 
-Demografia
+Demografia 
 ======================================================================
 Row
 -----------------------------------------------------------------------
@@ -471,7 +498,14 @@ plotly::plot_ly(data = joint_s,
          legend = list(x = 0.1, y = 0.9),
          yaxis = list(title = "Casos Confirmados Acumulados"),
          xaxis = list(title = "Data"),
-         hovermode = "compared")
+         hovermode = "compared",  annotations = list(
+                  text = paste0("Última Atualização:", format(max(total_nacional$Data), '%d/%m'), sep = " "),
+                   xref = "paper",
+                   yref = "paper",
+                   showarrow = FALSE,
+                  x = 0.95,
+                  y = 1
+                 ))
 ```
 
 Row {.tabset}
@@ -529,7 +563,7 @@ cabo_verde_map%>% mutate(c_acumulados=replace_na(c_acumulados,"Sem casos"))%>%
                col.regions = colorRampPalette(c("yellow", "red", "snow"))) 
 ```
 
-PALOP
+PALOP-TL
 ======================================================================
 Row
 -----------------------------------------------------------------------
@@ -570,6 +604,7 @@ valueBox(value = paste(format(sum(palop$death), big.mark = ",")," (",round(100 *
 
 Row
 --------------------------------------------------------------
+### Países PALOP e Timor Leste 
 ```{r}
 
 pal <- colorNumeric(palette = "Reds", domain = c(0:90))
@@ -578,13 +613,40 @@ leaflet(data = palop)%>%
    addProviderTiles("Esri.WorldImagery") %>% 
   addCircleMarkers(lng = ~ long, 
                    lat= ~ lat,  #use the pallete
-                   color = ~pal(confirmed),
-                   label = paste(palop$Country.Region,'<br>',"Confirmados:", palop$confirmed,'<br>', "Obitos:",palop$death,'<br>',"Recuperados:",palop$recovered),
-                   clusterOptions = markerClusterOptions(freezeAtZoom=5)
-
-                   ) %>% 
+                   color = ~pal(confirmed),stroke = FALSE, fillOpacity = 0.5,
+                  label= ~paste0("",Country.Region,'\n |',"Confirmados:", confirmed,'\n', "Obitos:",death,'\n',"Recuperados:",recovered)
+                   ) %>%
   addLegend(title = "Casos",pal=pal,values = palop$confirmed )
 ```
+
+### Casos Confirmados Diários
+
+```{r}
+
+palop_daily%>% filter(date>="2020-03-18")%>%
+plotly::plot_ly(
+    x = ~date, y = ~(confirmed_cum), name = ~`Country.Region`,
+    type = 'scatter', mode = 'lines',color = ~`Country.Region`
+  ) %>% 
+ # plotly::add_trace(y = ~recovered, name = 'Recuperados',  
+ #            legendgroup = 'Recuperados', showlegend = FALSE,
+ #            fillcolor = 'rgba(255, 188, 101, 0.8)',
+ #            hovertemplate = paste('<i>Data</i>: %{x}',
+ #                                  '<br><i>Recuperados</i>: %{y: .2f}%'))%>%
+  plotly::layout(
+    title = "<b>PALOP-TL</b>",
+    xaxis = list(title = "<b>Data</b>"),
+    yaxis = list(title = "<b>Casos Confirmados Acumulados</b>",type="linear"),
+    margin = list(t = 70),hovermode="compare",  annotations = list(
+                  text = paste0("Última Atualização:", format(max(palop_daily$date), '%d/%m'), sep = " "),
+                   xref = "paper",
+                   yref = "paper",
+                   showarrow = FALSE,
+                  x = 0.95,
+                  y = 1
+                 ))
+```
+
 
 África
 ======================================================================
@@ -627,7 +689,7 @@ valueBox(value = paste(format(sum(africa_daily$death), big.mark = ",")," (",roun
 
 Row
 ---------------------------------------------------------
-### Casos Diários
+### Distribuição dos Casos
 
 ```{r}
 plotly::plot_ly(data = africa_daily,
@@ -648,7 +710,15 @@ plotly::plot_ly(data = africa_daily,
                  yaxis = list(title = "Casos acumulados"),
                  xaxis = list(title = "Data"),
                  legend = list(x = 0.1, y = 0.9),
-                 hovermode = "compare", margin = list(t = 70))
+                 hovermode = "compare", margin = list(t = 70),
+                 annotations = list(
+                  text = paste0("Última Atualização:", format(max(africa_daily$date), '%d/%m'), sep = " "),
+                   xref = "paper",
+                   yref = "paper",
+                   showarrow = FALSE,
+                  x = 0.95,
+                  y = 1
+                 ))
 ```
 
 
@@ -662,7 +732,7 @@ plotly::plot_ly(data=africa_countries,
                 color = ~Country.Region,
                 sizes = c(5, 20),
                 marker = list(sizemode = 'diameter' , opacity = 0.5),
-                type = 'scatter',
+                type = 'scatter',mode='markers',
                hoverinfo='text',
                 hovertemplate = ~paste0("",Country.Region,'<br>',
                                "Confirmados: ",confirmed,'<br>',
@@ -687,7 +757,7 @@ covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho
   dplyr::select(Data = data, Concelho = concelho, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>%
   DT::datatable(rownames = FALSE,extensions = 'Buttons',
             options = list(dom='Bfrtip',searchHighlight = TRUE, 
-                           pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:4))), filter = 'top')
+                           pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:4)), autoWidth = TRUE), filter = 'top')
 ```
 
 ### PALOP-TL
@@ -695,8 +765,8 @@ covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho
 palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
             options = list(searchHighlight = TRUE, 
-                           pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:4))
-), filter = 'top')
+                           pageLength = 6,columnDefs = list(list(className = 'dt-center', targets = 0:4))
+,autoWidth = TRUE), filter = 'top')
 ```
 
 ### África
@@ -706,7 +776,7 @@ africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confi
    DT::datatable(rownames = FALSE,
             options = list(searchHighlight = TRUE, 
                            pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:4))
-), filter = 'top')
+,autoWidth = TRUE), filter = 'top')
 ```
 
 
@@ -747,9 +817,9 @@ Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvd
 
 O dashboard foi implementado no _Github docs_, caso deseje modificar na sua conta do Github, pode aplicar as seguintes etapas:
 
-* _Fork_ o [repositório do dashboard](https://marovski.github.io/covid19cvdashboard/) ou;
+* _Fork_ o [repositório do dashboard](https://github.com/marovski/covid19cvdashboard) ou;
 * Clonar o repositório para sua conta do Github.
 
 **Errata**
 
-Em caso de identificação de erros/sugestões, por favor, abrir uma [issue](https://marovski.github.io/covid19cvdashboard/issues/new).
+Em caso de identificação de erros/sugestões, por favor, abrir uma [issue](https://github.com/marovski/covid19cvdashboard/issues/new).
