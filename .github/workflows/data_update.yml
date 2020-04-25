@@ -40,6 +40,6 @@ jobs:
       - name: Install rnaturalearthhires
         run: Rscript -e "install.packages('rnaturalearthhires', repos = 'http://packages.ropensci.org', type = 'source')"
       - name: Install Github packages
-        run: Rscript -e "devtools::install_github('Covid19R/covid19Italy')" -e "devtools::install_github('Covid19R/coronavirus')"
+        run: Rscript -e "devtools::install_github('marovski/covid19cvdata')"
       - name: Render the site
         run: Rscript -e "rmarkdown::render_site()"
