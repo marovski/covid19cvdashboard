@@ -87,7 +87,7 @@ age_group<-covid_demo %>% group_by(grupo_etario) %>%dplyr::summarise(confirmados
 
 cv_city<-covid19cvdata::covid19cv_concelhos
 
-cv_city$concelho<-stringr::str_replace_all(cv_city$concelho, c("Sal Rei" = "Boa Vista","Sao Vicente" = "São Vicente"))
+cv_city$concelho<-stringr::str_replace_all(cv_city$concelho, c("Sal Rei" = "Boa Vista","Sao"="São"))
 
 cv_city$concelho<- as.character(cv_city$concelho)
 
@@ -631,7 +631,7 @@ Mapa CV {data-orientation=rows}
 Row
 -----------------------------------------------------------------------
 ### Distribuição Geográfica dos Casos
-```{r }
+```{r mapCV}
 
 cabo_verde_map%>% mutate(`Casos Confirmados`=replace_na(c_acumulados,"Sem casos"))%>%
   mapview::mapview(legend=TRUE,zcol = "Casos Confirmados",raster.palette = grey.colors,
@@ -882,7 +882,7 @@ Row
 top_worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(Country.Region, levels = Country.Region))%>% 
 plotly::plot_ly(
                 x = ~country,
-                y = ~confirmed,
+                y = ~active,
                 name = 'Ativos',
                 type = 'bar') %>%
   plotly::add_trace( y = ~ death,
