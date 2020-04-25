@@ -651,7 +651,30 @@ cv_city %>%
   dplyr::ungroup() %>%
   DT::datatable(rownames = FALSE,extensions = 'Buttons',
                 options = list(dom='Bfrtip',searchHighlight = TRUE, 
-                               pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:4)), autoWidth = TRUE), filter = 'top')
+                               pageLength = 20,
+                               buttons=c('csv'),
+                               columnDefs = list(list(className = 'dt-center', targets = 0:4)), 
+                               autoWidth = TRUE), 
+                                filter = 'top') %>%   
+    DT::formatStyle(
+    'Confirmados',
+    background = DT::styleColorBar(cv_city$confirmados, 'lightblue'),
+    backgroundSize = '100% 90%',
+    backgroundRepeat = 'no-repeat',
+    backgroundPosition = 'center'
+  )%>%   DT::formatStyle(
+    'Recuperados',
+    background = DT::styleColorBar(cv_city$recuperados, 'green'),
+    backgroundSize = '100% 90%',
+    backgroundRepeat = 'no-repeat',
+    backgroundPosition = 'center'
+  )%>% DT::formatStyle(
+    'Óbitos',
+    background = DT::styleColorBar(cv_city$obitos, 'red'),
+    backgroundSize = '100% 90%',
+    backgroundRepeat = 'no-repeat',
+    backgroundPosition = 'center'
+  )
 
 ```
 
