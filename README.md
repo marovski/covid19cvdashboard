@@ -42,4 +42,4 @@ The provided data are from [covid19cvdata](https://github.com/marovski/covid19cv
 
 
 -------------------
-Please note that the 'covid19-caboverde-dashboard' project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
+Please note that the 'covid19-caboverde-dashboard' project is released with a [Contributor Code of Conduct](.github/Code_of_conduct.md). By contributing to this project, you agree to abide by its terms.

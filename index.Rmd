@@ -108,6 +108,29 @@ cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass =
 
 world<-utils::read.csv('https://raw.githubusercontent.com/RamiKrispin/coronavirus-csv/master/coronavirus_dataset.csv')
 
+world_daily <- world %>% 
+  dplyr::mutate(date=as.Date(date))%>%
+  dplyr::group_by(date, type) %>%
+  dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
+  tidyr::pivot_wider(names_from = type,
+                     values_from = total) %>%
+  dplyr::arrange(date) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(active =  confirmed - death - recovered) %>%
+  dplyr::mutate(confirmed_cum = cumsum(confirmed),
+                death_cum = cumsum(death),
+                recovered_cum = cumsum(recovered),
+                active_cum = cumsum(active))
+
+top_worldCountries<-world %>%
+  dplyr::group_by( Country.Region,type) %>%
+  dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
+  tidyr::pivot_wider(names_from = type,
+                     values_from = total) %>%
+  dplyr::arrange(-confirmed)%>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(active =  confirmed - death - recovered)
+
 
 #------------------------#Get Africa Countries-------------------#
 
@@ -223,7 +246,7 @@ Row
 ### Tested {.value-box}
 
 ```{r}
-valueBox(value = format(241, big.mark = ","),caption = "Total de Testes Realizados",icon = "fas fa-user-md", color = tested_color)
+valueBox(value = format(791, big.mark = ","),caption = "Total de Testes Realizados",icon = "fas fa-user-md", color = tested_color)
 ```
 
 
@@ -289,13 +312,13 @@ plotly::plot_ly(data = total_nacional,
                 y = ~confirmados_ativos,
                 name = 'Ativos',
                 type = 'bar') %>%
-  plotly::add_trace( y = ~ obitos,
+  plotly::add_trace( y = ~ cumsum(obitos),
                      name = "Óbitos",
                      marker = list(color=death_color))%>%
-  plotly::add_trace(y = ~evacuados,
+  plotly::add_trace(y = ~cumsum(evacuados),
                     name = 'Evacuados',
                     marker = list(color='grey')) %>%
-  plotly::add_trace(y = ~recuperados,
+  plotly::add_trace(y = ~cumsum(recuperados),
                     name = 'Recuperados',
                     marker = list(color=recovered_color)) %>%
   plotly::add_annotations(x = as.Date("2020-03-27"),
@@ -310,7 +333,7 @@ plotly::plot_ly(data = total_nacional,
                           ax = 15,
                           ay = -90)%>% 
   plotly::add_annotations(x = as.Date("2020-04-18"),
-                          y = 29,
+                          y = 40,
                           text ="Prorrogação EE",
                           xref = "x",
                           yref = "y",
@@ -318,14 +341,14 @@ plotly::plot_ly(data = total_nacional,
                           arrowhead = 3,
                           arrowsize = .05,
                           showarrow = TRUE,
-                          ax = 1,
+                          ax = -15,
                           ay = -90)%>%
   plotly::layout(barmode='stack',
                  legend = list(orientation = "h",   # show entries horizontally
                                xanchor = "center",  # use center of legend as anchor
                                x = 0.5,y=8),
                  yaxis = list(title = "Casos Acumulados"),
-                 xaxis = list(title = "Data"),
+                 xaxis = list(title = ""),
                  hovermode = "compared",margin=list(b=10,t=10,pad=2),annotations = list(
                    text = paste0("Última Atualização:", format(max(total_nacional$Data), '%d/%m'), sep = " "),
                    xref = "paper",
@@ -420,6 +443,38 @@ plotly::plot_ly(data = total_nacional,
 
 ```
 
+Row
+-------------------------------------------------------------
+### Taxa Crescimento Diário dos Casos Confirmados e Óbitos
+```{r}
+total_nacional$c_lag<-lag(total_nacional$confirmados_acumulados)
+total_nacional$d_lag<-lag(cumsum(total_nacional$obitos))
+
+total_nacional$c_lag[is.na(total_nacional$c_lag)]<-0
+total_nacional$d_lag[is.na(total_nacional$d_lag)]<-0
+
+total_nacional$c_percentcrescimento<-round((total_nacional$confirmados_acumulados-total_nacional$c_lag)/total_nacional$c_lag*100,1)
+
+total_nacional$d_percentcrescimento<-round((cumsum(total_nacional$obitos)-total_nacional$d_lag)/total_nacional$d_lag*100,1)
+
+# total_nacional$r_percentcrescimento<-round(total_nacional$recuperados/total_nacional$r_lag*100,1)
+
+total_nacional %>%
+plotly::plot_ly( x = ~ Data, 
+                 y = ~c_percentcrescimento, 
+                 type="scatter", text= ~paste0('Confirmados:',confirmados),
+                 mode = 'lines+markers',  
+                 name = '% Crescimento Diário Casos Confirmados',
+                 marker = list(color = '#1f77b4'))  %>% 
+  plotly::add_trace(y = ~d_percentcrescimento, 
+                    name = '% Crescimento Diário Óbitos', 
+                    marker = list(color = 'red'), text= ~paste0('Óbitos:',obitos),
+                    line=list(color="red"),
+                    mode = 'lines+markers') %>% 
+plotly::layout(title = "", xaxis = list(title = ""), 
+               legend = list(x = 0.9, y = 0.95),
+         yaxis = list(title = "Taxa de crescimento diário",ticksuffix = "%"))
+```
 
 Demografia {data-orientation=rows}
 ======================================================================
@@ -578,8 +633,8 @@ Row
 ### Distribuição Geográfica dos Casos
 ```{r }
 
-cabo_verde_map%>% mutate(c_acumulados=replace_na(c_acumulados,"Sem casos"))%>% 
-  mapview::mapview(legend=TRUE,zcol = "c_acumulados",raster.palette = grey.colors,
+cabo_verde_map%>% mutate(`Casos Confirmados`=replace_na(c_acumulados,"Sem casos"))%>%
+  mapview::mapview(legend=TRUE,zcol = "Casos Confirmados",raster.palette = grey.colors,
                    col.regions = colorRampPalette(c("yellow", "red", "snow"))) 
 ```
 
@@ -587,8 +642,8 @@ Row
 ---------------------------------------------------------------------
 ### Concelhos Afetados
 ```{r}
-  cv_city %>%
- dplyr::select(Concelho=concelho, Ilha=ilha, Confirmados=confirmados,Recuperados=recuperados,Óbitos= obitos, `Ativos Acumulados`=c_ativos_acumulados, `Conf. Acumulados`=confirmados_acumulados)%>% dplyr::group_by(Concelho) %>%
+cv_city %>%
+  dplyr::select(Concelho=concelho, Ilha=ilha, Confirmados=confirmados,Recuperados=recuperados,Óbitos= obitos, `Ativos Acumulados`=c_ativos_acumulados, `Conf. Acumulados`=confirmados_acumulados)%>% dplyr::group_by(Concelho) %>%
   dplyr::summarise(Confirmados = sum(Confirmados),
                    Recuperados = sum(Recuperados),
                    Óbitos = sum(Óbitos),
@@ -780,6 +835,78 @@ plotly::plot_ly(data=africa_countries,
                  margin = list(t = 70))
 ```
 
+Mundo
+======================================================================
+Column {data-width=100} 
+-----------------------------------------------------------------------
+### Confirmados {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(world_daily$confirmed), big.mark = ","),sep=" "),
+         caption = "Casos Confirmados",
+         icon = "fas fa-globe", color = '#003399')
+```
+
+
+### Ativos {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(world_daily$active), big.mark = ",")," (",round(100 * sum(world_daily$active) / sum(world_daily$confirmed), 1), 
+                       "%)",sep=" "),caption = "Casos Ativos",icon = "fas fa-cross", color = 'blue')
+```
+
+### Recovered {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(world_daily$recovered), big.mark = ",")," (",round(100 * sum(world_daily$recovered) / sum(world_daily$confirmed), 1), 
+                       "%)",sep=" "),
+         caption = "Recuperados",
+         icon = "fas fa-heartbeat", color = 'green')
+```
+
+
+### Death {.value-box}
+
+```{r}
+valueBox(value = paste(format(sum(world_daily$death), big.mark = ",")," (",round(100 * sum(world_daily$death) / sum(world_daily$confirmed), 1), 
+                       "%)",sep=" "),
+         caption = "Óbitos",
+         color = 'red')
+```
+
+Row
+--------------------------------------------------------------
+### Países com mais de 20 000 casos
+
+```{r top_worldCountries}
+top_worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(Country.Region, levels = Country.Region))%>% 
+plotly::plot_ly(
+                x = ~country,
+                y = ~confirmed,
+                name = 'Ativos',
+                type = 'bar') %>%
+  plotly::add_trace( y = ~ death,
+                     name = "Óbitos",
+                     marker = list(color=death_color))%>%
+  plotly::add_trace(y = ~recovered,
+                    name = 'Recuperados',
+                    marker = list(color=recovered_color))%>%
+   plotly::layout(title = "",
+                 barmode = 'stack',
+                 yaxis = list(title = "Casos (escala log)",
+                              type = "log"),
+                  xaxis=list(title=""),
+                 hovermode = "compare",
+                 margin =  list(
+                   # l = 60,
+                   # r = 40,
+                   b = 10,
+                   t = 10,
+                   pad = 2
+                 ))
+```
+
+
 
 Dados
 =====================================================
@@ -832,7 +959,7 @@ Os dados de entrada para este dashboard são os pacotes R [covid19cvdata](https:
 
 **Fonte de dados**
 
-Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvdata) são obtidos do website [covi19.cv](https://covid19.cv) e o pacote coronavírus do Centro de Ciência e Engenharia da Universidade Johns Hopkins (JHU CCSE).
+Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvdata) são obtidos do website [covi19.cv](https://covid19.cv) e os dados do pacote [coronavirus](https://github.com/RamiKrispin/coronavirus) do Centro de Ciência e Engenharia da Universidade Johns Hopkins (JHU CCSE).
 
 **Pacotes**
 
@@ -842,6 +969,8 @@ Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvd
 * Tabelas - o pacote [DT](https://rstudio.github.io/DT/)
 
 **Referências**
+
+* Power BI Dashboard da plataforma [covid19.cv](https://covid19.cv): todos os dados utilizados neste projeto foram obtidos deste mágnifico dashboard público. Thank you NOSi!
 
 * Dashboard do [João Silva](https://rpubs.com/joaosilva/covid19-dash): o excelente trabalho desenvolvido pelo Engenheiro João serviu de base para este dashboard. Grande obrigado.
 

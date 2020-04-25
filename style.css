@@ -1,8 +1,14 @@
 body{
   background-color: #0000ffcc;
+   margin-bottom:50px;
 }
 
 img{
      max-width:48px;
      max-height:48px;
+}
+
+@media only screen and (max-width: 800px) {
+	
+#concelhos-afetados{display:none;}
 }
