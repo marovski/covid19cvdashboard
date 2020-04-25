@@ -15,6 +15,7 @@ output:
 #-------------------Packages---------------------------#
 
 ### -------covid19cvdata-----------------------------#
+devtools::install_github("marovski/covid19cvdata")
 library(covid19cvdata)
 #-----Required the dev version from Github---------------# 
 
@@ -122,7 +123,7 @@ world_daily <- world %>%
                 recovered_cum = cumsum(recovered),
                 active_cum = cumsum(active))
 
-top_worldCountries<-world %>%
+worldCountries<-world %>%
   dplyr::group_by( Country.Region,type) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(names_from = type,
@@ -130,6 +131,7 @@ top_worldCountries<-world %>%
   dplyr::arrange(-confirmed)%>%
   dplyr::ungroup() %>%
   dplyr::mutate(active =  confirmed - death - recovered)
+
 
 
 #------------------------#Get Africa Countries-------------------#
@@ -150,6 +152,24 @@ africa_countries<-africa %>%
                      values_from = total) %>%
   dplyr::ungroup() %>%
   dplyr::mutate(active =  confirmed - death - recovered)
+
+
+
+#-----------------------------------Daily Cases Africa------------------------------#
+
+africa_daily <- africa %>% 
+  dplyr::mutate(date=as.Date(date))%>%
+  dplyr::group_by(date, type) %>%
+  dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
+  tidyr::pivot_wider(names_from = type,
+                     values_from = total) %>%
+  dplyr::arrange(date) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(active =  confirmed - death - recovered) %>%
+  dplyr::mutate(confirmed_cum = cumsum(confirmed),
+                death_cum = cumsum(death),
+                recovered_cum = cumsum(recovered),
+                active_cum = cumsum(active))
 
 
 #---------------------#PALOP-TIL-----------------------------#
@@ -219,22 +239,6 @@ palop_daily<-world %>% filter(Country.Region %in% c("Angola", "Guinea-Bissau", "
                 recovered_cum = cumsum(recovered),
                 active_cum = cumsum(active)) 
 
-
-#-----------------------------------Daily Cases Africa------------------------------#
-
-africa_daily <- africa %>% 
-  dplyr::mutate(date=as.Date(date))%>%
-  dplyr::group_by(date, type) %>%
-  dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
-  tidyr::pivot_wider(names_from = type,
-                     values_from = total) %>%
-  dplyr::arrange(date) %>%
-  dplyr::ungroup() %>%
-  dplyr::mutate(active =  confirmed - death - recovered) %>%
-  dplyr::mutate(confirmed_cum = cumsum(confirmed),
-                death_cum = cumsum(death),
-                recovered_cum = cumsum(recovered),
-                active_cum = cumsum(active))
 ```
 
 
@@ -901,8 +905,8 @@ Row
 --------------------------------------------------------------
 ### Países com mais de 20 000 casos
 
-```{r top_worldCountries}
-top_worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(Country.Region, levels = Country.Region))%>% 
+```{r worldCountries}
+worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(Country.Region, levels = Country.Region))%>% 
 plotly::plot_ly(
                 x = ~country,
                 y = ~active,
@@ -936,7 +940,7 @@ Dados
 Row {.tabset}
 ---------------------------
 ### Cabo Verde
-```{r}
+```{r caboverde}
 covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho, c("Sal Rei"= "Boa Vista", "Mindelo"="São Vicente"))) %>%
   dplyr::select(Data = data, Concelho = concelho, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>%
   DT::datatable(rownames = FALSE,extensions = 'Buttons',
@@ -945,7 +949,7 @@ covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho
 ```
 
 ### PALOP-TL
-```{r}
+```{r palop}
 palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
                 options = list(searchHighlight = TRUE, 
@@ -955,7 +959,7 @@ palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbit
 
 ### África
 
-```{r}
+```{r africa}
 africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
                 options = list(searchHighlight = TRUE, 
@@ -963,6 +967,31 @@ africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confi
                                ,autoWidth = TRUE), filter = 'top')
 ```
 
+
+```{r worldcountries}
+worldCountries %>% 
+  dplyr::select(Países = Country.Region, 
+                Confirmados = confirmed, 
+                Óbitos = death,Recuperados=recovered, 
+                Activo=active)  %>% 
+  mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
+  DT::datatable(rownames = FALSE,
+                options = list(searchHighlight = TRUE, 
+                               pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:4))
+                               ,autoWidth = TRUE), filter = 'top')%>%  DT::formatStyle(
+    'Recuperados',
+    background = DT::styleColorBar(worldCountries$recovered, 'green'),
+    backgroundSize = '100% 90%',
+    backgroundRepeat = 'no-repeat',
+    backgroundPosition = 'center'
+  )%>% DT::formatStyle(
+    'Óbitos',
+    background = DT::styleColorBar(worldCountries$death, 'red'),
+    backgroundSize = '100% 90%',
+    backgroundRepeat = 'no-repeat',
+    backgroundPosition = 'center'
+  )
+```
 
 
 Sobre
