@@ -1,5 +1,4 @@
 name: Data Refresh
-
 on: 
   schedule:
     - cron:  '0 */8 * * *'
