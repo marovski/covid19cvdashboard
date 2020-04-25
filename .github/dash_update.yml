@@ -1,4 +1,4 @@
-name: Dashboard Refresh
+name: dash update
 on: 
   schedule:
     - cron:  '0 */8 * * *'
