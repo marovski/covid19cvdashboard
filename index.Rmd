@@ -967,6 +967,7 @@ africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confi
                                ,autoWidth = TRUE), filter = 'top')
 ```
 
+### Mundo
 
 ```{r worldcountries}
 worldCountries %>% 
