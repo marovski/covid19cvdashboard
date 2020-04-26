@@ -107,7 +107,7 @@ cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass =
 #------------------------World Cases-----------------------------#
 
 
-world<-utils::read.csv('https://raw.githubusercontent.com/RamiKrispin/coronavirus-csv/master/coronavirus_dataset.csv')
+world<-utils::read.csv('https://raw.githubusercontent.com/RamiKrispin/coronavirus/master/csv/coronavirus.csv')
 
 world_daily <- world %>% 
   dplyr::mutate(date=as.Date(date))%>%
@@ -250,7 +250,7 @@ Row
 ### Tested {.value-box}
 
 ```{r}
-valueBox(value = format(791, big.mark = ","),caption = "Total de Testes Realizados",icon = "fas fa-user-md", color = tested_color)
+valueBox(value = paste0(format(791, big.mark = ",")," (Até 24/04)"),caption = "Testes Realizados",icon = "fas fa-user-md", color = tested_color)
 ```
 
 
@@ -450,7 +450,7 @@ plotly::plot_ly(data = total_nacional,
 Row
 -------------------------------------------------------------
 ### Taxa Crescimento Diário dos Casos Confirmados e Óbitos
-```{r}
+```{r growth}
 total_nacional$c_lag<-lag(total_nacional$confirmados_acumulados)
 total_nacional$d_lag<-lag(cumsum(total_nacional$obitos))
 
@@ -923,7 +923,15 @@ plotly::plot_ly(
                  yaxis = list(title = "Casos (escala log)",
                               type = "log"),
                   xaxis=list(title=""),
-                 hovermode = "compare",
+                 hovermode = "compare", 
+                 annotations = list(
+                   text = paste0("Última Atualização:", format(max(world_daily$date), '%d/%m'), sep = " "),
+                   xref = "paper",
+                   yref = "paper",
+                   showarrow = FALSE,
+                   x = 0.95,
+                   y = 1
+                 ),
                  margin =  list(
                    # l = 60,
                    # r = 40,
