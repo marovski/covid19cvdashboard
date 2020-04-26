@@ -1,7 +1,7 @@
 name: dash update
 on: 
   schedule:
-    - cron:  '0 */8 * * *'
+    - cron:  '0 */4 * * *'
 jobs:
   build:
     name: refresh the dashboard
@@ -23,8 +23,8 @@ jobs:
           brew cask install xquartz 
           #brew install pandoc-citeproc
       - name: Install CRAN packages
-        run: Rscript -e "install.packages(c('devtools', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))" -e "install.packages("rnaturalearthhires", repos = "http://packages.ropensci.org", type = "source")"
+        run: Rscript -e "install.packages(c('devtools', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
       - name: Install Github packages
-        run: Rscript -e "devtools::install_github('marovski/covid19cvdata')"
+        run: Rscript -e "devtools::install_github("ropensci/rnaturalearthhires")" -e "devtools::install_github('marovski/covid19cvdata')"
       - name: Render the site
         run: Rscript -e "rmarkdown::render_site()"
