@@ -937,7 +937,7 @@ Row {.tabset}
 ### Cabo Verde
 ```{r caboverde}
 covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho, c("Sal Rei"= "Boa Vista", "Mindelo"="São Vicente"))) %>%
-  dplyr::select(Data = data, Concelho = concelho, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>%
+  dplyr::select(Data = data, Concelho = concelho, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>% mutate(Concelho=as.factor(Concelho),`Grupo Etario`=as.factor(`Grupo Etario`), Nacionalidade=as.factor(Nacionalidade))%>%
   DT::datatable(rownames = FALSE,extensions = 'Buttons',
                 options = list(dom='Bfrtip',searchHighlight = TRUE, 
                                pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:4)), autoWidth = TRUE), filter = 'top')
