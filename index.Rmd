@@ -249,8 +249,8 @@ Row
 
 ### Tested {.value-box}
 
-```{r}
-valueBox(value = paste0(format(791, big.mark = ",")," (Até 24/04)"),caption = "Testes Realizados",icon = "fas fa-user-md", color = tested_color)
+```{r tests}
+valueBox(value = format(791, big.mark = ","),caption = "Testes Realizados(até 24/04)",icon = "fas fa-user-md", color = tested_color)
 ```
 
 
@@ -308,7 +308,7 @@ valueBox(value = paste(format(sum(total_nacional$evacuados), big.mark = ","), " 
 Row
 -----------------------------------------------------------------------
 
-### Distribuição do Total de Casos
+### Distribuição do Total de Casos (última atualização:`r format(max(total_nacional$Data), '%d/%m')`)
 
 ```{r}
 plotly::plot_ly(data = total_nacional,
@@ -353,14 +353,9 @@ plotly::plot_ly(data = total_nacional,
                                x = 0.5,y=8),
                  yaxis = list(title = "Casos Acumulados"),
                  xaxis = list(title = ""),
-                 hovermode = "compared",margin=list(b=10,t=10,pad=2),annotations = list(
-                   text = paste0("Última Atualização:", format(max(total_nacional$Data), '%d/%m'), sep = " "),
-                   xref = "paper",
-                   yref = "paper",
-                   showarrow = FALSE,
-                   x = .05,
-                   y = 1
-                 ))
+                 hovermode = "compared",
+                 margin=list(b=10,t=10,pad=2)
+                 )
 ```
 
 
@@ -475,9 +470,13 @@ plotly::plot_ly( x = ~ Data,
                     marker = list(color = 'red'), text= ~paste0('Óbitos:',obitos),
                     line=list(color="red"),
                     mode = 'lines+markers') %>% 
-plotly::layout(title = "", xaxis = list(title = ""), 
-               legend = list(x = 0.9, y = 0.95),
-         yaxis = list(title = "Taxa de crescimento diário",ticksuffix = "%"))
+plotly::layout(title = "", 
+               xaxis = list(title = ""), 
+               legend = list(orientation = "h",   # show entries horizontally
+                               xanchor = "center",  # use center of legend as anchor
+                               x = 0.5,y=8),
+         yaxis = list(title = "Taxa de crescimento diário",ticksuffix = "%"),
+         margin=list(b=10,t=10,pad=2))
 ```
 
 Demografia {data-orientation=rows}
@@ -530,9 +529,9 @@ valueBox(value = paste(x$grupo_etario<-gsub(",","-",x$grupo_etario)," (",round(1
 Row
 ----------------------------------------------------------
 
-### Distribuição por Sexo dos Casos Confirmados Acumulados
+### Distribuição por Sexo dos Casos Confirmados Acumulados (última atualização:`r format(max(total_nacional$Data), '%d/%m')`)
 
-```{r}
+```{r sexo}
 plotly::plot_ly(data = joint_s,
                 x = ~ Data,
                 y = ~ cumsum(masculino_confirmado), 
@@ -724,7 +723,7 @@ valueBox(value = paste(format(sum(palop$death), big.mark = ",")," (",round(100 *
 
 Row
 --------------------------------------------------------------
-### Casos Confirmados Diários
+### Casos Confirmados Diários (última atualização:`r format(max(palop_daily$date),'%d/%m')`)
 
 ```{r}
 
@@ -734,17 +733,13 @@ palop_daily%>% filter(date>="2020-03-18")%>%
     type = 'scatter', mode = 'lines',color = ~`Country.Region`
   ) %>% 
   plotly::layout(
-    title = "<b>PALOP-TL</b>",
+    title = "",
     xaxis = list(title = "<b>Data</b>"),
     yaxis = list(title = "<b>Casos Confirmados Acumulados</b>",type="linear"),
-    margin = list(t = 70),hovermode="compare",  annotations = list(
-      text = paste0("Última Atualização:", format(max(palop_daily$date), '%d/%m'), sep = " "),
-      xref = "paper",
-      yref = "paper",
-      showarrow = FALSE,
-      x = .05,
-      y = 1
-    ))
+    margin=list(b=10,t=10,pad=2),hovermode="compare",
+    legend = list(orientation = "h",   # show entries horizontally
+                               xanchor = "center",  # use center of legend as anchor
+                               x = 0.5,y=8))
 ```
 
 ### Países PALOP e Timor Leste 
@@ -903,7 +898,7 @@ valueBox(value = paste(format(sum(world_daily$death), big.mark = ",")," (",round
 
 Row
 --------------------------------------------------------------
-### Países com mais de 20 000 casos
+### Países com mais de 20 000 casos (última atualização:`r format(max(world_daily$date), '%d/%m')`)
 
 ```{r worldCountries}
 worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(Country.Region, levels = Country.Region))%>% 
@@ -924,14 +919,6 @@ plotly::plot_ly(
                               type = "log"),
                   xaxis=list(title=""),
                  hovermode = "compare", 
-                 annotations = list(
-                   text = paste0("Última Atualização:", format(max(world_daily$date), '%d/%m'), sep = " "),
-                   xref = "paper",
-                   yref = "paper",
-                   showarrow = FALSE,
-                   x = 0.95,
-                   y = 1
-                 ),
                  margin =  list(
                    # l = 60,
                    # r = 40,
@@ -1008,7 +995,7 @@ Sobre
 
 **Dashboard Covid19CV**
 
-Este Dashboard da Covid19 fornece uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. O dashboard foi construído com [R](https://www.r-project.org/) usando a estrutura R Markdown.
+Este Dashboard da Covid19 pretende fornecer uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. O dashboard foi construído com [R](https://www.r-project.org/) usando a estrutura R Markdown.
 
 **Autoria**
 
@@ -1020,7 +1007,7 @@ Os dados de entrada para este dashboard são os pacotes R [covid19cvdata](https:
 
 **Fonte de dados**
 
-Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvdata) são obtidos do website [covi19.cv](https://covid19.cv) e os dados do pacote [coronavirus](https://github.com/RamiKrispin/coronavirus) do Centro de Ciência e Engenharia da Universidade Johns Hopkins (JHU CCSE).
+Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvdata) são obtidos da plataforma pública [covi19.cv](https://covid19.cv) e os dados do pacote [coronavirus](https://github.com/RamiKrispin/coronavirus) do Centro de Ciência e Engenharia da Universidade Johns Hopkins (JHU CCSE).
 
 **Pacotes**
 
