@@ -486,7 +486,7 @@ plotly::layout(title = "",
 ```
 
 ### Factor de Crescimento de Novos Casos
-```{r growth}
+```{r dailygrowth}
 
 #Daily Growth factor (worldmeters formula)
 total_nacional$g_lag<-lag(total_nacional$confirmados)
