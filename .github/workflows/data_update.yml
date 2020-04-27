@@ -22,7 +22,7 @@ jobs:
           brew install pandoc
           brew cask install xquartz 
       - name: Install CRAN packages
-        run: Rscript -e "install.packages(c('devtools','plotly', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
+        run: Rscript -e "install.packages(c('devtools','plotly','mapview', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
       - name: Install Github packages
         run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires',dependencies = TRUE)" -e "devtools::install_github('marovski/covid19cvdata')" -e "devtools::install_github('ropensci/rnaturalearth',dependencies = TRUE)"
       - name: Render the site

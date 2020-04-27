@@ -840,9 +840,11 @@ Column {data-width=650}
 ### Distribuição dos Casos
 
 ```{r}
+
 plotly::plot_ly(data = africa_daily,
                 x = ~ date,
                 y = ~ active_cum, 
+                frame=~date,
                 name = 'Ativos', 
                 fillcolor = active_color,
                 type = 'scatter',
