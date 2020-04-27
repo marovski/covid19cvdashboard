@@ -844,12 +844,11 @@ Column {data-width=650}
 plotly::plot_ly(data = africa_daily,
                 x = ~ date,
                 y = ~ active_cum, 
-                frame=~date,
                 name = 'Ativos', 
                 fillcolor = active_color,
                 type = 'scatter',
                 mode = 'none', 
-                stackgroup = 'one',frame = ~as.Date(date)) %>%
+                stackgroup = 'one') %>%
   plotly::add_trace(y = ~ recovered_cum,
                     name = "Recuperados",
                     fillcolor = recovered_color) %>%
