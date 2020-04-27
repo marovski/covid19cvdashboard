@@ -1,7 +1,7 @@
 name: dash update
 on: 
   schedule:
-    - cron:  '*/2 * * * *'
+    - cron:  '0 */3 * * *'
 jobs:
   build:
     name: refresh the dashboard
