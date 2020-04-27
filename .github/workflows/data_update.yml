@@ -25,6 +25,6 @@ jobs:
       - name: Install CRAN packages
         run: Rscript -e "install.packages(c('devtools', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
       - name: Install Github packages
-        run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires')" -e "devtools::install_github('marovski/covid19cvdata')"
+        run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires')" -e "devtools::install_github('marovski/covid19cvdata')" -e "devtools::install_github('ropensci/rnaturalearth')"
       - name: Render the site
         run: Rscript -e "rmarkdown::render_site()"
