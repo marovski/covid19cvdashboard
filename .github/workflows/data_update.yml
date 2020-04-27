@@ -27,3 +27,12 @@ jobs:
         run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires',dependencies = TRUE)" -e "devtools::install_github('marovski/covid19cvdata')" -e "devtools::install_github('ropensci/rnaturalearth',dependencies = TRUE)"
       - name: Render the site
         run: Rscript -e "rmarkdown::render_site()"
+      - name: Push updates
+        if: success()
+        run: |
+          if [[ "$(git status --porcelain)" != "" ]]; then
+              git config --global user.name 'marovski'
+              git config --global user.email 'cardozo27cv@gmail.com'
+              git commit -am "Update cv dashboard"
+              git push
+          fi
