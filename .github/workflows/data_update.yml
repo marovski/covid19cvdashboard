@@ -23,8 +23,6 @@ jobs:
           brew cask install xquartz 
           #brew install pandoc-citeproc
       - name: Install CRAN packages
-        run: Rscript -e "install.packages(c('devtools', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr', 'rnaturalearth'))"
-      - name: Install Github packages
-        run: Rscript -e "devtools::install_github('marovski/covid19cvdata')"
+        run: Rscript -e "install.packages(c('devtools', 'plotly','rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr', 'rnaturalearth'))"
       - name: Render the site
         run: Rscript -e "rmarkdown::render_site()"

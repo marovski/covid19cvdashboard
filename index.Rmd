@@ -31,6 +31,7 @@ library(reshape2)
 library(plyr)
 library(leaflet)
 library(rnaturalearth)
+library(plotly)
 
 #------------------ Parameters ------------------
 # Set colors
@@ -444,19 +445,24 @@ plotly::plot_ly(data = total_nacional,
 
 Row
 -------------------------------------------------------------
-### Taxa Crescimento Diário dos Casos Confirmados e Óbitos
+### Taxa Crescimento Diário dos Casos Confirmados e Óbitos Acumulados
 ```{r growth}
 total_nacional$c_lag<-lag(total_nacional$confirmados_acumulados)
+
 total_nacional$d_lag<-lag(cumsum(total_nacional$obitos))
+
 
 total_nacional$c_lag[is.na(total_nacional$c_lag)]<-0
 total_nacional$d_lag[is.na(total_nacional$d_lag)]<-0
+
+
+
+
 
 total_nacional$c_percentcrescimento<-round((total_nacional$confirmados_acumulados-total_nacional$c_lag)/total_nacional$c_lag*100,1)
 
 total_nacional$d_percentcrescimento<-round((cumsum(total_nacional$obitos)-total_nacional$d_lag)/total_nacional$d_lag*100,1)
 
-# total_nacional$r_percentcrescimento<-round(total_nacional$recuperados/total_nacional$r_lag*100,1)
 
 total_nacional %>%
 plotly::plot_ly( x = ~ Data, 
@@ -469,13 +475,44 @@ plotly::plot_ly( x = ~ Data,
                     name = '% Crescimento Diário Óbitos', 
                     marker = list(color = 'red'), text= ~paste0('Óbitos:',obitos),
                     line=list(color="red"),
-                    mode = 'lines+markers') %>% 
+                    mode = 'lines') %>% 
 plotly::layout(title = "", 
                xaxis = list(title = ""), 
                legend = list(orientation = "h",   # show entries horizontally
                                xanchor = "center",  # use center of legend as anchor
                                x = 0.5,y=8),
          yaxis = list(title = "Taxa de crescimento diário",ticksuffix = "%"),
+         margin=list(b=10,t=10,pad=2))
+```
+
+### Factor de Crescimento de Novos Casos
+```{r growth}
+
+#Daily Growth factor (worldmeters formula)
+total_nacional$g_lag<-lag(total_nacional$confirmados)
+
+total_nacional$g_lag[is.na(total_nacional$g_lag)]<-0
+
+total_nacional$g_factorcrescimento<-round(total_nacional$confirmados/total_nacional$g_lag,1)
+
+total_nacional$g_factorcrescimento[is.nan(total_nacional$g_factorcrescimento)]<-0
+
+total_nacional$g_factorcrescimento[is.infinite(total_nacional$g_factorcrescimento)]<-0
+
+
+total_nacional %>%
+plotly::plot_ly( x = ~ Data)%>%
+      plotly::add_trace(y = ~g_factorcrescimento, 
+                    name = 'Factor crescimento diário', 
+                    marker = list(color = 'purple'), text= ~paste0('Factor: ',g_factorcrescimento,'<br>','Confirmados:',confirmados,'<br>',format(Data,'%d/%m')),hoverinfo = 'text',
+                    line=list(color="purple"),
+                    mode = 'lines') %>% 
+plotly::layout(title = "", 
+               xaxis = list(title = "",ticktext=list("Factor:")), 
+               legend = list(orientation = "h",   # show entries horizontally
+                               xanchor = "center",  # use center of legend as anchor
+                               x = 0.5,y=8),
+         yaxis =list(title="Factor de crescimento"),
          margin=list(b=10,t=10,pad=2))
 ```
 
@@ -588,7 +625,7 @@ plotly::plot_ly(data=covid19cv%>%mutate(nacionalidade=sub("^$","NãoDivulgado",n
                 labels = ~nacionalidade, values = ~confirmados,
                 type = 'pie', showlegend = FALSE,hole=.4,
                 textposition = 'inside', textinfo = 'label+percent') %>% 
-  plotly::layout(title = "<b>Nacionalidades dos Casos Confirmados</b>")
+  plotly::layout(title = "<b>Nacionalidade dos Casos Confirmados</b>")
 ```
 
 
@@ -810,7 +847,7 @@ plotly::plot_ly(data = africa_daily,
                 fillcolor = active_color,
                 type = 'scatter',
                 mode = 'none', 
-                stackgroup = 'one') %>%
+                stackgroup = 'one',frame = ~as.Date(date)) %>%
   plotly::add_trace(y = ~ recovered_cum,
                     name = "Recuperados",
                     fillcolor = recovered_color) %>%
