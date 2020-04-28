@@ -626,7 +626,7 @@ valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / 
 ```
 
 
-Column
+Row
 ----------------------------------------------------------
 
 ### Distribuição por Sexo dos Casos Confirmados Acumulados (última atualização:`r format(max(total_nacional$Data), '%d/%m')`)
@@ -679,7 +679,8 @@ plotly::plot_ly(data = joint_s,
                    y = 1
                  ))
 ```
-
+Row
+-----------------------------------------
 
 ### Nacionalidade dos Casos
 
@@ -694,9 +695,6 @@ plotly::plot_ly(
   plotly::layout(title = "<b>Nacionalidade dos Casos Confirmados</b>")
 ```
 
-
-Column
-------------------------------------------------------
 
 ### Relação entre Casos Confirmados, Sexo, Grupo Etário
 
