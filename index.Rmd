@@ -1032,7 +1032,7 @@ names(cv_data_for_plot.split) %>%
                  fillOpacity = 0.8,
                  radius = ~log_cases,
 
-                 popup =  mapview::popupTable(cv_data_for_plot.split[[df]],
+                 popup =  leafpop::popupTable(cv_data_for_plot.split[[df]],
                                               feature.id = FALSE,
                                               row.numbers = FALSE,
                                               zcol=c("tipo","Casos","País")),
