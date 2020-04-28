@@ -1111,25 +1111,25 @@ covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho
   dplyr::select(Data = data, Concelho = concelho, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>% mutate(Concelho=as.factor(Concelho),`Grupo Etario`=as.factor(`Grupo Etario`), Nacionalidade=as.factor(Nacionalidade))%>%
   DT::datatable(rownames = FALSE,extensions = 'Buttons',
                 options = list(dom='Bfrtip',searchHighlight = TRUE, 
-                               pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:4)), autoWidth = TRUE), filter = 'top')
+                               pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:5)), autoWidth = TRUE), filter = 'top')
 ```
 
 ### PALOP-TL
 ```{r palop}
-palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
+palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),0)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
                 options = list(searchHighlight = TRUE, 
-                               pageLength = 6,columnDefs = list(list(className = 'dt-center', targets = 0:4))
+                               pageLength = 6,columnDefs = list(list(className = 'dt-center', targets = 0:6))
                                ,autoWidth = TRUE), filter = 'top')
 ```
 
 ### África
 
 ```{r africa}
-africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
+africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(as.numeric(round(100*(Recuperados/Confirmados),1))), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
                 options = list(searchHighlight = TRUE, 
-                               pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:4))
+                               pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:6))
                                ,autoWidth = TRUE), filter = 'top')
 ```
 
@@ -1144,7 +1144,7 @@ worldCountries %>%
   mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),1)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
                 options = list(searchHighlight = TRUE, 
-                               pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:4))
+                               pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:6))
                                ,autoWidth = TRUE), filter = 'top')%>%  DT::formatStyle(
     'Recuperados',
     background = DT::styleColorBar(worldCountries$recovered, 'green'),
