@@ -62,7 +62,7 @@ total_nacional<-covid19cvdata::covid19cv_nacional  %>%
 
 covid_demo<-covid19cvdata::covid19cv_pop
 
-covid19cv<-covid19cvdata::covid19cv %>% group_by(data,grupo_etario,sexo,nacionalidade)%>%dplyr::summarise(confirmados=sum(tipo_caso=="confirmado"),evacuados=sum(tipo_caso=="evacuado"),recuperados=sum(tipo_caso=="recuperado"),obitos=sum(tipo_caso=="obito"))
+covid19cv<-covid19cvdata::covid19cv %>% group_by(data,grupo_etario,sexo,nacionalidade,tipo_transmissao)%>%dplyr::summarise(confirmados=sum(tipo_caso=="confirmado"),evacuados=sum(tipo_caso=="evacuado"),recuperados=sum(tipo_caso=="recuperado"),obitos=sum(tipo_caso=="obito"))
 
 #Female
 female_data<-covid19cvdata::covid19cv  %>% filter(sexo == 'F') %>% 
@@ -91,7 +91,10 @@ cv_city<-covid19cvdata::covid19cv_concelhos
 
 cv_city$concelho<-stringr::str_replace_all(cv_city$concelho, c("Sal Rei" = "Boa Vista","Sao"="São"))
 
-cv_city$concelho<- as.character(cv_city$concelho)
+cv_city$concelho<-as.character(cv_city$concelho)
+
+cv_city<-cv_city %>% dplyr::group_by(Data,concelho,lat,long,ilha) %>%mutate(c_recuperados=sum(recuperados),c_obitos=sum(obitos)) %>% data.frame()
+
 
 # CV MAP
 cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass = "sf") %>%
@@ -101,7 +104,7 @@ cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass =
   dplyr::left_join(cv_city %>%
                      dplyr::filter(Data == max(Data)) %>%
                      dplyr::group_by(concelho) %>%
-                     dplyr::summarise(c_acumulados = sum(confirmados_acumulados)), # subseting for the most recent day
+                     dplyr::summarise(c_acumulados = sum(confirmados_acumulados),cm_ativos=sum(c_ativos_acumulados)), # subseting for the most recent day
                    by = c("concelho" = "concelho"))
 
 
@@ -475,7 +478,29 @@ plotly::plot_ly( x = ~ Data,
                     name = '% Crescimento Diário Óbitos', 
                     marker = list(color = 'red'), text= ~paste0('Óbitos:',obitos),
                     line=list(color="red"),
-                    mode = 'lines') %>% 
+                    mode = 'lines') %>%   
+  plotly::add_annotations(x = as.Date("2020-03-27"),
+                          y = 0,
+                          text ="Estado de Emergência",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 3,
+                          arrowhead = 3,
+                          arrowsize = .05,
+                          showarrow = TRUE,
+                          ax = 9,
+                          ay = -80) %>%
+  plotly::add_annotations(x = as.Date("2020-04-18"),
+                          y = 0,
+                          text ="Prorrogação EE",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 3,
+                          arrowhead = 3,
+                          arrowsize = .05,
+                          showarrow = TRUE,
+                          ax = 9,
+                          ay = -80)%>%
 plotly::layout(title = "", 
                xaxis = list(title = ""), 
                legend = list(orientation = "h",   # show entries horizontally
@@ -485,7 +510,7 @@ plotly::layout(title = "",
          margin=list(b=10,t=10,pad=2))
 ```
 
-### Factor de Crescimento de Novos Casos
+### Factor de Crescimento de Novos Casos ([worldometers](https://www.worldometers.info/coronavirus/coronavirus-cases/#cases-growth-factor))
 ```{r dailygrowth}
 
 #Daily Growth factor (worldmeters formula)
@@ -504,9 +529,31 @@ total_nacional %>%
 plotly::plot_ly( x = ~ Data)%>%
       plotly::add_trace(y = ~g_factorcrescimento, 
                     name = 'Factor crescimento diário', 
-                    marker = list(color = 'purple'), text= ~paste0('Factor: ',g_factorcrescimento,'<br>','Confirmados:',confirmados,'<br>',format(Data,'%d/%m')),hoverinfo = 'text',
+                    marker = list(color = 'purple'), text= ~paste0('Factor: ',g_factorcrescimento,'<br>','Confirmados: ',confirmados,'<br>',format(Data,'%d/%m')),hoverinfo = 'text',
                     line=list(color="purple"),
                     mode = 'lines') %>% 
+  plotly::add_annotations(x = as.Date("2020-03-27"),
+                          y = 0,
+                          text ="Estado de Emergência",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 3,
+                          arrowhead = 3,
+                          arrowsize = .05,
+                          showarrow = TRUE,
+                          ax = 9,
+                          ay = -80) %>%
+  plotly::add_annotations(x = as.Date("2020-04-18"),
+                          y = 0,
+                          text ="Prorrogação EE",
+                          xref = "x",
+                          yref = "y",
+                          arrowhead = 3,
+                          arrowhead = 3,
+                          arrowsize = .05,
+                          showarrow = TRUE,
+                          ax = 9,
+                          ay = -80)%>%
 plotly::layout(title = "", 
                xaxis = list(title = "",ticktext=list("Factor:")), 
                legend = list(orientation = "h",   # show entries horizontally
@@ -516,9 +563,9 @@ plotly::layout(title = "",
          margin=list(b=10,t=10,pad=2))
 ```
 
-Demografia {data-orientation=rows}
+Demografia
 ======================================================================
-Row
+Column {data-width=100}
 -----------------------------------------------------------------------
 ### CasosF {.value-box}
 
@@ -562,8 +609,24 @@ valueBox(value = paste(x$grupo_etario<-gsub(",","-",x$grupo_etario)," (",round(1
                        "%)",sep=""),caption = "Grupo Etário Mais Afetado",icon = "fas fa-cross", color = 'purple')
 ```
 
+### Transmission Cases1 {.value-box}
 
-Row
+```{r}
+x<-covid19cv %>% filter(tipo_transmissao=="Nao_Importado")
+
+valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Não Importadas'",icon = "fas fa-cross", color = 'purple')
+```
+
+### Transmission Cases2 {.value-box}
+
+```{r}
+x<-covid19cv %>% filter(tipo_transmissao=="Importado")
+
+valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Importadas'",icon = "fas fa-cross", color = 'purple')
+```
+
+
+Column
 ----------------------------------------------------------
 
 ### Distribuição por Sexo dos Casos Confirmados Acumulados (última atualização:`r format(max(total_nacional$Data), '%d/%m')`)
@@ -621,7 +684,10 @@ plotly::plot_ly(data = joint_s,
 ### Nacionalidade dos Casos
 
 ```{r}
-plotly::plot_ly(data=covid19cv%>%mutate(nacionalidade=sub("^$","NãoDivulgado",nacionalidade)),
+
+
+covid19cv%>% ungroup()%>%mutate(nacionalidade=sub("^$","NãoDivulgado",nacionalidade))%>%
+plotly::plot_ly(
                 labels = ~nacionalidade, values = ~confirmados,
                 type = 'pie', showlegend = FALSE,hole=.4,
                 textposition = 'inside', textinfo = 'label+percent') %>% 
@@ -629,7 +695,7 @@ plotly::plot_ly(data=covid19cv%>%mutate(nacionalidade=sub("^$","NãoDivulgado",n
 ```
 
 
-Row
+Column
 ------------------------------------------------------
 
 ### Relação entre Casos Confirmados, Sexo, Grupo Etário
@@ -673,8 +739,8 @@ Row
 ### Distribuição Geográfica dos Casos
 ```{r mapCV}
 
-cabo_verde_map%>% mutate(`Casos Confirmados`=replace_na(c_acumulados,"Sem casos"))%>%
-  mapview::mapview(legend=TRUE,zcol = "Casos Confirmados",raster.palette = grey.colors,
+cabo_verde_map%>% mutate(`Confirmados`=replace_na(c_acumulados,"Sem casos"), `Ativos`=replace_na(cm_ativos))%>%
+  mapview::mapview(legend=TRUE,zcol = c("Confirmados"),raster.palette = grey.colors,
                    col.regions = colorRampPalette(c("yellow", "red", "snow"))) 
 ```
 
@@ -789,7 +855,7 @@ leaflet(data = palop)%>%
   addCircleMarkers(lng = ~ long, 
                    lat= ~ lat,  #use the pallete
                    color = ~pal(confirmed),stroke = FALSE, fillOpacity = 0.5,
-                   label= ~paste0("",Country.Region,'\n |',"Confirmados:", confirmed,'\n', "Obitos:",death,'\n',"Recuperados:",recovered)
+                   label= ~paste0("",Country.Region,"\n ","Confirmados:", confirmed,'\n', "Obitos:",death,'\n',"Recuperados:",recovered)
   ) %>%
   addLegend(title = "Casos",pal=pal,values = palop$confirmed )
 ```
@@ -936,6 +1002,51 @@ valueBox(value = paste(format(sum(world_daily$death), big.mark = ",")," (",round
 
 Row
 --------------------------------------------------------------
+### Mapa Mundo(última atualização:`r format(max(world_daily$date), '%d/%m')`)
+
+```{r}
+#original map code by Art Steinmetz
+#Heremodified in part
+
+cv_data_for_plot <- world %>% 
+  dplyr::filter(cases > 0) %>% 
+  dplyr::group_by(Country.Region,Province.State,Lat,Long,type) %>% 
+  dplyr::summarise(cases = sum(cases)) %>% 
+  dplyr::mutate(log_cases = 2 * log(cases),tipo=stringr::str_replace_all(type, c("death"= "Óbitos", "confirmed"="Confirmados","recovered"="Recuperados")),País=Country.Region,Casos=cases) %>% 
+  dplyr::ungroup()
+
+
+cv_data_for_plot.split <- cv_data_for_plot %>% split(cv_data_for_plot$tipo)
+
+pal <- colorFactor(c("orange", "red","green"), domain = c("Confirmados", "Óbitos","Recuperados"))
+
+map_object <- leaflet() %>% addProviderTiles(providers$OpenStreetMap)
+
+names(cv_data_for_plot.split) %>%
+  purrr::walk( function(df) {
+    map_object <<- map_object %>%
+      addCircleMarkers(data=cv_data_for_plot.split[[df]],
+                 lng=~Long, lat=~Lat,
+                 color = ~pal(tipo),
+                 stroke = FALSE,
+                 fillOpacity = 0.8,
+                 radius = ~log_cases,
+
+                 popup =  mapview::popupTable(cv_data_for_plot.split[[df]],
+                                              feature.id = FALSE,
+                                              row.numbers = FALSE,
+                                              zcol=c("tipo","Casos","País")),
+                 group = df,
+                 labelOptions = labelOptions(noHide = F,
+                                             direction = 'auto'))
+  })
+map_object %>%
+  addLayersControl(
+    overlayGroups = names(cv_data_for_plot.split),
+    options = layersControlOptions(collapsed = FALSE) 
+  )
+```
+
 ### Países com mais de 20 000 casos (última atualização:`r format(max(world_daily$date), '%d/%m')`)
 
 ```{r worldCountries}
@@ -966,6 +1077,30 @@ plotly::plot_ly(
                  ))
 ```
 
+
+### Taxa Recuperação vs Taxa Mortandade (Países com mais de 20 000 infetados)
+```{r worldCountriesTx}
+worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(Country.Region, levels = Country.Region))%>% 
+plotly::plot_ly(
+                x=~(death/confirmed)*100,
+                y=~(recovered/confirmed)*100,
+                size = ~log(confirmed),
+                color = ~Country.Region,
+                sizes = c(5, 50),
+                marker = list(sizemode = 'diameter' , opacity = 0.5),
+                type = 'scatter',mode='markers',
+                hoverinfo='text',
+                hovertemplate = ~paste0("",Country.Region,'<br>',
+                                        "Confirmados: ",confirmed,'<br>',
+                                        "Ativos: ",active," (",round(100*(active/confirmed),1),' %)','<br>',
+                                        "Recuperados: ", recovered," (",round(100*(recovered/confirmed),1),' %)','<br>',
+                                        "Óbitos: ", death," (",round(100*(death/confirmed),1),' %)',sep=""))%>%
+  plotly::layout(title = "",
+                 xaxis = list(title = "<b>Taxa de Mortandade</b>",ticksuffix = "%"),
+                 yaxis = list(title = "<b>Taxa de Recuperação</b>",ticksuffix = "%"),
+                 # set the top margin so the plot helper buttons don't cover the title
+                 margin = list(t = 70))
+```
 
 
 Dados
