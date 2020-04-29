@@ -1189,7 +1189,7 @@ Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvd
 
 **Referências**
 
-* Power BI Dashboard da plataforma [covid19.cv](https://covid19.cv): todos os dados utilizados neste projeto foram obtidos deste mágnifico dashboard público. Thank you NOSi!
+* Power BI Dashboard da plataforma [covid19.cv](https://covid19.cv): este, contém todos os dados oficiais do Covid19 em Cabo Verde atualizados diariamente, que serviram de base para este projeto. Thank you!!
 
 * Dashboard do [João Silva](https://rpubs.com/joaosilva/covid19-dash): o excelente trabalho desenvolvido pelo Engenheiro João serviu de base para este dashboard. Grande obrigado.
 
