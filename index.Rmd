@@ -15,8 +15,13 @@ output:
 #-------------------Packages---------------------------#
 
 ### -------covid19cvdata-----------------------------#
-devtools::install_github("marovski/covid19cvdata")
+devtools::install_github("marovski/covid19cvdata",force=TRUE)
 library(covid19cvdata)
+
+##-------coronaviruspackage--------------------------#
+devtools::install_github("covid19r/coronavirus")
+library(coronavirus)
+data("coronavirus")
 #-----Required the dev version from Github---------------# 
 
 library(flexdashboard)
@@ -32,6 +37,7 @@ library(plyr)
 library(leaflet)
 library(rnaturalearth)
 library(plotly)
+
 
 #------------------ Parameters ------------------
 # Set colors
@@ -111,9 +117,9 @@ cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass =
 #------------------------World Cases-----------------------------#
 
 
-world<-utils::read.csv('https://raw.githubusercontent.com/RamiKrispin/coronavirus/master/csv/coronavirus.csv')
 
-world_daily <- world %>% 
+
+world_daily <- coronavirus %>% 
   dplyr::mutate(date=as.Date(date))%>%
   dplyr::group_by(date, type) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
@@ -127,7 +133,7 @@ world_daily <- world %>%
                 recovered_cum = cumsum(recovered),
                 active_cum = cumsum(active))
 
-worldCountries<-world %>%
+worldCountries<-coronavirus %>%
   dplyr::group_by( Country.Region,type) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(names_from = type,
@@ -146,7 +152,7 @@ countries <- read_csv("./data-raw/africa.csv")
 
 
 #Africa Cases
-africa<-semi_join(world,countries, by=c("Country.Region"="Country"))
+africa<-semi_join(coronavirus,countries, by=c("Country.Region"="Country"))
 
 #Africa Countries covid19 stats
 africa_countries<-africa %>%
@@ -178,7 +184,7 @@ africa_daily <- africa %>%
 
 #---------------------#PALOP-TIL-----------------------------#
 
-timor<-world%>%filter(Country.Region=="Timor-Leste") %>%dplyr::group_by( type,Country.Region) %>%
+timor<-coronavirus%>%filter(Country.Region=="Timor-Leste") %>%dplyr::group_by( type,Country.Region) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(names_from = type,
                      values_from = total) %>%
@@ -228,7 +234,7 @@ palop<-get.geocode.country(palop,"Country.Region")
 palop$lat<-as.numeric(palop$lat)
 palop$long<-as.numeric(palop$long)
 
-palop_daily<-world %>% filter(Country.Region %in% c("Angola", "Guinea-Bissau", "Timor-Leste", "Mozambique","Sao Tome and Principe","Cabo Verde"))%>%
+palop_daily<-coronavirus %>% filter(Country.Region %in% c("Angola", "Guinea-Bissau", "Timor-Leste", "Mozambique","Sao Tome and Principe","Cabo Verde"))%>%
   dplyr::mutate(date=as.Date(date))%>%
   dplyr::group_by(date, Country.Region, type) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
@@ -1006,7 +1012,7 @@ Row
 #original map code by Art Steinmetz
 #Heremodified in part
 
-cv_data_for_plot <- world %>% 
+cv_data_for_plot <- coronavirus %>% 
   dplyr::filter(cases > 0) %>% 
   dplyr::group_by(Country.Region,Province.State,Lat,Long,type) %>% 
   dplyr::summarise(cases = sum(cases)) %>% 
