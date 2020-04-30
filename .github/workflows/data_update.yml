@@ -18,7 +18,7 @@ jobs:
           clean: 'true'
           fetch-depth: '1'
       - name: Install pandoc 
-        run: apt-get install -y pandoc
+        run: sudo apt-get install -y pandoc
       - name: Install CRAN packages
         run: Rscript -e "install.packages(c('devtools','plotly','mapview', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
       - name: Install Github packages
