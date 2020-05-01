@@ -21,8 +21,10 @@ jobs:
         run: sudo apt-get install -y pandoc
       - name: Linux packages
         run: sudo apt-get -y install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev
+      - name: Linux packages
+        run: sudo apt-get install gdal-bin proj-bin libgdal-dev libproj-dev
       - name: Install CRAN packages
-        run: Rscript -e "install.packages(c('devtools','plotly','mapview', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
+        run: Rscript -e "install.packages(c('devtools','rgdal','plotly','mapview', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
       - name: Install Github packages
         run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires',dependencies = TRUE)" -e "devtools::install_github('marovski/covid19cvdata')" -e "devtools::install_github('ropensci/rnaturalearth',dependencies = TRUE)"
       - name: Render the site
