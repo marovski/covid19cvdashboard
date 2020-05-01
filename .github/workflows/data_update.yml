@@ -1,7 +1,7 @@
 name: dash update
 on: 
   schedule:
-    - cron:  '0 */1 * * *'
+    - cron:  '* 0/4 * * *'
 jobs:
   build:
     name: refresh the dashboard
@@ -19,10 +19,12 @@ jobs:
           fetch-depth: '1'
       - name: Install pandoc 
         run: sudo apt-get install -y pandoc
+      - name: Linux packages
+        run: sudo apt-get -y install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev
       - name: Install CRAN packages
         run: Rscript -e "install.packages(c('devtools','plotly','mapview', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
       - name: Install Github packages
-        run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires',dependencies = TRUE)" -e "devtools::install_github('marovski/covid19cvdata')" -e "devtools::install_github('ropenscilabs/rnaturalearth',dependencies = TRUE)"
+        run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires',dependencies = TRUE)" -e "devtools::install_github('marovski/covid19cvdata')" -e "devtools::install_github('ropensci/rnaturalearth',dependencies = TRUE)"
       - name: Render the site
         run: Rscript -e "rmarkdown::render_site()"
       - name: Push updates
