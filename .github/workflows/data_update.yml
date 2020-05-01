@@ -1,11 +1,11 @@
 name: dash update
 on: 
   schedule:
-    - cron:  '0 */3 * * *'
+    - cron:  '0 */1 * * *'
 jobs:
   build:
     name: refresh the dashboard
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: checkout_repo
         uses: actions/checkout@v2
@@ -18,15 +18,13 @@ jobs:
           clean: 'true'
           fetch-depth: '1'
       - name: Install pandoc 
-        run: sudo apt-get install -y pandoc
-      - name: Linux packages
-        run: sudo apt-get -y install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev
-      - name: Linux packages
-        run: sudo apt-get install gdal-bin proj-bin libgdal-dev libproj-dev
+        run: |
+          brew install pandoc
+          brew cask install xquartz 
       - name: Install CRAN packages
-        run: Rscript -e "install.packages(c('rnaturalearth','devtools','rgdal','plotly','mapview', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
+        run: Rscript -e "install.packages(c('devtools','plotly','mapview', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr'))"
       - name: Install Github packages
-        run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires',dependencies = TRUE)" -e "devtools::install_github('marovski/covid19cvdata')"
+        run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires',dependencies = TRUE)" -e "devtools::install_github('marovski/covid19cvdata')" -e "devtools::install_github('ropensci/rnaturalearth',dependencies = TRUE)"
       - name: Render the site
         run: Rscript -e "rmarkdown::render_site()"
       - name: Push updates
