@@ -377,10 +377,10 @@ Row
 cv_city %>%
   dplyr::select(concelho, confirmados,c_ativos_acumulados, recuperados, obitos,evacuados, confirmados_acumulados) %>%
   dplyr::group_by(concelho) %>%
-  dplyr::summarise(cumulative_positive_cases = sum(confirmados-recuperados-evacuados),
+  dplyr::summarise(cumulative_positive_cases = sum(confirmados-recuperados-evacuados-obitos),
                    recovered = sum(recuperados),
                    death = sum(obitos),
-                   cumulative_cases = sum(confirmados_acumulados)) %>%
+                   cumulative_cases = sum(confirmados_acumulados),evacuated=sum(evacuados)) %>%
   dplyr::ungroup() %>%
   dplyr::arrange(-cumulative_cases) %>%
   dplyr::mutate(region = factor(concelho , levels = concelho)) %>%
@@ -397,6 +397,9 @@ cv_city %>%
   plotly::add_trace(x = ~ death, 
                     name = "Óbitos",
                     marker = list(color = "red")) %>%
+    plotly::add_trace(x = ~ evacuated, 
+                    name = "Evacuados",
+                    marker = list(color = "grey")) %>%
   plotly::layout(title = "",
                  barmode = 'stack',
                  yaxis = list(title = ""),
@@ -622,7 +625,7 @@ valueBox(value = paste(x$grupo_etario<-gsub(",","-",x$grupo_etario)," (",round(1
 ```{r}
 x<-covid19cv %>% filter(tipo_transmissao=="Nao_Importado")
 
-valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Não Importadas'",icon = "fas fa-cross", color = 'green')
+valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Não Importadas'",icon = "fas fa-cross", color = 'purple')
 ```
 
 ### Transmission Cases2 {.value-box}
@@ -630,7 +633,7 @@ valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / 
 ```{r}
 x<-covid19cv %>% filter(tipo_transmissao=="Importado")
 
-valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Importadas'",icon = "fas fa-cross", color = 'lightgreen')
+valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Importadas'",icon = "fas fa-cross", color = 'purple')
 ```
 
 
