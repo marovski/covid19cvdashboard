@@ -375,9 +375,9 @@ Row
 
 ```{r}
 cv_city %>%
-  dplyr::select(concelho, confirmados,c_ativos_acumulados, recuperados, obitos, confirmados_acumulados) %>%
+  dplyr::select(concelho, confirmados,c_ativos_acumulados, recuperados, obitos,evacuados, confirmados_acumulados) %>%
   dplyr::group_by(concelho) %>%
-  dplyr::summarise(cumulative_positive_cases = sum(confirmados),
+  dplyr::summarise(cumulative_positive_cases = sum(confirmados-recuperados-evacuados),
                    recovered = sum(recuperados),
                    death = sum(obitos),
                    cumulative_cases = sum(confirmados_acumulados)) %>%
@@ -536,8 +536,10 @@ plotly::plot_ly( x = ~ Data)%>%
       plotly::add_trace(y = ~g_factorcrescimento, 
                     name = 'Factor crescimento diário', 
                     marker = list(color = 'purple'), text= ~paste0('Factor: ',g_factorcrescimento,'<br>','Confirmados: ',confirmados,'<br>',format(Data,'%d/%m')),hoverinfo = 'text',
-                    line=list(color="purple"),
-                    mode = 'lines') %>% 
+                    fillcolor = 'purple',
+                type = 'scatter',
+                mode = 'none', 
+                stackgroup = 'one') %>% 
   plotly::add_annotations(x = as.Date("2020-03-27"),
                           y = 0,
                           text ="Estado de Emergência",
@@ -620,7 +622,7 @@ valueBox(value = paste(x$grupo_etario<-gsub(",","-",x$grupo_etario)," (",round(1
 ```{r}
 x<-covid19cv %>% filter(tipo_transmissao=="Nao_Importado")
 
-valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Não Importadas'",icon = "fas fa-cross", color = 'purple')
+valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Não Importadas'",icon = "fas fa-cross", color = 'green')
 ```
 
 ### Transmission Cases2 {.value-box}
@@ -628,7 +630,7 @@ valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / 
 ```{r}
 x<-covid19cv %>% filter(tipo_transmissao=="Importado")
 
-valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Importadas'",icon = "fas fa-cross", color = 'purple')
+valueBox(value = paste(sum(x$confirmados)," (",round(100 * sum(x$confirmados) / cv_total_today$confirmados_acumulados, 1),"%)",sep=""),caption = "Transmissões 'Importadas'",icon = "fas fa-cross", color = 'lightgreen')
 ```
 
 
@@ -745,7 +747,7 @@ Row
 
 cabo_verde_map%>% mutate(`Confirmados`=replace_na(c_acumulados,"Sem casos"), `Ativos`=replace_na(cm_ativos))%>%
   mapview::mapview(legend=TRUE,zcol = c("Confirmados"),raster.palette = grey.colors,
-                   col.regions = colorRampPalette(c("yellow", "red", "snow"))) 
+                   col.regions = colorRampPalette(c("yellow","orange", "red", "snow"))) 
 ```
 
 Row
