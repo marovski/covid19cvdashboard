@@ -29,7 +29,7 @@ The provided data are from [covid19cvdata](https://github.com/marovski/covid19cv
 
 ### Data Source
 
-* The raw data in [covid19cvdata](https://github.com/marovski/covid19cvdata) package was obtained from public website [covid19.cv](www.covid19.cv).
+* The raw data in [covid19cvdata](https://github.com/marovski/covid19cvdata) package was obtained from Official Public website [covid19.cv](www.covid19.cv).
 
 * The raw data from [coronavirus](https://github.com/RamiKrispin/coronavirus) from Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE).
 
