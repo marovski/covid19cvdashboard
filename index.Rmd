@@ -537,12 +537,9 @@ total_nacional$g_factorcrescimento[is.infinite(total_nacional$g_factorcresciment
 total_nacional %>%
 plotly::plot_ly( x = ~ Data)%>%
       plotly::add_trace(y = ~g_factorcrescimento, 
-                    name = 'Factor crescimento diário', 
+                    name = 'Factor crescimento diário',       line=list(color="purple"),
                     marker = list(color = 'purple'), text= ~paste0('Factor: ',g_factorcrescimento,'<br>','Confirmados: ',confirmados,'<br>',format(Data,'%d/%m')),hoverinfo = 'text',
-                    fillcolor = 'purple',
-                type = 'scatter',
-                mode = 'none', 
-                stackgroup = 'one') %>% 
+                  type='scatter',mode = 'lines+markers') %>% 
   plotly::add_annotations(x = as.Date("2020-03-27"),
                           y = 0,
                           text ="Estado de Emergência",
@@ -758,17 +755,17 @@ Row
 ### Concelhos Afetados
 ```{r}
 cv_city %>%
-  dplyr::select(Concelho=concelho, Ilha=ilha, Confirmados=confirmados,Recuperados=recuperados,Óbitos= obitos, `Ativos Acumulados`=c_ativos_acumulados, `Conf. Acumulados`=confirmados_acumulados)%>% dplyr::group_by(Concelho) %>%
+  dplyr::select(Concelho=concelho, Ilha=ilha, Confirmados=confirmados,Recuperados=recuperados,Óbitos= obitos, `Ativos Acumulados`=c_ativos_acumulados, `Conf. Acumulados`=confirmados_acumulados,evacuados)%>% dplyr::group_by(Concelho) %>%
   dplyr::summarise(Confirmados = sum(Confirmados),
                    Recuperados = sum(Recuperados),
-                   Óbitos = sum(Óbitos),
+                   Óbitos = sum(Óbitos), Evacuados = sum(evacuados),
                    Ativos = cumsum(Confirmados-Recuperados-Óbitos) )%>%
   dplyr::ungroup() %>%
   DT::datatable(rownames = FALSE,extensions = 'Buttons',
                 options = list(dom='Bfrtip',searchHighlight = TRUE, 
                                pageLength = 20,
                                buttons=c('csv'),
-                               columnDefs = list(list(className = 'dt-center', targets = 0:4)), 
+                               columnDefs = list(list(className = 'dt-center', targets = 0:5)), 
                                autoWidth = TRUE), 
                                 filter = 'top') %>%   
     DT::formatStyle(
