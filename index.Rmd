@@ -646,8 +646,7 @@ plotly::plot_ly(data = joint_s,
                 name = 'Masculino', 
                 fillcolor = 'blue',
                 type = 'scatter',
-                mode = 'none', 
-                stackgroup = 'one') %>%
+                mode = 'line') %>%
   plotly::add_trace( y = ~cumsum(feminino_confirmado), 
                      name = "Feminino",
                      fillcolor = 'red') %>%
@@ -836,7 +835,7 @@ Row
 
 ```{r}
 
-palop_daily%>% filter(date>="2020-03-18")%>%
+palop_daily%>% filter(date>"2020-03-18")%>%
   plotly::plot_ly(
     x = ~date, y = ~(confirmed_cum), name = ~`Country.Region`,
     type = 'scatter', mode = 'lines',color = ~`Country.Region`
