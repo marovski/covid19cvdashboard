@@ -1187,19 +1187,23 @@ Sobre
 
 **Dashboard Covid19CV**
 
-Este Dashboard da Covid19 pretende fornecer uma visão geral do novo surto do novo Coronavírus COVID-19 em Cabo Verde. O dashboard foi construído com [R](https://www.r-project.org/) usando a estrutura R Markdown.
+Este Dashboard pretende fornecer uma visão geral do surto do COVID-19 em Cabo Verde, PALOP-TIL, África. 
+
+O dashboard foi construído com [R](https://www.r-project.org/) com a estrutura R Markdown, utilizando os dados das fontes oficiais de Cabo Verde e da Johns Hopkins University disponível no pacote R *coronavirus*.
 
 **Autoria**
 
 O dashboard foi desenvolvido e é mantido por [Mário Cardoso](https://marovski.github.io/).
 
+*Este projeto é pessoal e utiliza dados públicos*
+
 **Dados**
 
-Os dados de entrada para este dashboard são os pacotes R [covid19cvdata](https://marovski.github.io/covid19cvdata/) e [coronavirus](https://github.com/RamiKrispin/coronavirus) (versão de desenvolvimento). Os dados e o dashboard são atualizados diariamente.
+Os dados de entrada para este dashboard são os pacotes R [covid19cvdata](https://marovski.github.io/covid19cvdata/) e [coronavirus](https://github.com/RamiKrispin/coronavirus) (ambas em versão de desenvolvimento). Os dados e o dashboard são atualizados diariamente.
 
 **Fonte de dados**
 
-Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvdata) são obtidos da plataforma pública [covi19.cv](https://covid19.cv) e os dados do pacote [coronavirus](https://github.com/RamiKrispin/coronavirus) do Centro de Ciência e Engenharia da Universidade Johns Hopkins (JHU CCSE).
+Os dados brutos do pacote R [covid19cvdata](https://github.com/marovski/covid19cvdata) são obtidos do dashboard oficial dos dados do Covid19 em Cabo Verde, [covi19.cv](https://app.powerbi.com/view?r=eyJrIjoiMDk5ZjRlMTktMmFkZi00MWQ3LTg0NWMtNzQ0NDNjOTAyZTQxIiwidCI6IjdiNWNiZGU0LTI2N2YtNDVmOS05ZWYyLThlOTZmNTViNWFkMSIsImMiOjl9) e os dados do pacote [coronavirus](https://github.com/RamiKrispin/coronavirus) do Centro de Ciência e Engenharia da Universidade Johns Hopkins (JHU CCSE).
 
 **Pacotes**
 
@@ -1210,7 +1214,7 @@ Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvd
 
 **Referências**
 
-* Power BI Dashboard da plataforma [covid19.cv](https://covid19.cv): apresenta todos os dados oficiais do Covid19 em Cabo Verde atualizados diariamente, que serviram de base para este projeto. Big Thanks!!
+* Power BI Dashboard da plataforma [covid19.cv](https://app.powerbi.com/view?r=eyJrIjoiMDk5ZjRlMTktMmFkZi00MWQ3LTg0NWMtNzQ0NDNjOTAyZTQxIiwidCI6IjdiNWNiZGU0LTI2N2YtNDVmOS05ZWYyLThlOTZmNTViNWFkMSIsImMiOjl9): apresenta todos os dados oficiais do Covid19 em Cabo Verde atualizados diariamente, que serviram de base para este projeto. Big Thanks!!
 
 * Dashboard do [João Silva](https://rpubs.com/joaosilva/covid19-dash): o excelente trabalho desenvolvido pelo Engenheiro João serviu de base para este dashboard. Grande obrigado.
 
