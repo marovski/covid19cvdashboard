@@ -102,6 +102,7 @@ cv_city$concelho<-as.character(cv_city$concelho)
 cv_city<-cv_city %>% dplyr::group_by(Data,concelho,lat,long,ilha) %>%mutate(c_recuperados=sum(recuperados),c_obitos=sum(obitos)) %>% data.frame()
 
 
+
 # CV MAP
 cabo_verde_map <- rnaturalearth::ne_states(country = "Cape Verde", returnclass = "sf") %>%
   dplyr::select(concelho = name, region, geometry) %>%
@@ -374,39 +375,52 @@ Row
 ### Casos por Concelho
 
 ```{r}
-cv_city %>%
-  dplyr::select(concelho, confirmados,c_ativos_acumulados, recuperados, obitos,evacuados, confirmados_acumulados) %>%
-  dplyr::group_by(concelho) %>%
-  dplyr::summarise(cumulative_positive_cases = sum(confirmados-recuperados-evacuados-obitos),
-                   recovered = sum(recuperados),
-                   death = sum(obitos),
-                   cumulative_cases = sum(confirmados_acumulados),evacuated=sum(evacuados)) %>%
-  dplyr::ungroup() %>%
-  dplyr::arrange(-cumulative_cases) %>%
-  dplyr::mutate(region = factor(concelho , levels = concelho)) %>%
+# cv_city %>%
+#   dplyr::select(concelho, confirmados,c_ativos_acumulados, recuperados, obitos,evacuados, confirmados_acumulados) %>%
+#   dplyr::group_by(concelho) %>%
+#   dplyr::summarise(cumulative_positive_cases = sum(confirmados-recuperados-evacuados-obitos),
+#                    recovered = sum(recuperados),
+#                    death = sum(obitos),
+#                    cumulative_cases = sum(confirmados_acumulados),evacuated=sum(evacuados)) %>%
+#   dplyr::ungroup() %>%
+#   dplyr::arrange(-cumulative_cases) %>%
+#   dplyr::mutate(region = factor(concelho , levels = concelho)) %>%
+#   plotly::plot_ly(
+#     y = ~ region, 
+#     x = ~ cumulative_positive_cases, 
+#     orientation = 'h',
+#     type = "bar", 
+#     name = "Ativos",
+#     marker = list(color = "#1f77b4")) %>%
+#   plotly::add_trace(x = ~ recovered,
+#                     name = "Recuperados",
+#                     marker = list(color = "forestgreen")) %>%
+#   plotly::add_trace(x = ~ death, 
+#                     name = "Óbitos",
+#                     marker = list(color = "red")) %>%
+#     plotly::add_trace(x = ~ evacuated, 
+#                     name = "Evacuados",
+#                     marker = list(color = "grey")) %>%
+#   plotly::layout(title = "",
+#                  barmode = 'stack',
+#                  yaxis = list(title = ""),
+#                  xaxis = list(title = "Casos"),
+#                  hovermode = "compare",
+#                  legend = list(x = 0.65, y = 0.9),
+#                  hovermode = "compared",margin=list(b=10,t=10,pad=2))
+cv_city%>% filter(Data>"2020-03-18")%>%
   plotly::plot_ly(
-    y = ~ region, 
-    x = ~ cumulative_positive_cases, 
-    orientation = 'h',
-    type = "bar", 
-    name = "Ativos",
-    marker = list(color = "#1f77b4")) %>%
-  plotly::add_trace(x = ~ recovered,
-                    name = "Recuperados",
-                    marker = list(color = "forestgreen")) %>%
-  plotly::add_trace(x = ~ death, 
-                    name = "Óbitos",
-                    marker = list(color = "red")) %>%
-    plotly::add_trace(x = ~ evacuated, 
-                    name = "Evacuados",
-                    marker = list(color = "grey")) %>%
-  plotly::layout(title = "",
-                 barmode = 'stack',
-                 yaxis = list(title = ""),
-                 xaxis = list(title = "Casos"),
-                 hovermode = "compare",
-                 legend = list(x = 0.65, y = 0.9),
-                 hovermode = "compared",margin=list(b=10,t=10,pad=2))
+    x = ~Data, y = ~(confirmados_acumulados), name = ~`concelho`,
+    type = 'scatter', mode = 'lines',color = ~`concelho`
+  ) %>% 
+  plotly::layout(
+    title = "",
+    xaxis = list(title = "<b>Data</b>"),
+    yaxis = list(title = "<b>Casos Confirmados Acumulados(escala log)</b>",type="log"),
+    margin=list(b=10,t=10,pad=2),hovermode="compare",
+    legend = list(orientation = "h",   # show entries horizontally
+                               xanchor = "center",  # use center of legend as anchor
+                               x = 0.5,y=8))
 ```
 
 
