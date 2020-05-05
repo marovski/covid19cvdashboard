@@ -1129,10 +1129,10 @@ Row {.tabset}
 ### Cabo Verde
 ```{r caboverde}
 covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho, c("Sal Rei"= "Boa Vista", "Mindelo"="São Vicente"))) %>%
-  dplyr::select(Data = data, Concelho = concelho, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>% mutate(Concelho=as.factor(Concelho),`Grupo Etario`=as.factor(`Grupo Etario`), Nacionalidade=as.factor(Nacionalidade))%>%
+  dplyr::select(Data = data, Concelho = concelho,Ilha=ilha, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>% mutate(Concelho=as.factor(Concelho),`Grupo Etario`=as.factor(`Grupo Etario`), Nacionalidade=as.factor(Nacionalidade))%>%
   DT::datatable(rownames = FALSE,extensions = 'Buttons',
                 options = list(dom='Bfrtip',searchHighlight = TRUE, 
-                               pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:5)), autoWidth = TRUE), filter = 'top')
+                               pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:6)), autoWidth = TRUE), filter = 'top')
 ```
 
 ### PALOP-TL
@@ -1210,7 +1210,7 @@ Os dados brutos do pacote [covid19cvdata](https://github.com/marovski/covid19cvd
 
 **Referências**
 
-* Power BI Dashboard da plataforma [covid19.cv](https://covid19.cv): este, contém todos os dados oficiais do Covid19 em Cabo Verde atualizados diariamente, que serviram de base para este projeto. Thank you!!
+* Power BI Dashboard da plataforma [covid19.cv](https://covid19.cv): apresenta todos os dados oficiais do Covid19 em Cabo Verde atualizados diariamente, que serviram de base para este projeto. Big Thanks!!
 
 * Dashboard do [João Silva](https://rpubs.com/joaosilva/covid19-dash): o excelente trabalho desenvolvido pelo Engenheiro João serviu de base para este dashboard. Grande obrigado.
 
