@@ -21,7 +21,7 @@ library(covid19cvdata)
 ##-------coronaviruspackage--------------------------#
 devtools::install_github("covid19r/coronavirus",force = TRUE)
 library(coronavirus)
-
+coronavirus::update_dataset()
 #-----Required the dev version from Github---------------# 
 
 library(flexdashboard)
