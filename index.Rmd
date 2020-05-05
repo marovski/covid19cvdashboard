@@ -19,9 +19,9 @@ devtools::install_github("marovski/covid19cvdata",force=TRUE)
 library(covid19cvdata)
 
 ##-------coronaviruspackage--------------------------#
-devtools::install_github("covid19r/coronavirus")
+devtools::install_github("covid19r/coronavirus",force = TRUE)
 library(coronavirus)
-data("coronavirus")
+
 #-----Required the dev version from Github---------------# 
 
 library(flexdashboard)
