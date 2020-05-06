@@ -759,9 +759,10 @@ Row
 -----------------------------------------------------------------------
 ### Distribuição Geográfica dos Casos
 ```{r mapCV}
-
-cabo_verde_map%>% mutate(`Confirmados`=replace_na(c_acumulados,"Sem casos"), `Ativos`=replace_na(cm_ativos))%>%
-  mapview::mapview(legend=TRUE,zcol = c("Confirmados"),raster.palette = grey.colors,
+cabo_verde_map$c_acumulados<-replace_na(cabo_verde_map$c_acumulados,"Sem casos")
+cabo_verde_map$n<-NULL
+cabo_verde_map %>% 
+  mapview::mapview(legend=TRUE,zcol = c("c_acumulados"),raster.palette = grey.colors,
                    col.regions = colorRampPalette(c("yellow","orange", "red", "snow"))) 
 ```
 
