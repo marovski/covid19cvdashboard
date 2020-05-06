@@ -8,6 +8,8 @@ output:
     vertical_layout: scroll
     css: style.css
     social: menu
+    includes:
+      after_body:  analytics.html
    
 ---
 
@@ -1126,7 +1128,7 @@ Dados
 =====================================================
 Row {.tabset}
 ---------------------------
-### Cabo Verde
+### Cabo Verde (última atualização:`r format(max(total_nacional$Data), '%d/%m')`)
 ```{r caboverde}
 covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho, c("Sal Rei"= "Boa Vista", "Mindelo"="São Vicente"))) %>%
   dplyr::select(Data = data, Concelho = concelho,Ilha=ilha, Sexo = sexo,`Grupo Etario`= grupo_etario,`Nacionalidade`= nacionalidade, `Tipo de Caso` = tipo_caso)  %>% mutate(Concelho=as.factor(Concelho),`Grupo Etario`=as.factor(`Grupo Etario`), Nacionalidade=as.factor(Nacionalidade))%>%
@@ -1135,7 +1137,7 @@ covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho
                                pageLength = 20,buttons=c('csv'),columnDefs = list(list(className = 'dt-center', targets = 0:6)), autoWidth = TRUE), filter = 'top')
 ```
 
-### PALOP-TL
+### PALOP-TL (última atualização:`r format(max(world_daily$date), '%d/%m')`)
 ```{r palop}
 palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),0)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
@@ -1144,7 +1146,7 @@ palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbit
                                ,autoWidth = TRUE), filter = 'top')
 ```
 
-### África
+### África (última atualização:`r format(max(world_daily$date), '%d/%m')`)
 
 ```{r africa}
 africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(as.numeric(round(100*(Recuperados/Confirmados),1))), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
@@ -1154,7 +1156,7 @@ africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confi
                                ,autoWidth = TRUE), filter = 'top')
 ```
 
-### Mundo
+### Mundo (última atualização:`r format(max(world_daily$date), '%d/%m')`)
 
 ```{r worldcountries}
 worldCountries %>% 
