@@ -736,13 +736,13 @@ plotly::plot_ly(data=covid_demo, x=~confirmados, y=~grupo_etario,color=~sexo) %>
 ```{r}
 plotly::plot_ly(data= covid_demo,
                 x = ~grupo_etario, y = ~confirmados_ativos,
-                color = ~sexo, size=~confirmados_ativos*10,
+                color = ~sexo, size=~confirmados*10,
                 text = ~`sexo`, name = ~`sexo`,
                 type = "scatter", mode = 'markers',
-                hovertemplate = paste0(
+                hovertemplate = ~paste0(
                   '<b>Sexo</b>: %{text}',
-                  '<br><b>Grupo Etario</b>: %{x}<br>',
-                  '<b>Casos Ativos</b>: %{y}')) %>% 
+                  '<br><b>Grupo Etario</b>: %{x}<br>','<b>Confirmados</b>: ',confirmados,'<br>',
+                  '<b>Ativos</b>: %{y}<br>','<b>Recuperados</b>: ',recuperados,'<br>','<b>Óbitos</b>: ',obitos)) %>% 
   plotly::layout(
     title = "<b>Grupo Etario vs Casos Ativos</b>",
     xaxis = list(title = "<b>Grupo Etário</b>"),
