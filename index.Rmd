@@ -55,7 +55,6 @@ death_color <- "#E41317"
 #------------------ Data ----------------------------------------------------#
 
 ##---------- Get Nacional total cases----------------------------------------#
-cv_total_today<- covid19cvdata::covid19cv_nacional %>% filter(Data==max(Data))
 
 ## Moving Average
 total_nacional<-covid19cvdata::covid19cv_nacional  %>%
@@ -64,7 +63,20 @@ total_nacional<-covid19cvdata::covid19cv_nacional  %>%
                                        dplyr::lag(confirmados, n = 2) +
                                        dplyr::lag(confirmados, n = 3) +
                                        dplyr::lag(confirmados, n = 4)) / 5))
+#Daily GrowthRate
+total_nacional$c_lag<-lag(total_nacional$confirmados_acumulados)
 
+total_nacional$d_lag<-lag(cumsum(total_nacional$obitos))
+
+
+total_nacional$c_lag[is.na(total_nacional$c_lag)]<-0
+total_nacional$d_lag[is.na(total_nacional$d_lag)]<-0
+
+total_nacional$c_percentcrescimento<-round((total_nacional$confirmados_acumulados-total_nacional$c_lag)/total_nacional$c_lag*100,1)
+
+total_nacional$d_percentcrescimento<-round((cumsum(total_nacional$obitos)-total_nacional$d_lag)/total_nacional$d_lag*100,1)
+
+cv_total_today<- total_nacional %>% filter(Data==max(Data))
 
 #----------------------Get demographic data-----------------------------#
 
@@ -260,10 +272,10 @@ Resumo {data-orientation=rows}
 Row
 -----------------------------------------------------------------------
 
-### Tested {.value-box}
+### GrowthDaily {.value-box}
 
-```{r tests}
-valueBox(value = format(791, big.mark = ","),caption = "Testes Realizados(até 24/04)",icon = "fas fa-user-md", color = tested_color)
+```{r Growth}
+valueBox(value = paste(format(cv_total_today$c_percentcrescimento, big.mark = ","),"%"),caption = "Taxa Crescimento Diário",icon = "fas fa-chart-line", color = tested_color)
 ```
 
 
@@ -475,21 +487,7 @@ Row
 -------------------------------------------------------------
 ### Taxa Crescimento Diário dos Casos Confirmados e Óbitos Acumulados
 ```{r growth}
-total_nacional$c_lag<-lag(total_nacional$confirmados_acumulados)
 
-total_nacional$d_lag<-lag(cumsum(total_nacional$obitos))
-
-
-total_nacional$c_lag[is.na(total_nacional$c_lag)]<-0
-total_nacional$d_lag[is.na(total_nacional$d_lag)]<-0
-
-
-
-
-
-total_nacional$c_percentcrescimento<-round((total_nacional$confirmados_acumulados-total_nacional$c_lag)/total_nacional$c_lag*100,1)
-
-total_nacional$d_percentcrescimento<-round((cumsum(total_nacional$obitos)-total_nacional$d_lag)/total_nacional$d_lag*100,1)
 
 
 total_nacional %>%
@@ -1190,7 +1188,7 @@ Sobre
 
 **Dashboard Covid19CV**
 
-Este Dashboard pretende fornecer uma visão geral do surto do COVID-19 em Cabo Verde, PALOP-TIL, África. 
+Este Dashboard pretende fornecer uma visão geral do surto do COVID-19 em Cabo Verde. 
 
 O dashboard foi construído com [R](https://www.r-project.org/) com a estrutura R Markdown, utilizando os dados das fontes oficiais de Cabo Verde e da Johns Hopkins University disponível no pacote R *coronavirus*.
 
