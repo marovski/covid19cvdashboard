@@ -275,7 +275,7 @@ Row
 ### GrowthDaily {.value-box}
 
 ```{r Growth}
-valueBox(value = paste(format(cv_total_today$c_percentcrescimento, big.mark = ","),"%"),caption = "Taxa Crescimento Diário",icon = "fas fa-chart-line", color = tested_color)
+valueBox(value = paste(format(cv_total_today$c_percentcrescimento, big.mark = ","),"%"),caption = "Taxa Crescimento Diário de Confirmados",icon = "fas fa-chart-line", color = tested_color)
 ```
 
 
