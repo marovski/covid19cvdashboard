@@ -20,9 +20,10 @@ jobs:
       - name: Install pandoc 
         run: |
           brew install pandoc
-          brew cask install xquartz 
+          brew cask install xquartz
+          brew install geos gdal  
       - name: Install CRAN packages
-        run: Rscript -e "install.packages(c('devtools','usethis','rgeos','plotly','mapview', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr', 'rnaturalearth'))"
+        run: Rscript -e "install.packages(c('devtools','usethis','plotly','mapview', 'rworldmap','leaflet','stringr','readr','tidyr','ludridate','sp','reshape2','rmarkdown', 'flexdashboard', 'dplyr', 'rnaturalearth'))" -e "install.packages(c('rgdal','rgeos'), repos='http://R-Forge.R-project.org', type='source')"
       - name: Install Github packages
         run: Rscript -e "devtools::install_github('ropensci/rnaturalearthhires',dependencies = TRUE)" -e "devtools::install_github('marovski/covid19cvdata')" 
       - name: Render the site
