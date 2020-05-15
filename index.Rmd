@@ -149,7 +149,7 @@ world_daily <- coronavirus %>%
                 active_cum = cumsum(active))
 
 worldCountries<-coronavirus %>%
-  dplyr::group_by( Country.Region,type) %>%
+  dplyr::group_by( country,type) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(names_from = type,
                      values_from = total) %>%
@@ -167,11 +167,11 @@ countries <- read_csv("./data-raw/africa.csv")
 
 
 #Africa Cases
-africa<-semi_join(coronavirus,countries, by=c("Country.Region"="Country"))
+africa<-semi_join(coronavirus,countries, by=c("country"="Country"))
 
 #Africa Countries covid19 stats
 africa_countries<-africa %>%
-  dplyr::group_by( type,Country.Region) %>%
+  dplyr::group_by( type,country) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(names_from = type,
                      values_from = total) %>%
@@ -199,14 +199,14 @@ africa_daily <- africa %>%
 
 #---------------------#PALOP-TIL-----------------------------#
 
-timor<-coronavirus%>%filter(Country.Region=="Timor-Leste") %>%dplyr::group_by( type,Country.Region) %>%
+timor<-coronavirus%>%filter(country=="Timor-Leste") %>%dplyr::group_by( type,country) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(names_from = type,
                      values_from = total) %>%
   dplyr::ungroup() %>%
   dplyr::mutate(active =  confirmed - death - recovered) %>% data.frame()
 
-palop<-africa_countries %>% filter(Country.Region %in% c("Angola", "Guinea-Bissau", "Timor-Leste", "Mozambique","Sao Tome and Principe","Cabo Verde"))%>% rbind(timor)
+palop<-africa_countries %>% filter(country %in% c("Angola", "Guinea-Bissau", "Timor-Leste", "Mozambique","Sao Tome and Principe","Cabo Verde"))%>% rbind(timor)
 
 get.geocode.country<-function(x, place) {
   nrow <- nrow(x)
@@ -244,20 +244,20 @@ get.geocode.country<-function(x, place) {
   return (x)
 }
 
-palop<-get.geocode.country(palop,"Country.Region")
+palop<-get.geocode.country(palop,"country")
 
 palop$lat<-as.numeric(palop$lat)
 palop$long<-as.numeric(palop$long)
 
-palop_daily<-coronavirus %>% filter(Country.Region %in% c("Angola", "Guinea-Bissau", "Timor-Leste", "Mozambique","Sao Tome and Principe","Cabo Verde"))%>%
+palop_daily<-coronavirus %>% filter(country %in% c("Angola", "Guinea-Bissau", "Timor-Leste", "Mozambique","Sao Tome and Principe","Cabo Verde"))%>%
   dplyr::mutate(date=as.Date(date))%>%
-  dplyr::group_by(date, Country.Region, type) %>%
+  dplyr::group_by(date, country, type) %>%
   dplyr::summarise(total = sum(cases, na.rm = TRUE)) %>%
   tidyr::pivot_wider(names_from = type,
                      values_from = total) %>%
   dplyr::arrange(date) %>%
   dplyr::ungroup() %>%
-  dplyr::group_by(Country.Region)%>%
+  dplyr::group_by(country)%>%
   dplyr::mutate(active =  confirmed - death - recovered) %>%
   dplyr::mutate(confirmed_cum = cumsum(confirmed),
                 death_cum = cumsum(death),
@@ -852,8 +852,8 @@ Row
 
 palop_daily%>% filter(date>"2020-03-18")%>%
   plotly::plot_ly(
-    x = ~date, y = ~(confirmed_cum), name = ~`Country.Region`,
-    type = 'scatter', mode = 'lines',color = ~`Country.Region`
+    x = ~date, y = ~(confirmed_cum), name = ~`country`,
+    type = 'scatter', mode = 'lines',color = ~`country`
   ) %>% 
   plotly::layout(
     title = "",
@@ -875,7 +875,7 @@ leaflet(data = palop)%>%
   addCircleMarkers(lng = ~ long, 
                    lat= ~ lat,  #use the pallete
                    color = ~pal(confirmed),stroke = FALSE, fillOpacity = 0.5,
-                   label= ~paste0("",Country.Region,"\n ","Confirmados:", confirmed,'\n', "Obitos:",death,'\n',"Recuperados:",recovered)
+                   label= ~paste0("",country,"\n ","Confirmados:", confirmed,'\n', "Obitos:",death,'\n',"Recuperados:",recovered)
   ) %>%
   addLegend(title = "Casos",pal=pal,values = palop$confirmed )
 ```
@@ -964,12 +964,12 @@ plotly::plot_ly(data=africa_countries,
                 x=~(death/confirmed)*100,
                 y=~(recovered/confirmed)*100,
                 size = ~log(confirmed),
-                color = ~Country.Region,
+                color = ~country,
                 sizes = c(5, 20),
                 marker = list(sizemode = 'diameter' , opacity = 0.5),
                 type = 'scatter',mode='markers',
                 hoverinfo='text',
-                hovertemplate = ~paste0("",Country.Region,'<br>',
+                hovertemplate = ~paste0("",country,'<br>',
                                         "Confirmados: ",confirmed,'<br>',
                                         "Ativos: ",active," (",round(100*(active/confirmed),1),' %)','<br>',
                                         "Recuperados: ", recovered," (",round(100*(recovered/confirmed),1),' %)','<br>',
@@ -1030,9 +1030,9 @@ Row
 
 cv_data_for_plot <- coronavirus %>% 
   dplyr::filter(cases > 0) %>% 
-  dplyr::group_by(Country.Region,Province.State,Lat,Long,type) %>% 
+  dplyr::group_by(country,lat,long,type) %>% 
   dplyr::summarise(cases = sum(cases)) %>% 
-  dplyr::mutate(log_cases = 2 * log(cases),tipo=stringr::str_replace_all(type, c("death"= "Óbitos", "confirmed"="Confirmados","recovered"="Recuperados")),País=Country.Region,Casos=cases) %>% 
+  dplyr::mutate(log_cases = 2 * log(cases),tipo=stringr::str_replace_all(type, c("death"= "Óbitos", "confirmed"="Confirmados","recovered"="Recuperados")),País=country,Casos=cases) %>% 
   dplyr::ungroup()
 
 
@@ -1046,7 +1046,7 @@ names(cv_data_for_plot.split) %>%
   purrr::walk( function(df) {
     map_object <<- map_object %>%
       addCircleMarkers(data=cv_data_for_plot.split[[df]],
-                 lng=~Long, lat=~Lat,
+                 lng=~long, lat=~lat,
                  color = ~pal(tipo),
                  stroke = FALSE,
                  fillOpacity = 0.8,
@@ -1070,7 +1070,7 @@ map_object %>%
 ### Países com mais de 20 000 casos (última atualização:`r format(max(world_daily$date), '%d/%m')`)
 
 ```{r worldCountries}
-worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(Country.Region, levels = Country.Region))%>% 
+worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(country, levels = country))%>% 
 plotly::plot_ly(
                 x = ~country,
                 y = ~active,
@@ -1100,17 +1100,17 @@ plotly::plot_ly(
 
 ### Taxa Recuperação vs Taxa Mortandade (Países com mais de 20 000 infetados)
 ```{r worldCountriesTx}
-worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(Country.Region, levels = Country.Region))%>% 
+worldCountries%>%filter(confirmed>=20000)%>%dplyr::mutate(country = factor(country, levels = country))%>% 
 plotly::plot_ly(
                 x=~(death/confirmed)*100,
                 y=~(recovered/confirmed)*100,
                 size = ~log(confirmed),
-                color = ~Country.Region,
+                color = ~country,
                 sizes = c(5, 50),
                 marker = list(sizemode = 'diameter' , opacity = 0.5),
                 type = 'scatter',mode='markers',
                 hoverinfo='text',
-                hovertemplate = ~paste0("",Country.Region,'<br>',
+                hovertemplate = ~paste0("",country,'<br>',
                                         "Confirmados: ",confirmed,'<br>',
                                         "Ativos: ",active," (",round(100*(active/confirmed),1),' %)','<br>',
                                         "Recuperados: ", recovered," (",round(100*(recovered/confirmed),1),' %)','<br>',
@@ -1138,7 +1138,7 @@ covid19cvdata::covid19cv %>% mutate(concelho = stringr::str_replace_all(concelho
 
 ### PALOP-TL (última atualização:`r format(max(world_daily$date), '%d/%m')`)
 ```{r palop}
-palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),0)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
+palop %>% dplyr::select(Países = country, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(round(100*(Recuperados/Confirmados),0)), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
                 options = list(searchHighlight = TRUE, 
                                pageLength = 6,columnDefs = list(list(className = 'dt-center', targets = 0:6))
@@ -1148,7 +1148,7 @@ palop %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbit
 ### África (última atualização:`r format(max(world_daily$date), '%d/%m')`)
 
 ```{r africa}
-africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(as.numeric(round(100*(Recuperados/Confirmados),1))), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
+africa_countries %>% dplyr::select(Países = country, Confirmados = confirmed, Óbitos = death,Recuperados=recovered, Activo=active)  %>% mutate(`% Recuperação`=paste(as.numeric(round(100*(Recuperados/Confirmados),1))), `% Óbito`=paste( round(100*(Óbitos/Confirmados),1))) %>%
   DT::datatable(rownames = FALSE,
                 options = list(searchHighlight = TRUE, 
                                pageLength = 20,columnDefs = list(list(className = 'dt-center', targets = 0:6))
@@ -1159,7 +1159,7 @@ africa_countries %>% dplyr::select(Países = Country.Region, Confirmados = confi
 
 ```{r worldcountries}
 worldCountries %>% 
-  dplyr::select(Países = Country.Region, 
+  dplyr::select(Países = country, 
                 Confirmados = confirmed, 
                 Óbitos = death,Recuperados=recovered, 
                 Activo=active)  %>% 
